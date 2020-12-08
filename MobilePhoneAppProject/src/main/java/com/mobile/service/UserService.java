@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
+import com.mobile.domain.Notice;
+import com.mobile.domain.Office;
+import com.mobile.domain.Point;
+import com.mobile.domain.Region;
+import com.mobile.domain.Review;
 
 public interface UserService {
 	
@@ -44,7 +49,7 @@ public interface UserService {
 	/**
 	 * 회원 상태 변경하기
 	 * */
-	void memberChangeState(Long memberId);
+	public void memberChangeState(Long memberId);
 	
 	//Blacklist table
 	/**
@@ -52,13 +57,11 @@ public interface UserService {
 	 * */
 	public List<Blacklist> blacklistSelectAll();
 	
-	
 	/**
 	 * 블랙리스트 조회
 	 * */
 	public Blacklist blacklistSelectById(Long blacklistId);
 	
-
 	/**
 	 * 블랙리스트 추가
 	 * */
@@ -72,21 +75,172 @@ public interface UserService {
 	/**
 	 * 블랙리스트 삭제
 	 * */
-	void blacklistChangeState(Long blacklistId);
+	public void blacklistDelete(Long blacklistId);
 	
 	//Notice table
+	/**
+	 * 공지사항 전체 조회
+	 * */
+	public List<Notice> noticeSelectAll();
+	
+	
+	/**
+	 * 공지사항 조회
+	 * */
+	public Notice noticeSelectById(Long noticeId);
+	
+
+	/**
+	 * 공지사항 추가
+	 * */
+	public void noticeInsert(Notice notice);
+	
+	/**
+	 * 공지사항 정보 수정하기
+	 * */
+	public void noticeUpdate(Notice notice);
+	
+	/**
+	 * 공지사항 삭제
+	 * */
+	public void noticeDelete(Long noticeId);
 	
 	//Review table
+	/**
+	 * 리뷰 전체 조회
+	 * */
+	public List<Review> reviewSelectAll();
 	
+	
+	/**
+	 * 리뷰 조회
+	 * */
+	public Review reviewSelectById(Long reviewId);
+	
+	/**
+	 * 작성자 아이디로 리뷰 조회
+	 * */
+	public List<Review> reviewSelectByMemberId(Long memberId);
+	
+
+	/**
+	 * 리뷰 추가
+	 * */
+	public void reviewInsert(Review review);
+	
+	/**
+	 * 리뷰 정보 수정하기
+	 * */
+	public void reviewUpdate(Review review);
+	
+	/**
+	 * 리뷰 삭제
+	 * */
+	public void reviewDelete(Long reviewId);
+
 	//Region table
+	/**
+	 * 지역 전체 조회
+	 * */
+	public List<Region> regionSelectAll();
+	
+	
+	/**
+	 * 지역 아이디로 조회
+	 * */
+	public Region regionSelectById(Long regionId);
+
+	/**
+	 * 지역 추가
+	 * */
+	public void regionInsert(Region region);
+	
+	/**
+	 * 지역 정보 수정하기
+	 * */
+	public void regionUpdate(Region region);
+	
+	/**
+	 * 지역 삭제
+	 * */
+	public void regionDelete(Long regionId);
 	
 	//Office table
+	/**
+	 * 지점 전체 조회
+	 * */
+	public List<Office> officeSelectAll();
+	
+	/**
+	 * 활성화 지점 전체 조회
+	 * */
+	public List<Office> officeSelectActivatedAll();
+	
+	/**
+	 * 지역 아이디로 지점 조회
+	 * */
+	public List<Office> officeSelectByRegionId(Long regionId);
+	
+	/**
+	 * 지점 아이디로 조회
+	 * */
+	public Office officeSelectById(Long officeId);
+
+	/**
+	 * 지점 추가
+	 * */
+	public void officeInsert(Office office);
+	
+	/**
+	 * 지점 정보 수정하기
+	 * */
+	public void officeUpdate(Office office);
+	
+	/**
+	 * 지점 상태변경
+	 * */
+	public void officeChangeState(Long officeId, Integer state);
 	
 	//Point table
+	/**
+	 * 포인트 전체 조회
+	 * */
+	public List<Point> pointSelectAll();
+	
+	/**
+	 * 회원 아이디로 포인트 조회
+	 * */
+	public List<Point> pointSelectByMemberId(Long memberId);
+	
+	/**
+	 * 포인트 아이디로 조회
+	 * */
+	public Point pointSelectById(Long pointId);
+
+	/**
+	 * 포인트 추가(새로운 포인트)
+	 * */
+	public void pointInsert(Point point);
+	
+	/**
+	 * 포인트 정보 수정하기
+	 * */
+	public void pointUpdate(Point point);
+	
+	/**
+	 * 포인트 상태변경
+	 * */
+	public void pointChangeState(Long pointId, Integer state);
 	
 	
+	/**
+	 * 미사용 포인트 회원 아이디로 조회
+	 * */
+	public List<Point> pointSelectUnusedPoint(Long memberId);
 	
-	
-	
-	
+	/**
+	 * 사용 포인트 회원 아이디로 조회
+	 * */
+	public List<Point> pointSelectUsedPoint(Long memberId);
+
 }
