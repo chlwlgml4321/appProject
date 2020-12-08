@@ -2,6 +2,8 @@ package com.mobile.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
@@ -9,43 +11,91 @@ import com.mobile.domain.Office;
 import com.mobile.domain.Point;
 import com.mobile.domain.Region;
 import com.mobile.domain.Review;
+import com.mobile.repository.MembersRepository;
 
 public class UserServiceImpl implements UserService {
 
+	@Autowired
+	MembersRepository membersRepo;
+	
 	@Override
 	public List<Members> memberSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return membersRepo.findAll();
 	}
 
 	@Override
 	public List<Members> mamberSelectActivatedAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return membersRepo.findActiveMember();
 	}
 
 	@Override
 	public Members memberSelectById(Long memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return membersRepo.findById(memberId).orElse(null);
 	}
 
 	@Override
 	public void memberInsert(Members member) {
-		// TODO Auto-generated method stub
+		
+		membersRepo.save(member);
 
 	}
 
 	@Override
 	public void memberUpdate(Members member) {
-		// TODO Auto-generated method stub
+		
+		Members m = membersRepo.findById(member.getMemberId()).orElse(null);
+		
+		if(m!=null) {
+			if(member.getIsVisitor() != null) {
+				m.setIsVisitor(member.getIsVisitor());
+			}
+			
+			if(member.getMemberCode()!=null) {
+				m.setMemberCode(member.getMemberCode());
+			}
+			
+			if(member.getName()!=null) {
+				m.setName(member.getName());
+			}
+			
+			if(member.getOffice()!=null) {
+				m.setOffice(member.getOffice());
+			}
+			
+			if(member.getPaassword()!=null) {
+				m.setPaassword(member.getPaassword());
+			}
+			
+			if(member.getProfileImg()!=null) {
+				m.setProfileImg(member.getProfileImg());
+			}
+			
+			if(member.getRegions()!=null) {
+				m.setRegions(member.getRegions());
+			}
+			
+			membersRepo.save(m);
+		}
+		
 
 	}
 
 	@Override
 	public void memberChangeState(Long memberId) {
-		// TODO Auto-generated method stub
-
+		Members member = membersRepo.findById(memberId).orElse(null);
+		int state;
+		
+		if(member !=null) {
+			state = member.getState();
+			
+			if(state == 0) {
+				member.setState(1);
+			} else {
+				member.setState(0);
+			}
+			membersRepo.save(member);
+		}
 	}
 
 	@Override
