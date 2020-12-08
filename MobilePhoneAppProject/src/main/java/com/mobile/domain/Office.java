@@ -36,5 +36,7 @@ public class Office {
 	@ManyToOne
 	@JoinColumn(name = "regionId")
 	Region region;
+
+	Integer state;
 	
 }
