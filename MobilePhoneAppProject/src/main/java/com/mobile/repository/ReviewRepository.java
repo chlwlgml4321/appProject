@@ -15,4 +15,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	//memberId 로 review 가져오기 
 	@Query("select r from Review r where r.member.memberId=?1")
 	public List<Review> findByMemberId(Long memberId);
+	
+
 }
