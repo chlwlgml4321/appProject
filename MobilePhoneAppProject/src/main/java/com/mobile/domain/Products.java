@@ -48,13 +48,21 @@ public class Products {
 	@JoinColumn(name="deviceId")
 	Device device;
 	
-	@OneToOne
-	@JoinColumn(name="marketSupportFundId")
-	MarketSupportFund marketSupportFund;
+	Integer activationType;
 	
-	@OneToOne
-	@JoinColumn(name="mainSupportFundId")
-	MainSupportFund mainSupportFund;
+//	@OneToOne
+//	@JoinColumn(name="marketSupportFundId")
+//	MarketSupportFund marketSupportFund;
+	
+	Integer marketSupportFund;
+	
+//	@OneToOne
+//	@JoinColumn(name="mainSupportFundId")
+//	MainSupportFund mainSupportFund;
+	
+	Integer mainSupportFund;
+	
+	Integer isReccomendationProducts;
 	
 	/**
 	 * 0 - 비활성화
