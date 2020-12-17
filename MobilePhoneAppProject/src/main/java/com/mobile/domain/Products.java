@@ -50,15 +50,7 @@ public class Products {
 	
 	Integer activationType;
 	
-//	@OneToOne
-//	@JoinColumn(name="marketSupportFundId")
-//	MarketSupportFund marketSupportFund;
-	
 	Integer marketSupportFund;
-	
-//	@OneToOne
-//	@JoinColumn(name="mainSupportFundId")
-//	MainSupportFund mainSupportFund;
 	
 	Integer mainSupportFund;
 	

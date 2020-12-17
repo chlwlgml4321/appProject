@@ -2,13 +2,19 @@ package com.mobile.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.mobile.domain.Application;
 import com.mobile.domain.CallingPlan;
+import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Device;
+import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Products;
+import com.mobile.domain.WiredGoods;
 
+@Service
 public interface ProductService {
 
 	/**
@@ -25,12 +31,12 @@ public interface ProductService {
 	/**
 	 * 상태에 따른 신청서 조회
 	 * */
-	public List<Application> applicationSelectActivatedAll();
+	public List<Application> applicationSelectByState(Integer state);
 	
 	/**
 	 * member id로 신청서 조회
 	 * */
-	public List<Application> applicationSelectByMemberId();
+	public List<Application> applicationSelectByMemberId(Long memberId);
 	
 	/**
 	 * 신청서 아이디로 조회
@@ -63,7 +69,7 @@ public interface ProductService {
 	/**
 	 * 통신사로 요금제 조회
 	 * */
-	public List<CallingPlan> callingPlanSelectByCarrierId();
+	public List<CallingPlan> callingPlanSelectByCarrierId(Long carrierId);
 
 	/**
 	 * 요금제 조회
@@ -73,12 +79,12 @@ public interface ProductService {
 	/**
 	 * 요금제 삽입 
 	 * */
-	public void callingPlanInsert(Application application);
+	public void callingPlanInsert(CallingPlan callingPlan);
 	
 	/**
 	 * 요금제 정보 수정하기
 	 * */
-	public void callingPlanUpdate(Application application);
+	public void callingPlanUpdate(CallingPlan callingPlan);
 	
 	/**
 	 * 요금제 상태 삭제하기
@@ -138,18 +144,18 @@ public interface ProductService {
 	/**
 	 * 상품 전체 조회
 	 * */
-	public void productsSelectAll();
+	public List<Products> productsSelectAll();
 	
 	
 	/**
 	 * 상품 id로 조회
 	 * */
-	public void productsSelectById(Long Id);
+	public Products productsSelectById(Long Id);
 	
 	/**
 	 * 활성화된 상품만 조회
 	 * */
-	public void productsSelectActivatedAll();
+	public List<Products> productsSelectActivatedAll();
 	
 	/**
 	 * 조건에 맞게 조회
@@ -157,7 +163,7 @@ public interface ProductService {
 	 * type 2 : LTE
 	 * type 3 : Recommendation Products
 	 * */
-	public void productsSearching(Long carrierId, Integer activationType, Long deviceId, Integer subcondition, Long officeId);
+	public List<Products> productsSearching(Long carrierId, Integer activationType, Long deviceId, Integer subcondition, Long officeId);
 	
 	
 	
@@ -181,6 +187,82 @@ public interface ProductService {
 	
 	//Recommendation table
 	
+	
+	//Installment Table
+	/**
+	 * 할부 전체 조회
+	 * */
+	public List<Installment> installmentSelectAll();
+	
+	/**
+	 * 할부 id로 조회
+	 * */
+	public Installment installmentSelectById(Long installmentId);
+	
+	//Wired Goods Table
+	/**
+	 * 유선 상품 전체조회
+	 * */
+	public List<WiredGoods> wiredGoodsSelectAll();
+	
+	/**
+	 * 활성화된 상품 전체조회
+	 * */
+	public List<WiredGoods> wiredGoodsSelectActivatedAll();
+	
+	/**
+	 * 유선 상품 id로 조회
+	 * */
+	public WiredGoods wiredGoodsSelectById(Long wiredGoodId);
+	
+	/**
+	 * 유선 상품 삽입
+	 * */
+	public void wiredGoodsInsert(WiredGoods wiredGoods);
+	
+	/**
+	 * 유선 상품 수정
+	 * */
+	public void wiredGoodsUpdate(WiredGoods wiredGoods);
+	
+	/**
+	 * 유선 상품 삭제
+	 * state를 변경
+	 * */
+	public void wiredGoodsDelete(Long wiredGoodsId);
+	
+	//Card Table
+	
+	/**
+	 * 할인 카드 전체 조회
+	 * */
+	public List<Card> cardSelectAll();
+
+	
+	/**
+	 * 활성화된 카드 전체 조회
+	 * */
+	public List<Card> cardSelectActivatedAll();
+	
+	/**
+	 * 카드 id로 조회
+	 * */
+	public Card cardSelectById(Long cardId);
+	
+	/**
+	 * 카드 삽입
+	 * */
+	public void cardInsert(Card card);
+	
+	/**
+	 * 카드 수정
+	 * */
+	public void cardUpdate(Card card);
+	
+	/**
+	 * 카드 삭제
+	 * */
+	public void cardDelete(Long cardId);
 	
 	
 }

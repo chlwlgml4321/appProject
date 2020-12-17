@@ -40,9 +40,6 @@ public class CallingPlan {
 	//선택 약정 할인
 	Integer bondDiscount;
 	
-	//카드 결합 할인
-	Integer cardDiscount;
-	
 	/**
 	 * 5G or LTE
 	 * LTE - 0

@@ -58,5 +58,29 @@ public class Application {
 	
 	Integer state;
 	
+	Integer installmentFee;
+	
+	Integer installmentPrincipal;
+	
+	Integer cash;
+	
+	Integer monthlyInstallment;
+	
+	Integer monthlyCallingFee;
+	
+	Integer finalFee;
+	
+	@ManyToOne
+	@JoinColumn(name="installmentId")
+	Installment installment;
+	
+	@ManyToOne
+	@JoinColumn(name="wiredGoodsId")
+	WiredGoods wiredGoods;
+	
+	@ManyToOne
+	@JoinColumn(name="carrierId")
+	Card card;
+	
 	
 }
