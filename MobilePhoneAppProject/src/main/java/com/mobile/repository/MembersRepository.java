@@ -12,4 +12,10 @@ public interface MembersRepository extends JpaRepository<Members, Long> {
 	//회원의 상태가 1인 회원 가져오기
 	@Query("select m from Members m where m.state=1")
 	public List<Members> findActiveMember();
+	
+	@Query("select m from Members m where m.phone = ?1")
+	public Members findByPhone(String phone);
+	
+	@Query("select m from Members m where m.phone = ?1 and m.password = ?2")
+	public Members findByPhoneAndPwd(String phone, String password);
 }

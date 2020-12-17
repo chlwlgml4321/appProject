@@ -45,15 +45,15 @@ public interface AppControllerInterface {
 	 * */
 	//member 회원 가입( 성공 시 1, 실패 시 0)
 	@RequestMapping("/app/userRegister")
-	public void userRegister(String name, String phone, Long regionId, String profileImg, String password, Integer isvisitor, Long officeId, String userContacts);
+	public void userRegister(String name, String phone, String regions, String profileImg, String password, Integer isvisitor, Long officeId, String userContacts);
 	
 	//member id로 조회
 	@RequestMapping("/app/getUser")
-	public void getUser(Long id);
+	public Members getUser(Long id);
 	
 	//member 로그인(성공 시 1 , 승인 대기중으로 인한 실패 2, 인증오류로 인한 실패 3 )
 	@RequestMapping("/app/login")
-	public String login(String phoneNumber, String password);
+	public int login(String phoneNumber, String password);
 	
 	//member 정보 수정
 	@RequestMapping("/app/userInfoUpdate")
@@ -216,6 +216,7 @@ public interface AppControllerInterface {
 	// memembers id로 리뷰 조회
 	@RequestMapping("/app/getReviewByMemberId")
 	public void getReviewByMemberId(Long memberId);
+	
 	
 	
 	

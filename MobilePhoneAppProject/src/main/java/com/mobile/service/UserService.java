@@ -53,6 +53,11 @@ public interface UserService {
 	 * */
 	public void memberChangeState(Long memberId);
 	
+	/**
+	 * 회원 로그인
+	 * */
+	int memberLogin(String phoneNumber, String password);
+	
 	//Blacklist table
 	/**
 	 * 블랙리스트 전체 조회
@@ -245,5 +250,7 @@ public interface UserService {
 	 * 사용 포인트 회원 아이디로 조회
 	 * */
 	public List<Point> pointSelectUsedPoint(Long memberId);
+
+	
 
 }

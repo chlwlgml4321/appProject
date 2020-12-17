@@ -42,7 +42,7 @@ public class Members {
 	String regions;
 	String profileImg;
 	String memberCode;
-	String paassword;
+	String password;
 	
 	
 	/**

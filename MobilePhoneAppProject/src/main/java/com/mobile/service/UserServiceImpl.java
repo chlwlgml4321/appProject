@@ -59,10 +59,34 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void memberInsert(Members member) {
 		
-		membersRepo.save(member);
+		
+		Members m = membersRepo.findByPhone(member.getPhone());
+		
+		if(m!=null) {
+			membersRepo.save(member);
+		} else {
+			System.out.println("phone number 중복");
+		}
+		
 
 	}
-
+	@Override 
+	public int memberLogin(String phone, String password) {
+		
+		
+		Members m = membersRepo.findByPhoneAndPwd(phone, password);
+		if(m==null) {
+			return 3;
+		} else {
+			if(m.getState()==1) {
+				return 1;
+			} else {
+				return 2;
+			}
+		}
+	}
+	
+	
 	@Override
 	public void memberUpdate(Members member) {
 		
@@ -85,8 +109,8 @@ public class UserServiceImpl implements UserService {
 				m.setOffice(member.getOffice());
 			}
 			
-			if(member.getPaassword()!=null) {
-				m.setPaassword(member.getPaassword());
+			if(member.getPassword()!=null) {
+				m.setPassword(member.getPassword());
 			}
 			
 			if(member.getProfileImg()!=null) {

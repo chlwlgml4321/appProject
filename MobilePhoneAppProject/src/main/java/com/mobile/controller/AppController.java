@@ -1,12 +1,20 @@
 package com.mobile.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobile.domain.Application;
 import com.mobile.domain.Members;
+import com.mobile.domain.Notice;
+import com.mobile.domain.Office;
+import com.mobile.domain.Point;
+import com.mobile.domain.Region;
 import com.mobile.domain.Review;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
@@ -23,61 +31,147 @@ public class AppController implements AppControllerInterface {
 	@Override
 	public String getAllNotice() {
 		
-		return null;
+		List<Notice> list = userService.noticeSelectAll();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public String getNoticeById(java.lang.Long noticeId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Notice notice = userService.noticeSelectById(noticeId);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(notice);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
-	public String getUserPoint(java.lang.Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUserPoint(Long memberId) {
+		
+		int pointSum = 0;
+		
+		List<Point> list = userService.pointSelectUnusedPoint(memberId);
+		
+		if(list!=null) {
+			for(Point obj : list) {
+				pointSum += obj.getPoint();
+			}
+		}
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(pointSum);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
-	public String unusedPoint(java.lang.Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String usedPoint(java.lang.Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void userRegister(String name, String phone, java.lang.Long regionId, String profileImg, String password,
-			Integer isvisitor, java.lang.Long officeId, String userContacts) {
-		// TODO Auto-generated method stub
+	public String unusedPoint(Long memberId) {
+		
+		
+		List<Point> list = userService.pointSelectUnusedPoint(memberId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 		
 	}
 
 	@Override
-	public void getUser(java.lang.Long id) {
-		// TODO Auto-generated method stub
+	public String usedPoint(Long memberId) {
+		List<Point> list = userService.pointSelectUsedPoint(memberId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public void userRegister(String name, String phone, String regions, String profileImg, String password,
+			Integer isvisitor, Long officeId, String userContacts) {
+		
+		
+		Office office = userService.officeSelectById(officeId);
+		String memberCode = "";
+		
+		Members member = new Members(null, name, phone, regions, null, memberCode, password, isvisitor, null, null, office);
+		
+		userService.memberInsert(member);
+		
 		
 	}
 
 	@Override
-	public String login(String phoneNumber, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public Members getUser(java.lang.Long id) {
+		
+		return userService.memberSelectById(id);
+		
+	}
+
+	@Override
+	public int login(String phoneNumber, String password) {
+		
+	
+		return userService.memberLogin(phoneNumber, password);
 	}
 
 	@Override
 	public void userInfoUpdate(Members members) {
-		// TODO Auto-generated method stub
 		
+		userService.memberUpdate(members);
 	}
 
 	@Override
 	public void userDropout(java.lang.Long membersId) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
