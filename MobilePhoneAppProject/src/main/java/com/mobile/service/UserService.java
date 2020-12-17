@@ -3,6 +3,7 @@ package com.mobile.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
@@ -12,6 +13,7 @@ import com.mobile.domain.Point;
 import com.mobile.domain.Region;
 import com.mobile.domain.Review;
 
+@Service
 public interface UserService {
 	
 	/***
@@ -76,6 +78,7 @@ public interface UserService {
 	 * 블랙리스트 삭제
 	 * */
 	public void blacklistDelete(Long blacklistId);
+	
 	
 	//Notice table
 	/**

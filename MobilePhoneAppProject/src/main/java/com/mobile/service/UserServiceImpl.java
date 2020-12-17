@@ -3,6 +3,7 @@ package com.mobile.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
@@ -19,15 +20,23 @@ import com.mobile.repository.PointRepository;
 import com.mobile.repository.RegionRepository;
 import com.mobile.repository.ReviewRepository;
 
+
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	MembersRepository membersRepo;
+	@Autowired
 	BlacklistRepository blackListRepo;
+	@Autowired
 	NoticeRepository noticeRepo;
+	@Autowired
 	ReviewRepository reviewRepo;
+	@Autowired
 	RegionRepository regionRepo;
+	@Autowired
 	OfficeRepository officeRepo;
+	@Autowired
 	PointRepository pointRepo;
 	
 	
