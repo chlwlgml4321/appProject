@@ -63,7 +63,7 @@
 		
 		
 		function changeState(id) {  
-		    
+		    alert(id);
 		    $.ajax({
 		        type : 'GET',
 		        url : "/changeUserSate",
@@ -118,20 +118,37 @@
         <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
+          
       </li>
       
+      
+       <!-- 블랙리스트 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="user">
+          <i class="fas fa-fw fa-table"></i>
+          <span>BlackList</span></a>
+      </li>
+      
+      <!-- 대기중인고객 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="inactiveUser">
+          <i class="fas fa-fw fa-table"></i>
+          <span>대기중인 고객</span></a>
+          
+      </li>      
 
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        상품 관리
+        공지사항
       </div>
+      
       <li class="nav-item">
-        <a class="nav-link" href="category">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>카테고리 관리</span></a>
+          <span>공지사항 보기</span></a>
       </li>
       
       <li class="nav-item">
@@ -437,57 +454,77 @@
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr>
+	                      <th>profile</th>
 	                      <th>ID</th>
+	                      <th>방문여부</th>
+	                      <th>회원코드</th>
+	                      <th>이름</th>
 	                      <th>비밀번호</th>
-	                      <th>e-mail</th>
 	                      <th>핸드폰</th>
-	                      <th>아이</th>
 	                      <th>가입일자</th>
-	                      <th>상태</th>
+	                      <th>지역</th>
+	                      
+	                      <th>지점 id</th>
+	                      <th>회원상태</td>
+	                      
 	                    </tr>
 	                  </thead>
-	                  <tfoot>
-	                    <tr>
-	                      <tr>
-	                      <th>ID</th>
-	                      <th>비밀번호</th>
-	                      <th>e-mail</th>
-	                      <th>핸드폰</th>
-	                      <th>아이</th>
-	                      <th>가입일자</th>
-	                      <th>상태</th>
-	                    </tr>
-	                  </tfoot>
+	                 
 	                  <tbody>
-	                  	<c:forEach items="${members}" var="member">
+	                  	<c:forEach items="${members}" var="members">
 	                    <tr>
-	                      <td>${member.id}</td>
-	                      <td>${member.password}</td>
-	                      <td>${member.email}</td>
-	                      <td>${member.mobile}</td>
-	                      <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td>
-	                      <td>${member.regDate}</td>
-	                      <c:choose>
-	                      	<c:when test="${member.memberState==1}">
+	                      <td>${members.profileImg}</td>
+	                      <td>${members.memberId}</td>
+	                      <td>${members.isVisitor}</td>
+	                      <td>${members.memberCode}</td>
+	                      <td>${members.name}</td>
+	                      <td>${members.password}</td>
+	                      <td>${members.phone}</td>
+	                      <td>${members.regDate}</td>
+	                      <td>${members.regions}</td>
+	  					  <td>${members.office.officeId}</td> 
+	  					 <c:choose>
+	  					 	<c:when test="${members.state==1}">
+	  					 		<td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${members.memberId}">
+                    					<span class="text">정상</span>
+                  					</a>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<td style="color: red;">
+	  					 		<a href="#" class="btn btn-warning" id= "${members.memberId}">
+                    					<span class="text">탈퇴</span>
+                  					</a>
+	  					 	</c:otherwise>
+	  					 </c:choose>
+	  					 
+	                     
+	                     
+	                      <%--  <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td> --%> 
+	                   
+	                     <%--  <c:choose>
+	                      	<c:when test="${members.state==1}">
 	                      		<td style="color: green;">
 	                      		
-	                      			<a href="#" class="btn btn-success" id="${member.id}">
-                    					<span class="text">정상</span>
+	                      			<a href="#" class="btn btn-success" id="${members.memberId}">
+                    					<span class="text">추가</span>
                   					</a>
 	                      		</td>
 	                      	</c:when>
 	                      	
 	                      	<c:otherwise>
 	                      		<td style="color: red;">
-	                	      		<a href="#" class="btn btn-warning" id= "${member.id}">
-                    					<span class="text">탈퇴</span>
+	                	      		<a href="#" class="btn btn-warning" id= "${members.memberId}">
+                    					<span class="text">블랙리스트</span>
                   					</a>
 	                      		</td>
 	                      	</c:otherwise>
 	                      
-	                      </c:choose>
+	                      </c:choose> --%>
 	                    </tr>
 	                    </c:forEach>
+	                   
 	                  </tbody>
 	                </table>
 	                </c:otherwise>

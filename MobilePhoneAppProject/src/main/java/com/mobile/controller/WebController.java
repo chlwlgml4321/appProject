@@ -23,6 +23,7 @@ public class WebController {
 	private UserService userService;
 	
 	
+	
 	//index
 	@RequestMapping("/index")
 	public String index() {
@@ -35,18 +36,30 @@ public class WebController {
 	//멤버 전체보기 
 	@RequestMapping("/user")
 	public String user(Model model) {
-		List<Members> members = userService.memberSelectAll();
+		List<Members> members = userService.mamberSelectActivatedAll();
 		
 		model.addAttribute("members", members);
 		
 		return "/admin/user";
 	}
+	
+	
+	//승인대기중인 멤버 보기 
+	@RequestMapping("/inactiveUser")
+	public String inactiveUser(Model model) {
+		System.out.println("wlsdlq");
+		List<Members> members = userService.mamberSelectInactivatedAll();
+		model.addAttribute("members",members);
+		
+		return "/admin/inactiveUser";
+	}
+			
 
 	
 	@RequestMapping("/memberInsert")
 	public String memberInsert() {
 		
-		Members member= new Members(null, "최지희", "01065534732", "용인시", null,"ABCD", "byeluv", 1, 0, null, null);
+		Members member= new Members(null, "이하", "01065534732", "강릉", null,"ABCD", "byeluv", 1, 2, null, null);
 		
 		userService.memberInsert(member);
 		return null;
@@ -70,17 +83,49 @@ public class WebController {
 		return ""; 
 	}
 	
-	//공지사항 작성 폼 
-	@RequestMapping("/noticeRegister")
+	//멤버 active 시키기
+	@RequestMapping("/changeActive")
+	@ResponseBody
+	public String changeActive(Long id) {
+		Members member = new Members();
+		member.setMemberId(id);
+		
+		userService.memberStateAvtice(id);
+		
+		return "";
+	}
+	
+	//공지사항 작성 폼으로 가기  
+	@RequestMapping("/admin/noticeRegister")
 	public void noticeForm() {
+		
+		
 		
 	}
 	
-	@RequestMapping("/noticeInsert")
-	public String noticeInsert(Notice notice) {
+	//공지사항 insert
+	@RequestMapping("/noticeRegister")
+	public String registerNotice(Notice notice, Model model) {
+		System.out.println("진입");
+		System.out.println(notice.getTitle());
+		System.out.println(notice.getContents());
 		
+		List<Notice> notices =userService.noticeSelectAll();
+		model.addAttribute("notice", notices);
 		
 		userService.noticeInsert(notice);
+		
+
+		return "redirect:/notice";
+	}
+	
+	
+	//수정페이지로 이동 
+	@RequestMapping("/noticeInsert")
+	public String noticeInsert(Notice notice) {
+		System.out.println("##insert");
+		
+		//userService.noticeInsert(notice);
 		
 		return "/admin/noticeInsert";
 		
@@ -118,18 +163,21 @@ public class WebController {
 		Notice notice = new Notice();
 		notice.setNoticeId(id);
 		userService.noticeDelete(id);
-		return "";
+		return "redirect:/notice";
 	}
 	
 	
-	
 	//notice 수정하기 
-	@RequestMapping("/updateNotice")
-	public String noticeUpdate(Notice notice) {
-		System.out.println("들어옴");
+	@RequestMapping("/noticeUpdate")
+	public String noticeUpdate( Notice notice) {
+		
+		System.out.println("title: "+ notice.getTitle());
+
+		System.out.println("id: "+notice.getNoticeId());
+		System.out.println("id: "+notice.getContents());
 		userService.noticeUpdate(notice);
 		
-		return "redirect:/updateNotice?id="+notice.getNoticeId();
+		return "/admin/noticeInsert";
 	}
 	
 	

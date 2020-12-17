@@ -33,6 +33,11 @@ public interface UserService {
 	public List<Members> mamberSelectActivatedAll();
 	
 	/**
+	 * 비활성화된 회원 전체 조회
+	 * */
+	public List<Members> mamberSelectInactivatedAll();
+	
+	/**
 	 * 회원 조회
 	 * */
 	public Members memberSelectById(Long memberId);
@@ -52,6 +57,12 @@ public interface UserService {
 	 * 회원 상태 변경하기
 	 * */
 	public void memberChangeState(Long memberId);
+	
+	
+	/**
+	 * 회원 상태 2에서 1로 변경하기 
+	 */
+	public void memberStateAvtice(Long memberId);
 	
 	/**
 	 * 회원 로그인

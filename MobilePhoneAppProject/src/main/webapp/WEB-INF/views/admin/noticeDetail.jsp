@@ -29,6 +29,17 @@
 	
 	
 <script type="text/javascript">
+$(document).ready(function(){
+		$("#updateNotice").click(function(){
+			$("#updateForm").submit();
+			
+		});
+		
+	});
+
+		
+
+
 
 </script>	
 </head>
@@ -53,7 +64,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -67,10 +78,19 @@
       </div>
 
       <!-- 유저 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
+          
+      </li>
+      
+      
+       <!-- 블랙리스트 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="user">
+          <i class="fas fa-fw fa-table"></i>
+          <span>BlackList</span></a>
       </li>
       
 
@@ -79,12 +99,13 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        상품 관리
+        공지사항
       </div>
-      <li class="nav-item active">
-        <a class="nav-link" href="category">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>카테고리 관리</span></a>
+          <span>공지사항 보기</span></a>
       </li>
       
       <li class="nav-item">
@@ -369,67 +390,75 @@
         </nav>
         <!-- End of Topbar -->
 
-<!-- Begin Page Content -->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">${product.productNo}번 상품 정보</h1>
+          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+             <div class="col-lg-12">
+
+              <!-- Roitation Utilities -->
+              
+              <div class="card">
+             
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate}2020년 12월 17일 </h6>
+                </div>
+                <div class="card-body text-left">
+                ${notice.contents}
+               
+                </div>
+             
+              </div>
+
+            </div>
+            
+            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
+				<input type="hidden" name="title" value ="${notice.title}">
+				<input type="hidden" name="contents" value="${notice.contents}">
+			</form>
+
+				 <div class="form-group col-md-2" >
+			   <button type="submit" id="updateNotice" class="btn btn-primary">
+			   수정</button>
+			  </div>
+			 
+            </div>
+				
+				
+				
+				
+				
+				
+				
+				
+			<!-- <table >
+				<tr>
+				<td>
+				<input type="submit" value="수정하기" style="text-align: center;">
+				</td>
+				</tr>
+			</table> -->
+							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
+				<input type="hidden" name="title" value ="${notice.title}">
+				<input type="hidden" name="content" value="${notice.content}">
+			</form> --%>
+			
+             
+             
           </div>
 
-            
-			   <form action="${pageCotext.request.contextPath}/admin/categoryUpdate" method="post">
-			  <div>
-		  		<input type="hidden" name = "categoryNo" value="${category.categoryNo}">
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">상품 이름</label>
-			      <input type="text" class="form-control" id="inputEmail4" value="${product.productName}" placeholder="${category.categoryName}" name="productName">
-			    </div>
-			    
-			    <input type="hidden" name = "categoryNo" value="${category.categoryNo}">
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">상품 등록일</label>
-			      <input type="text" class="form-control" id="inputEmail4" value="${product.regDate}" placeholder="${category.categoryName}" name="productName">
-			    </div>
-			    
-			    <input type="hidden" name = "categoryNo" value="${product.category.categoryNo}">
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">카테고리</label>
-			      <input type="text" class="form-control" id="inputEmail4" value="${product.category.categoryName}" placeholder="${category.categoryName}" name="productName">
-			    </div>
-			    
-			    <input type="hidden" name = "categoryNo" value="${product.productDetail.descriptions}">
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">상품 설명</label>
-			      <input type="text" class="form-control" id="inputEmail4" value="${product.productDetail.descriptions}" placeholder="${product.productDetail.descriptions}" name="descriptions">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">상품 이미지</label>
-			      <input type="text" class="form-control" id="inputEmail4" value="${product.productDetail.image1}" placeholder="" name="image1">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputState">옵션</label>
-			      
-				
-			        	<c:forEach items="${product.options}" var="option">
-			        		<input type="text" class="form-control inputOption" value="${option.optionName}" placeholder="value=${option.optionName}" name="productName" readonly>
-				    	</c:forEach>
-				    	<input type="text" class="form-control" value="${option.optionName}"  name="productName">
-			    
-			    </div> 
-			    
-			  </div>
-			  
-			  <div class="form-group col-md-2" >
-			   <button type="submit" class="btn btn-primary">수정</button>
-			  </div>
-			  </form>
-			
+        </div>
+        <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
-
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

@@ -49,6 +49,11 @@ public class UserServiceImpl implements UserService {
 	public List<Members> mamberSelectActivatedAll() {
 		return membersRepo.findActiveMember();
 	}
+	
+	@Override
+	public List<Members> mamberSelectInactivatedAll() {
+		return membersRepo.findInactiveMember();
+	}
 
 	@Override
 	public Members memberSelectById(Long memberId) {
@@ -142,6 +147,22 @@ public class UserServiceImpl implements UserService {
 			}
 			membersRepo.save(member);
 		}
+	}
+	
+	@Override
+	public void memberStateAvtice(Long memberId) {
+		Members member = membersRepo.findById(memberId).orElse(null);
+		int state;
+		
+		if(member !=null) {
+			state= member.getState();
+			
+			if(state==2) {
+				member.setState(1);
+			}
+			membersRepo.save(member);
+		}
+		
 	}
 
 	@Override

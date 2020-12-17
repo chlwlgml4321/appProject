@@ -10,8 +10,12 @@ import com.mobile.domain.Members;
 public interface MembersRepository extends JpaRepository<Members, Long> {
 
 	//회원의 상태가 1인 회원 가져오기
-	@Query("select m from Members m where m.state=1")
+	@Query("select m from Members m where m.state=1 or m.state=0")
 	public List<Members> findActiveMember();
+	
+	//회원의 상태가 2인 회원 가져오기
+	@Query("select m from Members m where m.state=2")
+	public List<Members> findInactiveMember();
 	
 	@Query("select m from Members m where m.phone = ?1")
 	public Members findByPhone(String phone);
