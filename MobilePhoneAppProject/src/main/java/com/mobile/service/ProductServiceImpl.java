@@ -279,6 +279,12 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 
 	}
+	
+	@Override
+	public List<Products> productFindReccomendaion(){
+		
+		return null;
+	}
 
 	@Override
 	public void productInsert(Products product) {
@@ -395,6 +401,11 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	}
 
+	@Override
+	public List<Card> cardSelectByCarrierId(Long carrierId){
+		return null;
+	}
+	
 	@Override
 	public Card cardSelectById(Long cardId) {
 		

@@ -139,7 +139,7 @@ public interface AppControllerInterface {
 	
 	// 특가 상품을 조건에 맞게 검색(통신사, 기기변경, 모델명, 네트워크 타입), 지점
 	@RequestMapping("/app/productSearch")
-	public String productSearch(Long carrierId, Integer activtaionType, Long deviceId, Long officeId);
+	public String productSearch(Long carrierId, Integer activtaionType, Long deviceId, Long officeId, int subcpndition);
 	
 	//추천 특가 상품 조회
 	@RequestMapping("/app/getReccomendationProduct")
@@ -211,11 +211,11 @@ public interface AppControllerInterface {
 	
 	// 전체 리뷰 조회
 	@RequestMapping("/app/getAllReview")
-	public void getAllReview();
+	public String getAllReview();
 	
 	// memembers id로 리뷰 조회
 	@RequestMapping("/app/getReviewByMemberId")
-	public void getReviewByMemberId(Long memberId);
+	public String getReviewByMemberId(Long memberId);
 	
 	
 	

@@ -263,6 +263,10 @@ public interface ProductService {
 	 * 카드 삭제
 	 * */
 	public void cardDelete(Long cardId);
+
+	List<Products> productFindReccomendaion();
+
+	List<Card> cardSelectByCarrierId(Long carrierId);
 	
 	
 }

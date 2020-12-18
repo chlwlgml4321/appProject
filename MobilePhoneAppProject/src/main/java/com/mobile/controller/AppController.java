@@ -10,12 +10,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobile.domain.Application;
+import com.mobile.domain.CallingPlan;
+import com.mobile.domain.Card;
+import com.mobile.domain.Carrier;
+import com.mobile.domain.Device;
+import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
 import com.mobile.domain.Point;
+import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.Review;
+import com.mobile.domain.WiredGoods;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
 
@@ -29,6 +36,8 @@ public class AppController implements AppControllerInterface {
 	private ProductService productService;
 
 	@Override
+	@ResponseBody
+	@RequestMapping("/app/getAllNotice")
 	public String getAllNotice() {
 		
 		List<Notice> list = userService.noticeSelectAll();
@@ -47,6 +56,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/getNoticeById")
+	@ResponseBody
 	public String getNoticeById(java.lang.Long noticeId) {
 
 		Notice notice = userService.noticeSelectById(noticeId);
@@ -65,6 +76,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/getUserPoint")
+	@ResponseBody
 	public String getUserPoint(Long memberId) {
 		
 		int pointSum = 0;
@@ -93,6 +106,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/unusedPoint")
+	@ResponseBody
 	public String unusedPoint(Long memberId) {
 		
 		
@@ -115,6 +130,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/usedPoint")
+	@ResponseBody
 	public String usedPoint(Long memberId) {
 		List<Point> list = userService.pointSelectUsedPoint(memberId);
 		
@@ -134,6 +151,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/userRegister")
+	@ResponseBody
 	public void userRegister(String name, String phone, String regions, String profileImg, String password,
 			Integer isvisitor, Long officeId, String userContacts) {
 		
@@ -149,6 +168,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/getUser")
+	@ResponseBody
 	public Members getUser(java.lang.Long id) {
 		
 		return userService.memberSelectById(id);
@@ -163,196 +184,645 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/userInfoUpdate")
+	@ResponseBody
 	public void userInfoUpdate(Members members) {
 		
 		userService.memberUpdate(members);
 	}
 
 	@Override
+	@RequestMapping("/app/userDropout")
+	@ResponseBody
 	public void userDropout(java.lang.Long membersId) {
 		
 		
 		
+		
 	}
 
 	@Override
+	@RequestMapping("/app/getAllCarrier")
+	@ResponseBody
 	public String getAllCarrier() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Carrier> list = productService.carrierSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getCarrier")
+	@ResponseBody
 	public String getCarrier(java.lang.Long carrierId) {
-		// TODO Auto-generated method stub
-		return null;
+		Carrier carrier = productService.carrierSelectById(carrierId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(carrier);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
 	}
 
 	@Override
+	@RequestMapping("/app/getAllCallingPlan")
+	@ResponseBody
 	public String getAllCallingPlan() {
-		// TODO Auto-generated method stub
-		return null;
+		List<CallingPlan> list = productService.callingPlanSelectActivatedAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getCallingPlan")
+	@ResponseBody
 	public String getCallingPlan(java.lang.Long callingPlanId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		CallingPlan callinPlan = productService.callingPlanSelectById(callingPlanId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(callinPlan);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getCallingPlanByCarrierId")
+	@ResponseBody
 	public String getCallingPlanByCarrierId(java.lang.Long carrierId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<CallingPlan> list = productService.callingPlanSelectByCarrierId(carrierId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllRegion")
+	@ResponseBody
 	public String getAllRegion() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Region> list = userService.regionSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getRegion")
+	@ResponseBody
 	public String getRegion(java.lang.Long regionId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Region region = userService.regionSelectById(regionId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(region);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllOffice")
+	@ResponseBody
 	public String getAllOffice() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Office> list = userService.officeSelectActivatedAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getOffice")
+	@ResponseBody
 	public String getOffice(java.lang.Long officeId) {
-		// TODO Auto-generated method stub
-		return null;
+		Office office = userService.officeSelectById(officeId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(office);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getOfficeByRegionId")
+	@ResponseBody
 	public String getOfficeByRegionId(java.lang.Long regionId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Office> list = userService.officeSelectByRegionId(regionId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllDevice")
+	@ResponseBody
 	public String getAllDevice() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Device> list = productService.deviceSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getDevice")
+	@ResponseBody
 	public String getDevice(java.lang.Long deviceId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Device device = productService.deviceSelectById(deviceId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(device);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllProduct")
+	@ResponseBody
 	public String getAllProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Products> list = productService.productsSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
 	}
 
 	@Override
+	@RequestMapping("/app/getProduct")
+	@ResponseBody
 	public String getProduct(java.lang.Long productId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Products product = productService.productsSelectById(productId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(product);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/productSearch")
+	@ResponseBody
 	public String productSearch(java.lang.Long carrierId, Integer activtaionType, java.lang.Long deviceId,
-			java.lang.Long officeId) {
-		// TODO Auto-generated method stub
-		return null;
+			java.lang.Long officeId, int subcondition) {
+		List<Products> list = productService.productsSearching(carrierId, activtaionType, deviceId, subcondition, officeId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getReccomendationProduct")
+	@ResponseBody
 	public String getReccomendationProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Products> list = productService.productFindReccomendaion();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/addApplication")
+	@ResponseBody
 	public void addApplication(Application application) {
-		// TODO Auto-generated method stub
+		
+		productService.applicationInsert(application);
 		
 	}
 
 	@Override
+	@RequestMapping("/app/getApplicationByUserId")
+	@ResponseBody
 	public String getApplicationByUserId(java.lang.Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		
+		List<Application> list = productService.applicationSelectByMemberId(userId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getApplication")
+	@ResponseBody
 	public String getApplication(java.lang.Long applicationId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Application application = productService.applicationSelectById(applicationId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(application);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllApplication")
+	@ResponseBody
 	public String getAllApplication() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Application> list = productService.applicationSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllInstallment")
+	@ResponseBody
 	public String getAllInstallment() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Installment> list = productService.installmentSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getInstallment")
+	@ResponseBody
 	public String getInstallment(java.lang.Long InstallmentId) {
-		// TODO Auto-generated method stub
-		return null;
+		Installment installment = productService.installmentSelectById(InstallmentId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(installment);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllWiredGoods")
+	@ResponseBody
 	public String getAllWiredGoods() {
-		// TODO Auto-generated method stub
-		return null;
+		List<WiredGoods> list = productService.wiredGoodsSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getWiredGoods")
+	@ResponseBody
 	public String getWiredGoods(java.lang.Long wiredGoodsId) {
-		// TODO Auto-generated method stub
-		return null;
+		WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(wiredGoods);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getAllCard")
+	@ResponseBody
 	public String getAllCard() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Card> list = productService.cardSelectActivatedAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getCardId")
+	@ResponseBody
 	public String getCardId(java.lang.Long cardId) {
-		// TODO Auto-generated method stub
-		return null;
+		Card card = productService.cardSelectById(cardId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(card);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/getCardByCarrierId")
+	@ResponseBody
 	public String getCardByCarrierId(java.lang.Long carrierId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Card> list = productService.cardSelectByCarrierId(carrierId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
+	@RequestMapping("/app/registerReview")
+	@ResponseBody
 	public void registerReview(Review review) {
-		// TODO Auto-generated method stub
+		userService.reviewInsert(review);
 		
 	}
 
 	@Override
-	public void getAllReview() {
-		// TODO Auto-generated method stub
+	@RequestMapping("/app/getAllReview")
+	@ResponseBody
+	public String getAllReview() {
+		List<Review> list = userService.reviewSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 		
 	}
 
 	@Override
-	public void getReviewByMemberId(java.lang.Long memberId) {
-		// TODO Auto-generated method stub
+	@RequestMapping("/app/getReviewByMemberId")
+	@ResponseBody
+	public String getReviewByMemberId(java.lang.Long memberId) {
+		
+		List<Review> list = userService.reviewSelectByMemberId(memberId);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 		
 	}
 	
