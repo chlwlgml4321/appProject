@@ -37,13 +37,33 @@
 
 <script type="text/javascript">
 	
+	
 $(document).ready(function(){
+	
 	$("#registerNotice").click(function(){
 		$("#registerForm").submit();
 		
 	});
 	
-});
+	// textarea 체크
+	$('.contentstext').keyup(function (e){
+	    var content = $(this).val();
+	    $('#counter').html("("+content.length+" / 최대 500자)");    //글자수 실시간 카운팅
+
+	    if (content.length > 500){
+	        alert("최대 500자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 500));
+	        $('#counter').html("(500 / 최대 500자)");
+	    }
+	});
+
+		
+	});
+
+	
+	
+	
+
 </script>
 </head>
 <body id="page-top">
@@ -79,17 +99,56 @@ $(document).ready(function(){
 			<!-- Heading -->
 			<div class="sidebar-heading">유저 관리</div>
 
-			<!-- 유저 관리 -->
-			<li class="nav-item  active"><a class="nav-link" href="user">
-					<i class="fas fa-fw fa-table"></i> <span>Users</span>
-			</a></li>
+			 <!-- 유저 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Users</span></a>
+          
+      </li>
+      
+      
+       <!-- 블랙리스트 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+          <i class="fas fa-fw fa-table"></i>
+          <span>BlackList</span></a>
+      </li>
+      
+      <!-- 대기중인고객 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+          <i class="fas fa-fw fa-table"></i>
+          <span>대기중인 고객</span></a>
+          
+      </li> 
 
 
-			<!-- 블랙리스트 관리 -->
-			<li class="nav-item  active"><a class="nav-link" href="user">
-					<i class="fas fa-fw fa-table"></i> <span>BlackList</span>
-			</a></li>
 
+ <!-- 지역 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        Region 관리
+      </div>
+
+      <!-- 지역 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Region</span></a>
+          
+      </li>
+      
+      
+      <!-- 지역 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+          <i class="fas fa-fw fa-table"></i>
+          <span>지역 등록</span></a>
+          
+      </li>  
 
 			<!-- 상품 관리 Divider -->
 			<hr class="sidebar-divider">
@@ -97,7 +156,7 @@ $(document).ready(function(){
 			<!-- Heading -->
 			<div class="sidebar-heading">공지사항</div>
 
-			<li class="nav-item"><a class="nav-link" href="notice"> <i
+			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/notice"> <i
 					class="fas fa-fw fa-table"></i> <span>공지사항 보기</span></a></li>
 
 			<li class="nav-item"><a class="nav-link" href="product"> <i
@@ -383,13 +442,16 @@ $(document).ready(function(){
 										
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">
-												<input type="text" name="title" >
+												<input type="text"  name="title" placeholder="제목을 입력하세요." style="width:500px; height:40px";>
 											</h6>
 											<h6 class="mb-1 small"></h6>
 										</div>
 										<div class="card-body text-left">
-										<textarea name="contents" cols="50" rows="13"></textarea>
+										<textarea name="contents" class="contentstext" placeholder="내용을 입력하세요. " cols="100" rows="30"></textarea>
+										</br>
+										<span style="color:#aaa;" id="counter">(0 / 최대 500자)</span>
 										</div>
+										
 										
 										<div class="form-group col-md-2" >
 			   							<button type="submit" id="registerNotice" class="btn btn-primary">

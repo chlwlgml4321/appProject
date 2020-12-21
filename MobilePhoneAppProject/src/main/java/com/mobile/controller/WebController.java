@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
+import com.mobile.domain.Region;
 import com.mobile.service.UserService;
 
 
@@ -180,5 +181,77 @@ public class WebController {
 		return "/admin/noticeInsert";
 	}
 	
+	
+	//regionInsert 들어가기 
+	@RequestMapping("/regionInsert")
+	public String regionInsert() {
+		return "/admin/regionInsert";
+	}
+	
+	
+	
+	//regionInsert
+	@RequestMapping("/regionForm")
+	public String regionForm(Region region, Model model) {
+		System.out.println("##regionInsert");
+		System.out.println(region.getRegionName());
+		System.out.println(region.getRegionId());
+		
+		List<Region> regions= userService.regionSelectAll();
+		model.addAttribute("region", regions);
+		userService.regionInsert(region);
+		
+		return "redirect:/region";
+	}
+	
+	
+	//지역 전체보기
+		@RequestMapping("/region")
+		public String region(Model model) {
+			
+			List<Region> region= userService.regionSelectAll();
+			
+			model.addAttribute("region", region);
+			
+			return "/admin/region";
+			
+		}
+		
+		//region 글지우기 
+		@RequestMapping("/deleteRegion")
+		@ResponseBody
+		public String deleteRegion(Long id) {
+			
+			System.out.println("id 진입 "+id );
+			Region region = new Region();
+			region.setRegionId(id);
+			userService.regionDelete(id);
+			return "redirect:/region";
+		}
+		
+		//region 디테일
+		@RequestMapping("/regionDetail/{regionId}")
+		public ModelAndView regionDetail(@PathVariable Long regionId) {
+		
+			Region region = userService.regionSelectById(regionId);
+			System.out.println("regionDetail 진입");
+			System.out.println(regionId);
+			return new ModelAndView("admin/regionUpdate","region", region);
+		}
+		
+		
+		//region 수정하기 
+		@RequestMapping("/regionUpdate")
+		public String regionUpdate(Region region, Model model) {
+			
+			System.out.println(region.getRegionName());
+			userService.regionUpdate(region);
+
+			List<Region> regions= userService.regionSelectAll();
+			
+			model.addAttribute("region", regions);
+			
+			return "/admin/region";
+		}
 	
 }
