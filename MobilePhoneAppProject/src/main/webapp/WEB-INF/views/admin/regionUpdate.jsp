@@ -426,7 +426,7 @@ $(document).ready(function(){
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            지점 등록하기</h1>
+            지역 등록하기</h1>
           </div>
 
             
@@ -438,23 +438,12 @@ $(document).ready(function(){
 			      <input type="text" class="form-control" value="${region.regionName}" name="regionName">
 			      <input type='hidden' name='regionId' value="${region.regionId}">
 			    </div>
-			    
-			    
-			    <div>
-			   <%--  <div class="form-group col-md-2">
-			      <label for="inputEmail4">카테고리</label>
-			      <select id="categoryNo" class="form-control" name="categoryNo">
-			       <c:forEach items="${category}" var="cate">
-					<option value="${cate.categoryNo}">${cate.categoryName}</option>
-				   </c:forEach>
-			      </select>
-			    </div> --%>
-			</div>
 			  </div>
 			  
 			  <div class="form-group col-md-2" >
 			 
 			  <button type="submit" id="registerRegion" class="btn btn-primary">등록</button>
+			  
 			  </div>
 			  </form>
 			

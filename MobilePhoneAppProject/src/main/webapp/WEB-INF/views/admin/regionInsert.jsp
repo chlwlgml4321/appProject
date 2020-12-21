@@ -438,17 +438,7 @@ $(document).ready(function(){
 			      <input type="text" class="form-control" name="regionName">
 			    </div>
 			    
-			    
-			    <div>
-			   <%--  <div class="form-group col-md-2">
-			      <label for="inputEmail4">카테고리</label>
-			      <select id="categoryNo" class="form-control" name="categoryNo">
-			       <c:forEach items="${category}" var="cate">
-					<option value="${cate.categoryNo}">${cate.categoryName}</option>
-				   </c:forEach>
-			      </select>
-			    </div> --%>
-			</div>
+		
 			  </div>
 			  
 			  <div class="form-group col-md-2" >

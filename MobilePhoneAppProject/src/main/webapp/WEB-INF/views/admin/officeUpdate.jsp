@@ -30,12 +30,49 @@
 	
 <script type="text/javascript">
 
-$(document).ready(function(){
+
 	
-	$("#registerOffice").click(function(){
-		$("#officeForm").submit();
+	$(document).ready(function(){
 		
-	});
+		$("#registerOffice").click(function(){
+			$("#officeForm").submit();
+			
+		});
+		
+		$(".btn").click(function(){
+			if($(this).attr("class") == "btn btn-success"){
+				
+				
+				var result = confirm('지점을 삭제하시겠습니까? ');
+						
+				if(result){
+					
+					$(this).attr("class","btn btn-warning");
+					$(this).children().text("삭제됨");
+					
+					deleteOffice($(this).attr("id"));
+					
+					
+				}
+			} 
+			
+			
+		});
+
+			function deleteOffice(id) {  
+			    alert(id);
+			    $.ajax({
+			        type : 'GET',
+			        url : "/deleteOffice",
+			        data : {"id" : id},
+			        success : function (data) {
+			        	 location.reload();             
+			        }
+
+			    });
+			   
+			}
+			
 });
 	
 </script>	
@@ -69,9 +106,6 @@ $(document).ready(function(){
       <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
-     <!-- 유저관리 Divider -->
-      <hr class="sidebar-divider">
-
       <!-- Heading -->
       <div class="sidebar-heading">
         유저 관리
@@ -103,6 +137,7 @@ $(document).ready(function(){
       </li>  
       
 
+
  <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
@@ -113,7 +148,7 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="region">
+        <a class="nav-link" href="${pageContext.request.contextPath}/region">
           <i class="fas fa-fw fa-table"></i>
           <span>Region</span></a>
           
@@ -122,24 +157,23 @@ $(document).ready(function(){
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="regionInsert">
+        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li> 
-      
-
+      </li>  
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        상품 관리
+        공지사항
       </div>
-      <li class="nav-item active">
-        <a class="nav-link" href="category">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>카테고리 관리</span></a>
+          <span>공지사항 보기</span></a>
       </li>
       
       <li class="nav-item">
@@ -432,50 +466,39 @@ $(document).ready(function(){
             지점 등록하기</h1>
           </div>
 
-            
-			   <form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeForm" >
-			  <div>
-		  		
-		  		 <input type='hidden' name='officeId' value="${office.officeId}">
-		  		 
-				<div class="form-group col-md-2">
-			      <label for="inputState">지역</label>
-			      <select id="regionId" class="form-control" name="regionId">
-			      <option selected>지역 선택</option>
-			        		<c:forEach items="${region}" var="reg">
-							<option value="${reg.regionId}">${reg.regionName}</option>
-				   </c:forEach>
-			      </select>
-			    </div>
-			    
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">지점 이름</label>
-			      <input type="text" class="form-control" id="officeName" name="officeName">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">전화번호</label>
-			      <input type="text" class="form-control" id="tel" name="tel">
-			    </div>
-			
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">지점 주소</label>
-			      <input type="text" class="form-control" id="address"  placeholder=" " name="address">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">code</label>
-			      <input type="text" class="form-control" id="code"  placeholder="" name="code">
-			    </div>
-			    
-			  </div>
+			   	<form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeUpdate/${office.officeId}" >
+			  		<div>
 			  
-			  <div class="form-group col-md-2" >
-			   <button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
-			  </div>
-			  </form>
+			  		<input type='hidden' name='regionId' value="${office.officeId}">
+		  		
+			    	<div class="form-group col-md-2">
+			      		<label for="inputEmail4">지점 이름</label>
+			      		<input type="text" class="form-control" value="${office.officeName}" name="officeName">
+			    	</div>
+			    	   
+			     	<div class="form-group col-md-2">
+			      		<label for="inputEmail4">지점 주소</label>
+			      		<input type="text" class="form-control" value="${office.address}" name="address">
+			     	</div>
+			    
+			    	<div class="form-group col-md-2">
+			      		<label for="inputEmail4">지점 코드</label>
+			      		<input type="text" class="form-control" value="${office.code}" name="code">
+			    	</div>
+			    
+			    	<div class="form-group col-md-2">
+			      		<label for="inputEmail4">전화번호</label>
+			      		<input type="text" class="form-control" value="${office.tel}" name="tel">
+			    	</div>
+			 
+			  		<div class="form-group col-md-2" >
+			  		<button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
+			  		<%-- <button type="submit" id="${office.officeId}" class="btn btn-success">삭제</button> --%>
+			  		
+			  		</div>
+			  		</div>
+			  	</form>
+			  
 			
       </div>
       <!-- End of Main Content -->

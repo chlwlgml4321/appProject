@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
+import com.mobile.domain.Office;
 import com.mobile.domain.Region;
 import com.mobile.service.UserService;
 
@@ -253,5 +254,98 @@ public class WebController {
 			
 			return "/admin/region";
 		}
+		
+
+		@RequestMapping("/officeRegister")
+		public String register(Model model) {
+			
+			List<Region> region= userService.regionSelectAll();
+			model.addAttribute("region",region);
+			return "/admin/officeRegister";
+			
+		}
+
 	
+		@RequestMapping("/officeForm")
+		public String officeForm(Office office, Model model, Long regionId) {
+			System.out.println("##officeInsert");
+			System.out.println("id: "+office.getOfficeId());
+			System.out.println(office.getAddress());
+			System.out.println(office.getOfficeName());
+			System.out.println("code: "+ office.getCode());
+			System.out.println(office.getTel());
+			
+			List<Office> offices = userService.officeSelectAll();
+			
+			model.addAttribute("office", offices);
+			
+			Region region= userService.regionSelectById(regionId);
+			office.setRegion(region);
+			userService.officeInsert(office);
+			return "redirect:/office";
+			
+		}
+		
+		//office selectALL
+		@RequestMapping("/office")
+		public String office(Model model) {
+			
+			List<Office> office = userService.officeSelectAll();
+			model.addAttribute("office", office);
+			
+			return "/admin/office";
+		}
+		
+	
+		
+		//officeState 바꾸기 
+		@RequestMapping("/changeOfficeState")
+		@ResponseBody
+		public String changeOfficeState(Long id) {
+			
+			Office office= new Office();
+			office.setOfficeId(id);
+			userService.officeChangeState(id);
+			return "";
+		}
+		
+		//office 디테일
+		@RequestMapping("/officeDetail/{officeId}")
+		public ModelAndView officeDetail(@PathVariable Long officeId) {
+				
+			Office office = userService.officeSelectById(officeId);
+			System.out.println("officeDetail 진입");
+			System.out.println(officeId);
+			return new ModelAndView("admin/officeUpdate","office", office);
+		}
+		
+		
+		//region 수정하기 
+		@RequestMapping("/officeUpdate/{officeId}")
+		public String officeUpdate(@PathVariable Long officeId, Office office, Model model) {
+			System.out.println("##officeUpdate");
+			System.out.println(office.getOfficeId());
+			System.out.println(office.getAddress());
+			System.out.println(office.getOfficeName());
+			userService.officeUpdate(office);
+			List<Office> offices= userService.officeSelectAll();
+					
+			model.addAttribute("office", offices);
+					
+			return "/admin/office";
+		}
+		
+		
+//		//office 글지우기 
+//		@RequestMapping("/deleteRegion")
+//		@ResponseBody
+//		public String deleteOffice(Long id) {
+//					
+//			System.out.println("id 진입 "+id );
+//			Office office = new Office();
+//			offfice.setOfficeId(id);
+//			userService.regionDelete(id);
+//			return "redirect:/region";
+//		}
+		
 }

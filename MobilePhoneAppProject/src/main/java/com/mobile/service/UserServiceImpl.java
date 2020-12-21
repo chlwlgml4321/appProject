@@ -405,11 +405,14 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	public void officeChangeState(Long officeId, Integer state) {
+	public void officeChangeState(Long officeId) {
 		
 		Office o =officeRepo.findById(officeId).orElse(null);
+		int state;
 		
 		if(o !=null) {
+			state = o.getState();
+			
 			if(state ==0) {
 				o.setState(1);
 			} else {

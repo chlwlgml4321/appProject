@@ -29,15 +29,55 @@
 	
 	
 <script type="text/javascript">
-
 $(document).ready(function(){
-	
-	$("#registerOffice").click(function(){
-		$("#officeForm").submit();
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
+			
+			
+			var result = confirm('지점 상태를 비활성화 시키겠습니까?');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("비활성화");
+				
+				changeOfficeState($(this).attr("id"));
+				
+				
+			}
+		} else if(($(this).attr("class") == "btn btn-warning")){
+			var result = confirm('지점 상태를 활성화 시키겠습니까?');
+			if(result){
+				
+				
+				
+				$(this).attr("class","btn btn-success");
+				$(this).children().text("활성화");
+				
+				changeOfficeState($(this).attr("id"));
+			}
+		}
+		
 		
 	});
-});
 	
+	
+	function changeOfficeState(id) {  
+	    alert(id);
+	    $.ajax({
+	        type : 'GET',
+	        url : "/changeOfficeState",
+	        data : {"id" : id},
+	        success : function (data) {
+	                         
+	        }
+
+	    });
+	}
+	
+});
+
+
 </script>	
 </head>
 <body id="page-top">
@@ -61,15 +101,12 @@ $(document).ready(function(){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
 
       <!-- 유저관리 Divider -->
-      <hr class="sidebar-divider">
-
-     <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
@@ -102,8 +139,8 @@ $(document).ready(function(){
           
       </li>  
       
-
- <!-- 지역 관리 Divider -->
+      
+       <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -126,33 +163,22 @@ $(document).ready(function(){
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li> 
-      
-
+      </li>  
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        상품 관리
+        공지사항
       </div>
-      <li class="nav-item active">
-        <a class="nav-link" href="category">
-          <i class="fas fa-fw fa-table"></i>
-          <span>카테고리 관리</span></a>
-      </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="product">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
+          <span>공지사항 보기</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -424,59 +450,91 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-<!-- Begin Page Content -->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            지점 등록하기</h1>
+          <h1 class="h3 mb-2 text-gray-800">지점 목록</h1>
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty office}">
+	              		<h3>등록된 지점이 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
+	                      <th>officeId</th>
+	                      <th>이름</th>
+	                      <th>주소</th>
+	                      <th>번호</th>
+	                      <th>코드</th>
+	                      <th>상태</th>
+	                      <th>수정</th>
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${office}" var="office">
+	                    <tr>
+	                      <td> 
+	                      ${office.officeId}
+	              		  </td>
+	                      <td>${office.officeName}</td>
+	                      <td>${office.address}</td>
+	                      <td>${office.tel}</td>
+	                      <td>${office.code}</td>
+	                      
+	                     <c:choose>
+	  					 	<c:when test="${office.state==1}">
+	  					 		<td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${office.officeId}">
+                    					<span class="text">활성화</span>
+                  					</a>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<td style="color: red;">
+	  					 		<a href="#" class="btn btn-warning" id= "${office.officeId}">
+                    					<span class="text">비활성화</span>
+                  					</a>
+	  					 	</c:otherwise>
+	  					 </c:choose>
+	                      
+	                      <td style="color: green;">
+	  					 		<a href="${pageContext.request.contextPath}/officeDetail/${office.officeId}"  class="btn btn-primary" id="${office.officeId}">
+                    					<span class="text">수정</span>
+                  					</a>
+	                      <%-- <td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${office.officeId}">
+                    					<span class="text">삭제</span>
+                  					</a> --%>
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
+                </br>
+                						<div class="form-group col-md-2">
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/officeRegister'" class="btn btn-primary">지역 등록하기</button>
+										</div>
+              </div>
+            </div>
           </div>
 
-            
-			   <form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeForm" >
-			  <div>
-		  		
-		  		 <input type='hidden' name='officeId' value="${office.officeId}">
-		  		 
-				<div class="form-group col-md-2">
-			      <label for="inputState">지역</label>
-			      <select id="regionId" class="form-control" name="regionId">
-			      <option selected>지역 선택</option>
-			        		<c:forEach items="${region}" var="reg">
-							<option value="${reg.regionId}">${reg.regionName}</option>
-				   </c:forEach>
-			      </select>
-			    </div>
-			    
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">지점 이름</label>
-			      <input type="text" class="form-control" id="officeName" name="officeName">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">전화번호</label>
-			      <input type="text" class="form-control" id="tel" name="tel">
-			    </div>
-			
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">지점 주소</label>
-			      <input type="text" class="form-control" id="address"  placeholder=" " name="address">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">code</label>
-			      <input type="text" class="form-control" id="code"  placeholder="" name="code">
-			    </div>
-			    
-			  </div>
-			  
-			  <div class="form-group col-md-2" >
-			   <button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
-			  </div>
-			  </form>
-			
+        </div>
+        <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
 
