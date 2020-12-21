@@ -25,17 +25,28 @@ import com.mobile.repository.WiredGoodsRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
 	
+	@Autowired
 	ApplicationRepository applicationRepository;
+	
+	
+	@Autowired
 	CallingPlanRepository callingPlanRepository;
+	
+	
+	@Autowired
 	CarrierRepository carrierRepository;
+	@Autowired
 	DeviceRepository deviceRepository;
-	ProductsRepository productsRepository; 
+	@Autowired
+	ProductsRepository productsRepository;
+	@Autowired
 	InstallmentRepository installmentRepository;
+	@Autowired
 	WiredGoodsRepository wiredGoodsRepository;
+	@Autowired
 	CardRepository cardRepository;
 	
 	
