@@ -33,6 +33,12 @@ public class Office {
 	
 	String officeName;
 	
+	String address;
+	
+	String tel;
+	
+	String code;
+	
 	@ManyToOne
 	@JoinColumn(name = "regionId")
 	Region region;
