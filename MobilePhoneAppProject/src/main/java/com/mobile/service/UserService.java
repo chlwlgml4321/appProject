@@ -218,7 +218,7 @@ public interface UserService {
 	/**
 	 * 지점 상태변경
 	 * */
-	public void officeChangeState(Long officeId, Integer state);
+	public void officeChangeState(Long officeId);
 	
 	//Point table
 	/**

@@ -29,18 +29,15 @@
 	
 	
 <script type="text/javascript">
+
 $(document).ready(function(){
-		$("#updateNotice").click(function(){
-			$("#updateForm").submit();
-			
-		});
+	
+	$("#registerOffice").click(function(){
+		$("#officeForm").submit();
 		
 	});
-
-		
-
-
-
+});
+	
 </script>	
 </head>
 <body id="page-top">
@@ -64,7 +61,7 @@ $(document).ready(function(){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index">
+        <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -72,14 +69,17 @@ $(document).ready(function(){
       <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
+     <!-- 유저관리 Divider -->
+      <hr class="sidebar-divider">
+
       <!-- Heading -->
       <div class="sidebar-heading">
         유저 관리
       </div>
 
-      		 <!-- 유저 관리 -->
+      <!-- 유저 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -88,19 +88,20 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
       
+      
       <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+        <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
           
-      </li> 
-
+      </li>  
+      
 
  <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
@@ -112,7 +113,7 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
           <span>Region</span></a>
           
@@ -121,23 +122,24 @@ $(document).ready(function(){
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li>  
+      </li> 
+      
+
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        공지사항
+        상품 관리
       </div>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/notice">
+      <li class="nav-item active">
+        <a class="nav-link" href="category">
           <i class="fas fa-fw fa-table"></i>
-          <span>공지사항 보기</span></a>
+          <span>카테고리 관리</span></a>
       </li>
       
       <li class="nav-item">
@@ -422,76 +424,62 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+<!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
-          
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            
-            <div class="card-body">
-             <div class="col-lg-12">
-
-              <!-- Roitation Utilities -->
-              
-              <div class="card">
-             
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate}2020년 12월 17일 </h6>
-                </div>
-                <div class="card-body text-left">
-                ${notice.contents}
-               
-                </div>
-             
-              </div>
-
-            </div>
-            
-            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="contents" value="${notice.contents}">
-			</form>
-
-				 <div class="form-group col-md-2" >
-				 </br>
-			   <button type="submit" id="updateNotice" class="btn btn-primary">
-			   수정</button>
-			  </div>
-			 
-            </div>
-				
-				
-				
-				
-				
-				
-				
-				
-			<!-- <table >
-				<tr>
-				<td>
-				<input type="submit" value="수정하기" style="text-align: center;">
-				</td>
-				</tr>
-			</table> -->
-							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="content" value="${notice.content}">
-			</form> --%>
-			
-             
-             
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            지점 등록하기</h1>
           </div>
 
-        </div>
-        <!-- /.container-fluid -->
+            
+			   <form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeForm" >
+			  <div>
+		  		
+		  		 <input type='hidden' name='officeId' value="${office.officeId}">
+		  		 
+				<div class="form-group col-md-2">
+			      <label for="inputState">지역</label>
+			      <select id="regionId" class="form-control" name="regionId">
+			      <option selected>지역 선택</option>
+			        		<c:forEach items="${region}" var="reg">
+							<option value="${reg.regionId}">${reg.regionName}</option>
+				   </c:forEach>
+			      </select>
+			    </div>
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">지점 이름</label>
+			      <input type="text" class="form-control" id="officeName" name="officeName">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">전화번호</label>
+			      <input type="text" class="form-control" id="tel" name="tel">
+			    </div>
+			
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">지점 주소</label>
+			      <input type="text" class="form-control" id="address"  placeholder=" " name="address">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">code</label>
+			      <input type="text" class="form-control" id="code"  placeholder="" name="code">
+			    </div>
+			    
+			  </div>
+			  
+			  <div class="form-group col-md-2" >
+			   <button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

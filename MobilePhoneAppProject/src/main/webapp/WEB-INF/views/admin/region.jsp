@@ -30,16 +30,41 @@
 	
 <script type="text/javascript">
 $(document).ready(function(){
-		$("#updateNotice").click(function(){
-			$("#updateForm").submit();
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
 			
-		});
+			
+			var result = confirm('지역을 삭제하시겠습니까? ');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("삭제됨");
+				
+				deleteRegion($(this).attr("id"));
+				
+				
+			}
+		} 
+		
 		
 	});
 
+		function deleteRegion(id) {  
+		    alert(id);
+		    $.ajax({
+		        type : 'GET',
+		        url : "/deleteRegion",
+		        data : {"id" : id},
+		        success : function (data) {
+		        	 location.reload();             
+		        }
+
+		    });
+		   
+		}
 		
-
-
+	});
 
 </script>	
 </head>
@@ -77,9 +102,9 @@ $(document).ready(function(){
         유저 관리
       </div>
 
-      		 <!-- 유저 관리 -->
+      <!-- 유저 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -88,21 +113,22 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
       
+      
       <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+        <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
           
-      </li> 
-
-
- <!-- 지역 관리 Divider -->
+      </li>  
+      
+      
+       <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -112,7 +138,7 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
           <span>Region</span></a>
           
@@ -121,7 +147,7 @@ $(document).ready(function(){
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
@@ -135,22 +161,12 @@ $(document).ready(function(){
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/notice">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
           <span>공지사항 보기</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="product">
-          <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -426,72 +442,72 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
+          <h1 class="h3 mb-2 text-gray-800">지역 목록</h1>
           
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             
             <div class="card-body">
-             <div class="col-lg-12">
-
-              <!-- Roitation Utilities -->
-              
-              <div class="card">
-             
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate}2020년 12월 17일 </h6>
-                </div>
-                <div class="card-body text-left">
-                ${notice.contents}
-               
-                </div>
-             
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty region}">
+	              		<h3>등록된 지역이 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
+	                   
+	                  
+	                      <th>regionId</th>
+	                      <th>지역 이름</th>
+	                      <th>수정</th>
+	                      <th>삭제</th>
+	                      
+	                      
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${region}" var="region">
+	                    <tr>
+	                      <td> 
+	                      ${region.regionId}
+	              		  </td>
+	                      <td>${region.regionName}</td>
+	                      
+	                      <td style="color: green;">
+	  					 		<a href="${pageContext.request.contextPath}/regionDetail/${region.regionId}"  class="btn btn-warning" id="${region.regionId}">
+                    					<span class="text">수정</span>
+                  					</a>
+	                     <td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${region.regionId}">
+                    					<span class="text">삭제</span>
+                  					</a>
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
+                </br>
+                						<div class="form-group col-md-2">
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/regionInsert'" class="btn btn-primary">지역 등록하기</button>
+										</div>
               </div>
-
             </div>
-            
-            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="contents" value="${notice.contents}">
-			</form>
-
-				 <div class="form-group col-md-2" >
-				 </br>
-			   <button type="submit" id="updateNotice" class="btn btn-primary">
-			   수정</button>
-			  </div>
-			 
-            </div>
-				
-				
-				
-				
-				
-				
-				
-				
-			<!-- <table >
-				<tr>
-				<td>
-				<input type="submit" value="수정하기" style="text-align: center;">
-				</td>
-				</tr>
-			</table> -->
-							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="content" value="${notice.content}">
-			</form> --%>
-			
-             
-             
           </div>
 
         </div>
         <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

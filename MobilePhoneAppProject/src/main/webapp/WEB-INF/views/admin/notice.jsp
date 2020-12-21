@@ -118,7 +118,40 @@ $(document).ready(function(){
           <span>BlackList</span></a>
       </li>
       
+      
+      <!-- 대기중인고객 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="inactiveUser">
+          <i class="fas fa-fw fa-table"></i>
+          <span>대기중인 고객</span></a>
+          
+      </li>  
+      
 
+ <!-- 지역 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        Region 관리
+      </div>
+
+      <!-- 지역 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="region">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Region</span></a>
+          
+      </li>
+      
+      
+      <!-- 지역 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="regionInsert">
+          <i class="fas fa-fw fa-table"></i>
+          <span>지역 등록</span></a>
+          
+      </li>  
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
@@ -467,6 +500,7 @@ $(document).ready(function(){
 	                </c:otherwise>
                 </c:choose>
                 
+                </br>
                 						<div class="form-group col-md-2">
 											<button type="button" onclick="location.href='${pageContext.request.contextPath}/admin/noticeRegister'" class="btn btn-primary">글쓰기</button>
 										</div>

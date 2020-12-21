@@ -29,18 +29,15 @@
 	
 	
 <script type="text/javascript">
+
 $(document).ready(function(){
-		$("#updateNotice").click(function(){
-			$("#updateForm").submit();
-			
-		});
+	
+	$("#registerRegion").click(function(){
+		$("#regionForm").submit();
 		
 	});
-
-		
-
-
-
+});
+	
 </script>	
 </head>
 <body id="page-top">
@@ -64,7 +61,7 @@ $(document).ready(function(){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index">
+        <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -77,9 +74,9 @@ $(document).ready(function(){
         유저 관리
       </div>
 
-      		 <!-- 유저 관리 -->
+      <!-- 유저 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -88,21 +85,23 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
       
+      
       <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+        <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
           
-      </li> 
+      </li>  
+      
 
 
- <!-- 지역 관리 Divider -->
+	 <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -112,7 +111,7 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
           <span>Region</span></a>
           
@@ -121,7 +120,7 @@ $(document).ready(function(){
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
@@ -135,7 +134,7 @@ $(document).ready(function(){
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/notice">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
           <span>공지사항 보기</span></a>
       </li>
@@ -422,76 +421,35 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+<!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
-          
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            
-            <div class="card-body">
-             <div class="col-lg-12">
-
-              <!-- Roitation Utilities -->
-              
-              <div class="card">
-             
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate}2020년 12월 17일 </h6>
-                </div>
-                <div class="card-body text-left">
-                ${notice.contents}
-               
-                </div>
-             
-              </div>
-
-            </div>
-            
-            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="contents" value="${notice.contents}">
-			</form>
-
-				 <div class="form-group col-md-2" >
-				 </br>
-			   <button type="submit" id="updateNotice" class="btn btn-primary">
-			   수정</button>
-			  </div>
-			 
-            </div>
-				
-				
-				
-				
-				
-				
-				
-				
-			<!-- <table >
-				<tr>
-				<td>
-				<input type="submit" value="수정하기" style="text-align: center;">
-				</td>
-				</tr>
-			</table> -->
-							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="content" value="${notice.content}">
-			</form> --%>
-			
-             
-             
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            지점 등록하기</h1>
           </div>
 
-        </div>
-        <!-- /.container-fluid -->
+            
+			   <form method="post" id="regionForm" action="${pageCotext.request.contextPath}/regionForm" >
+			  <div>
+		  		
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">지역 이름</label>
+			      <input type="text" class="form-control" name="regionName">
+			    </div>
+			    
+		
+			  </div>
+			  
+			  <div class="form-group col-md-2" >
+			 
+			  <button type="submit" id="registerRegion" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

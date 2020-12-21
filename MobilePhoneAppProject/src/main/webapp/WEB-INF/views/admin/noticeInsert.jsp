@@ -36,7 +36,25 @@
 
 
 <script type="text/javascript">
+$(document).ready(function(){
 	
+	// textarea 체크
+	$('.contentstext').keyup(function (e){
+	    var content = $(this).val();
+	    $('#counter').html("("+content.length+" / 최대 500자)");    //글자수 실시간 카운팅
+
+	    if (content.length > 500){
+	        alert("최대 500자까지 입력 가능합니다.");
+	        $(this).val(content.substring(0, 500));
+	        $('#counter').html("(500 / 최대 500자)");
+	    }
+	});
+
+		
+	});
+
+
+
 </script>
 </head>
 <body id="page-top">
@@ -83,6 +101,31 @@
 					<i class="fas fa-fw fa-table"></i> <span>BlackList</span>
 			</a></li>
 
+
+			 <!-- 지역 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        Region 관리
+      </div>
+
+      <!-- 지역 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="region">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Region</span></a>
+          
+      </li>
+      
+      
+      <!-- 지역 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="regionInsert">
+          <i class="fas fa-fw fa-table"></i>
+          <span>지역 등록</span></a>
+          
+      </li>  
 
 			<!-- 상품 관리 Divider -->
 			<hr class="sidebar-divider">
@@ -376,14 +419,17 @@
 										<input type='hidden' name='noticeId' value="${notice.noticeId}">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">
-												<input type="text" name="title" value="${notice.title}">
+												<input type="text" name="title" style="width:500px; height:40px" value="${notice.title}">
 											</h6>
 											<h6 class="mb-1 small">${notice.regDate}</h6>
 										</div>
 										<div class="card-body text-left">
 											<!-- <input type="textarea" name="contents" placeholder=${notice.contents}> -->
 
-										<textarea name="contents" cols="50" rows="13">${notice.contents}</textarea>
+										<textarea name="contents" class="contentstext" cols="100" rows="30">${notice.contents}
+										</textarea></br>
+										<span style="color:#aaa;" id="counter">(0 / 최대 500자)</span>
+										
 
 
 
