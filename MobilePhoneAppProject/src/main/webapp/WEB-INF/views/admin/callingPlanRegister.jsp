@@ -102,8 +102,7 @@ $(document).ready(function(){
           
       </li>  
       
-
- <!-- 지역 관리 Divider -->
+      <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -115,7 +114,7 @@ $(document).ready(function(){
       <li class="nav-item  active">
         <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
-          <span>Region</span></a>
+          <span>REGION</span></a>
           
       </li>
       
@@ -126,7 +125,61 @@ $(document).ready(function(){
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
+      </li>  
+      
+      
+      <!-- 지점 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        office 관리
+      </div>
+
+      <!-- 지점 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="office">
+          <i class="fas fa-fw fa-table"></i>
+          <span>OFFICE</span></a>
+          
+      </li>
+      
+      
+      <!-- 지역 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="officeRegister">
+          <i class="fas fa-fw fa-table"></i>
+          <span>지점 등록</span></a>
+          
+      </li>  
+
+
+      
+       <!-- 요금제 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        요금제 관리
+      </div>
+
+      <!-- 요금제 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="callingPlan">
+          <i class="fas fa-fw fa-table"></i>
+          <span>요금제</span></a>
+          
+      </li>
+      
+      
+      <!-- 요금제 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="callingPlanRegister">
+          <i class="fas fa-fw fa-table"></i>
+          <span>요금제 등록</span></a>
+          
       </li> 
+      
       
 
       <!-- 상품 관리 Divider -->

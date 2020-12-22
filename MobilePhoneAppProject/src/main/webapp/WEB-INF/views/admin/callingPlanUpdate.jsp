@@ -38,7 +38,7 @@ $(document).ready(function(){
 		
 	});
 	
-	alert("${callingPlan.carrier.carrierId}");
+	/* alert("${callingPlan.carrier.carrierId}"); */
 	
 	/* $("#carrierId").each(function(){
 
@@ -456,9 +456,9 @@ $(document).ready(function(){
 			       <!-- <option  value ="1" >SKT </option>
 				   <option  value ="2" >KT </option>
 				   <option  value ='3' >LGU+ </option> -->
-			       <option  value ='1' <c:if test="${callingPlan.carrier.carrierId == '1'} "> selected="selected" </c:if>>SKT </option>
-				   <option  value ='2' <c:if test="${callingPlan.carrier.carrierId == '2'} "> selected="selected" </c:if>>KT </option>
-				   <option  value ='3' <c:if test="${callingPlan.carrier.carrierId == '3'} "> selected </c:if>>LGU+ </option> 
+			       <option  value ='1' <c:if test="${callingPlan.carrier.carrierId == '1'}"> selected="selected" </c:if>>SKT </option>
+				   <option  value ='2' <c:if test="${callingPlan.carrier.carrierId == '2'}"> selected="selected" </c:if>>KT </option>
+				   <option  value ='3' <c:if test="${callingPlan.carrier.carrierId == '3'}"> selected </c:if>>LGU+ </option> 
 			      <%-- <option value="${callingPlan.carrier.carrierId}">${callingPlan.carrier.carrierName}</option>  --%>
 			      </select>
 			    </div>  
@@ -484,9 +484,8 @@ $(document).ready(function(){
 			     <div class="form-group col-md-2">
 			      <label for="inputEmail4">networkType</label>
 			      <select id="networkType" class="form-control" name="networkType">
-					<option selected>networkType 선택</option>
-					<option  value ='1'>5G </option>
-					<option  value ='0'>4G </option>
+					<option  value='1' <c:if test="${callingPlan.networkType == '1'}"> selected="selected" </c:if>>5G </option>
+					<option  value ='0'<c:if test="${callingPlan.networkType == '0'}"> selected="selected" </c:if>>4G</option>
 			      </select>
 			    </div>  
 			    
