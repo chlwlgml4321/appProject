@@ -177,6 +177,8 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/memberLogin")
+	@ResponseBody
 	public int login(String phoneNumber, String password) {
 		
 	
