@@ -42,10 +42,11 @@ public interface AppControllerInterface {
 	
 	/**
 	 * members
+	 * @return 
 	 * */
 	//member 회원 가입( 성공 시 1, 실패 시 0)
 	@RequestMapping("/app/userRegister")
-	public void userRegister(String name, String phone, String regions, String profileImg, String password, Integer isvisitor, Long officeId, String userContacts);
+	public int userRegister(String name, String phone, String regions, String profileImg, String password, Integer isvisitor, Long officeId, String userContacts);
 	
 	//member id로 조회
 	@RequestMapping("/app/getUser")

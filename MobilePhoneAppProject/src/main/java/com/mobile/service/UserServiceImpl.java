@@ -62,15 +62,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void memberInsert(Members member) {
+	public int memberInsert(Members member) {
 		
 		
 		Members m = membersRepo.findByPhone(member.getPhone());
 		
 		if(m==null) {
 			membersRepo.save(member);
+			return 1;
 		} else {
 			System.out.println("phone number 중복");
+			return 0;
 		}
 		
 

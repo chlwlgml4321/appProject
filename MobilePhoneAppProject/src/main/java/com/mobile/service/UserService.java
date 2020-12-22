@@ -45,8 +45,9 @@ public interface UserService {
 
 	/**
 	 * 회원 가입하기
+	 * @return 
 	 * */
-	public void memberInsert(Members member);
+	public int memberInsert(Members member);
 	
 	/**
 	 * 회원 정보 수정하기

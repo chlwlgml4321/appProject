@@ -153,7 +153,7 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/userRegister")
 	@ResponseBody
-	public void userRegister(String name, String phone, String regions, String profileImg, String password,
+	public int userRegister(String name, String phone, String regions, String profileImg, String password,
 			Integer isvisitor, Long officeId, String userContacts) {
 		
 		
@@ -162,7 +162,7 @@ public class AppController implements AppControllerInterface {
 		
 		Members member = new Members(null, name, phone, regions, null, memberCode, password, isvisitor, null, null, office);
 		
-		userService.memberInsert(member);
+		return userService.memberInsert(member);
 		
 		
 	}
