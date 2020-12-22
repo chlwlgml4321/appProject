@@ -30,51 +30,27 @@
 	
 <script type="text/javascript">
 
-
+$(document).ready(function(){
 	
-	$(document).ready(function(){
+	$("#registerCallingPlan").click(function(){
 		
-		$("#registerOffice").click(function(){
-			$("#officeForm").submit();
-			
-		});
+		$("#callingPlanForm").submit();
 		
-		$(".btn").click(function(){
-			if($(this).attr("class") == "btn btn-success"){
-				
-				
-				var result = confirm('지점을 삭제하시겠습니까? ');
-						
-				if(result){
-					
-					$(this).attr("class","btn btn-warning");
-					$(this).children().text("삭제됨");
-					
-					deleteOffice($(this).attr("id"));
-					
-					
-				}
-			} 
-			
-			
-		});
+	});
+	
+	alert("${callingPlan.carrier.carrierId}");
+	
+	/* $("#carrierId").each(function(){
 
-			function deleteOffice(id) {  
-			    alert(id);
-			    $.ajax({
-			        type : 'GET',
-			        url : "/deleteOffice",
-			        data : {"id" : id},
-			        success : function (data) {
-			        	 location.reload();             
-			        }
+	    if($(this).val()=="${callingPlan.carrier.carrierId}"){
 
-			    });
-			   
-			}
-			
+	      $(this).attr("selected","selected"); 
+
+	    }
+
+	  }); */
+		
 });
-	
 </script>	
 </head>
 <body id="page-top">
@@ -463,42 +439,65 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            지점 수정하기</h1>
+            요금제 수정하기</h1>
           </div>
 
-			   	<form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeUpdate/${office.officeId}" >
-			  		<div>
-			  
-			  		<input type='hidden' name='regionId' value="${office.officeId}">
+            
+			   <form method="post" id="callingPlanForm" action="${pageCotext.request.contextPath}/callingPlanForm" >
+			  <div>
 		  		
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 이름</label>
-			      		<input type="text" class="form-control" value="${office.officeName}" name="officeName">
-			    	</div>
-			    	   
-			     	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 주소</label>
-			      		<input type="text" class="form-control" value="${office.address}" name="address">
-			     	</div>
+		  		 <input type='hidden' name='callingPlanId' value="${callingPlan.callingPlanId}">
+		  		 <%-- <input type='hidden' name='carrierId' value="${carrier.carrierId}"> --%>
+					
+		  		 
+				 <div class="form-group col-md-2">
+			      <label for="inputState">통신사</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			       <!-- <option  value ="1" >SKT </option>
+				   <option  value ="2" >KT </option>
+				   <option  value ='3' >LGU+ </option> -->
+			       <option  value ='1' <c:if test="${callingPlan.carrier.carrierId == '1'} "> selected="selected" </c:if>>SKT </option>
+				   <option  value ='2' <c:if test="${callingPlan.carrier.carrierId == '2'} "> selected="selected" </c:if>>KT </option>
+				   <option  value ='3' <c:if test="${callingPlan.carrier.carrierId == '3'} "> selected </c:if>>LGU+ </option> 
+			      <%-- <option value="${callingPlan.carrier.carrierId}">${callingPlan.carrier.carrierName}</option>  --%>
+			      </select>
+			    </div>  
+			
 			    
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 코드</label>
-			      		<input type="text" class="form-control" value="${office.code}" name="code">
-			    	</div>
 			    
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">전화번호</label>
-			      		<input type="text" class="form-control" value="${office.tel}" name="tel">
-			    	</div>
-			 
-			  		<div class="form-group col-md-2" >
-			  		<button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
-			  		<%-- <button type="submit" id="${office.officeId}" class="btn btn-success">삭제</button> --%>
-			  		
-			  		</div>
-			  		</div>
-			  	</form>
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">요금제 이름</label>
+			      <input type="text" class="form-control" id="planName" value="${callingPlan.planName}" name="planName">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">기본요금</label>
+			      <input type="text" class="form-control" id="basicFee" value="${callingPlan.basicFee}" name="basicFee">
+			    </div>
+			
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">선택약정 할인율</label>
+			      <input type="text" class="form-control" id="bondDiscount"  value="${callingPlan.bondDiscount}"  name="bondDiscount">
+			    </div>
+			    
+			     <div class="form-group col-md-2">
+			      <label for="inputEmail4">networkType</label>
+			      <select id="networkType" class="form-control" name="networkType">
+					<option selected>networkType 선택</option>
+					<option  value ='1'>5G </option>
+					<option  value ='0'>4G </option>
+			      </select>
+			    </div>  
+			    
+			  </div>
 			  
+			  <div class="form-group c ol-md-2" >
+			   <button type="submit" id="registerCallingPlan" class="btn btn-primary">등록</button>
+			  </div>
+			  
+			  
+			  </form>
 			
       </div>
       <!-- End of Main Content -->

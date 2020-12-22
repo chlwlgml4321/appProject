@@ -526,7 +526,7 @@ $(document).ready(function(){
                 
                 </br>
                 						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/officeRegister'" class="btn btn-primary">지역 등록하기</button>
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/officeRegister'" class="btn btn-primary">지점 등록하기</button>
 										</div>
               </div>
             </div>

@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mobile.domain.CallingPlan;
+import com.mobile.domain.Carrier;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
 import com.mobile.domain.Region;
+import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
 
 
@@ -24,7 +27,8 @@ public class WebController {
 	@Autowired
 	private UserService userService;
 	
-	
+	@Autowired
+	private ProductService productService;
 	
 	//index
 	@RequestMapping("/index")
@@ -258,7 +262,7 @@ public class WebController {
 
 		@RequestMapping("/officeRegister")
 		public String register(Model model) {
-			
+			System.out.println("##officeregister");
 			List<Region> region= userService.regionSelectAll();
 			model.addAttribute("region",region);
 			return "/admin/officeRegister";
@@ -320,7 +324,7 @@ public class WebController {
 		}
 		
 		
-		//region 수정하기 
+		//office 수정하기 
 		@RequestMapping("/officeUpdate/{officeId}")
 		public String officeUpdate(@PathVariable Long officeId, Office office, Model model) {
 			System.out.println("##officeUpdate");
@@ -335,17 +339,76 @@ public class WebController {
 			return "/admin/office";
 		}
 		
+		//callingPlan 
+		@RequestMapping("/callingPlan")
+			public String callingPlan(Model model) {
+				
+			List<CallingPlan> callingPlan= productService.callingPlanSelectAll();
+			model.addAttribute("callingPlan", callingPlan);
+			return "/admin/callingPlan";
+		}
+
+		//callingPlanDetail
+		@RequestMapping("/callingPlanDetail/{callingPlanId}")
+		public ModelAndView callingDetail(@PathVariable Long callingPlanId, Long carrierId, Model model) {
+			
+			CallingPlan callingPlan= productService.callingPlanSelectById(callingPlanId);
+			System.out.println("##callingDetail");
+			System.out.println(callingPlanId);
+			//Carrier carrier= productService.carrierSelectById(carrierId);
+			Carrier carrier= new Carrier();
+			model.addAttribute(carrier);
+			//callingPlan.setCarrier(carrier);
+			return new ModelAndView("/admin/callingPlanUpdate", "callingPlan", callingPlan);
+		}
 		
-//		//office 글지우기 
-//		@RequestMapping("/deleteRegion")
-//		@ResponseBody
-//		public String deleteOffice(Long id) {
-//					
-//			System.out.println("id 진입 "+id );
-//			Office office = new Office();
-//			offfice.setOfficeId(id);
-//			userService.regionDelete(id);
-//			return "redirect:/region";
-//		}
+		@RequestMapping("/callingPlanRegister")
+		public String callRegister(Model model) {
+			System.out.println("callRegister 진입");
+			List<Carrier> carrier= productService.carrierSelectAll();
+			model.addAttribute("carrier",carrier);
+			return "/admin/callingPlanRegister";
+			
+		}
+
+		
+		//요금제 등록 
+		@RequestMapping("/callingPlanForm")
+		public String callingPlanForm(CallingPlan callingPlan, Model model, Long carrierId) {
+			
+			List<CallingPlan> callingPlans = productService.callingPlanSelectAll();
+			
+			model.addAttribute("callingPlan", callingPlans);
+			
+			Carrier carrier= productService.carrierSelectById(carrierId);
+			callingPlan.setCarrier(carrier);
+			productService.callingPlanInsert(callingPlan);
+			
+			return "redirect:/callingPlan";
+			
+		}
+		
+		//CallingPlanSate 바꾸기 
+		@RequestMapping("/changeCallingPlanSate")
+		@ResponseBody
+		public String changeCallingPlanSate(Long id) {
+					
+			CallingPlan callingPlan= new CallingPlan();
+			callingPlan.setCallingPlanId(id);
+			productService.callingPlanChangeState(id);
+			return "";
+		}
+		
+		//callingPlanUpdate 수정하기 
+		@RequestMapping("/callingPlanUpdate/{callingPlanId}")
+		public String callingPlanUpdate(@PathVariable Long callingPlanId, CallingPlan callingPlan, Model model) {
+			System.out.println("##callingPlanUpdate");
+			productService.callingPlanUpdate(callingPlan);
+			List<CallingPlan> callingPlans= productService.callingPlanSelectAll();
+			
+			model.addAttribute("callingPlan", callingPlans);
+							
+			return "/admin/callingPlan";
+		}
 		
 }

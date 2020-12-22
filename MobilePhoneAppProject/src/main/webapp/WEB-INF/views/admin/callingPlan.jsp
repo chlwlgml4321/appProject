@@ -29,52 +29,55 @@
 	
 	
 <script type="text/javascript">
-
-
-	
-	$(document).ready(function(){
-		
-		$("#registerOffice").click(function(){
-			$("#officeForm").submit();
+$(document).ready(function(){
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
 			
-		});
-		
-		$(".btn").click(function(){
-			if($(this).attr("class") == "btn btn-success"){
+			
+			var result = confirm('요금제를 비활성화 시키겠습니까?');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("비활성화");
+				
+				changeState($(this).attr("id"));
 				
 				
-				var result = confirm('지점을 삭제하시겠습니까? ');
-						
-				if(result){
-					
-					$(this).attr("class","btn btn-warning");
-					$(this).children().text("삭제됨");
-					
-					deleteOffice($(this).attr("id"));
-					
-					
-				}
-			} 
-			
-			
-		});
-
-			function deleteOffice(id) {  
-			    alert(id);
-			    $.ajax({
-			        type : 'GET',
-			        url : "/deleteOffice",
-			        data : {"id" : id},
-			        success : function (data) {
-			        	 location.reload();             
-			        }
-
-			    });
-			   
 			}
-			
-});
+		} else if(($(this).attr("class") == "btn btn-warning")){
+			var result = confirm('요금제를 활성화 시키겠습니까?');
+			if(result){
+				
+				
+				
+				$(this).attr("class","btn btn-success");
+				$(this).children().text("활성화");
+				
+				changeState($(this).attr("id"));
+			}
+		}
+		
+		
+	});
 	
+	
+	function changeState(id) {  
+	    alert(id);
+	    $.ajax({
+	        type : 'GET',
+	        url : "/changeCallingPlanSate",
+	        data : {"id" : id},
+	        success : function (data) {
+	                         
+	        }
+
+	    });
+	}
+	
+});
+
+
 </script>	
 </head>
 <body id="page-top">
@@ -98,7 +101,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -136,9 +139,8 @@
           
       </li>  
       
-
-
- <!-- 지역 관리 Divider -->
+      
+       <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -148,7 +150,7 @@
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
           <span>Region</span></a>
           
@@ -157,7 +159,7 @@
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
@@ -176,17 +178,7 @@
           <span>공지사항 보기</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="product">
-          <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -458,48 +450,101 @@
         </nav>
         <!-- End of Topbar -->
 
-<!-- Begin Page Content -->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            지점 수정하기</h1>
+          <h1 class="h3 mb-2 text-gray-800">요금제 목록</h1>
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty callingPlan}">
+	              		<h3>등록된 요금제가 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
+	                   
+	                  
+	                      <th>callingPlanId</th>
+	                      <th>요금제 이름</th>
+	                      <th>기본요금</th>
+	                      <th>선택약정 요금 할인</th>
+	                      <th>networkType</th>
+	                      <th>통신사</th>
+	                      <th>상태</th>
+	                      <th>수정</th>
+	                      
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${callingPlan}" var="callingPlan">
+	                    <tr>
+	                      <td> 
+	                      ${callingPlan.callingPlanId}
+	              		  </td>
+	                      <td>${callingPlan.planName}</td>
+	                      <td>${callingPlan.basicFee}원</td>
+	                      <td>${callingPlan.bondDiscount}%</td>
+	                      <c:choose>
+	  					 	<c:when test="${callingPlan.networkType==1}">
+	  					 		<th>5G</th>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<th>4G</th>
+	  					 	</c:otherwise>
+	  					 </c:choose>
+	                      <td>${callingPlan.carrier.carrierName}</td>
+	                      <c:choose>
+	  					 	<c:when test="${callingPlan.state==1}">
+	  					 		<td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${callingPlan.callingPlanId}">
+                    					<span class="text">활성화</span>
+                  					</a>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<td style="color: red;">
+	  					 		<a href="#" class="btn btn-warning" id= "${callingPlan.callingPlanId}">
+                    					<span class="text">비활성화</span>
+                  					</a>
+	  					 	</c:otherwise>
+	  					 	
+	  					 </c:choose>
+	  					 
+	  					  <td style="color: green;">
+	  					 		<a href="${pageContext.request.contextPath}/callingPlanDetail/${callingPlan.callingPlanId}"  class="btn btn-primary"  id="${callingPlan.callingPlanId}">
+                    					<span class="text">수정</span>
+                  					</a>
+	                     
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
+                </br>
+                						<div class="form-group col-md-2">
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/callingPlanRegister'" class="btn btn-primary">요금제 등록하기</button>
+										</div>
+              </div>
+            </div>
           </div>
 
-			   	<form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeUpdate/${office.officeId}" >
-			  		<div>
-			  
-			  		<input type='hidden' name='regionId' value="${office.officeId}">
-		  		
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 이름</label>
-			      		<input type="text" class="form-control" value="${office.officeName}" name="officeName">
-			    	</div>
-			    	   
-			     	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 주소</label>
-			      		<input type="text" class="form-control" value="${office.address}" name="address">
-			     	</div>
-			    
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 코드</label>
-			      		<input type="text" class="form-control" value="${office.code}" name="code">
-			    	</div>
-			    
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">전화번호</label>
-			      		<input type="text" class="form-control" value="${office.tel}" name="tel">
-			    	</div>
-			 
-			  		<div class="form-group col-md-2" >
-			  		<button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
-			  		<%-- <button type="submit" id="${office.officeId}" class="btn btn-success">삭제</button> --%>
-			  		
-			  		</div>
-			  		</div>
-			  	</form>
-			  
-			
+        </div>
+        <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
 

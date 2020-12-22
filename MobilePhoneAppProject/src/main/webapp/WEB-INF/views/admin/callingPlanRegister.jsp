@@ -30,49 +30,12 @@
 	
 <script type="text/javascript">
 
-
+$(document).ready(function(){
 	
-	$(document).ready(function(){
+	$("#registerCallingPlan").click(function(){
+		$("#callingPlanForm").submit();
 		
-		$("#registerOffice").click(function(){
-			$("#officeForm").submit();
-			
-		});
-		
-		$(".btn").click(function(){
-			if($(this).attr("class") == "btn btn-success"){
-				
-				
-				var result = confirm('지점을 삭제하시겠습니까? ');
-						
-				if(result){
-					
-					$(this).attr("class","btn btn-warning");
-					$(this).children().text("삭제됨");
-					
-					deleteOffice($(this).attr("id"));
-					
-					
-				}
-			} 
-			
-			
-		});
-
-			function deleteOffice(id) {  
-			    alert(id);
-			    $.ajax({
-			        type : 'GET',
-			        url : "/deleteOffice",
-			        data : {"id" : id},
-			        success : function (data) {
-			        	 location.reload();             
-			        }
-
-			    });
-			   
-			}
-			
+	});
 });
 	
 </script>	
@@ -106,6 +69,9 @@
       <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
+     <!-- 유저관리 Divider -->
+      <hr class="sidebar-divider">
+
       <!-- Heading -->
       <div class="sidebar-heading">
         유저 관리
@@ -137,7 +103,6 @@
       </li>  
       
 
-
  <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
@@ -148,7 +113,7 @@
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
           <span>Region</span></a>
           
@@ -157,23 +122,24 @@
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li>  
+      </li> 
+      
+
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        공지사항
+        상품 관리
       </div>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="notice">
+      <li class="nav-item active">
+        <a class="nav-link" href="category">
           <i class="fas fa-fw fa-table"></i>
-          <span>공지사항 보기</span></a>
+          <span>카테고리 관리</span></a>
       </li>
       
       <li class="nav-item">
@@ -463,42 +429,58 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            지점 수정하기</h1>
+            요금제 등록하기</h1>
           </div>
 
-			   	<form method="post" id="officeForm" action="${pageCotext.request.contextPath}/officeUpdate/${office.officeId}" >
-			  		<div>
-			  
-			  		<input type='hidden' name='regionId' value="${office.officeId}">
+            
+			   <form method="post" id="callingPlanForm" action="${pageCotext.request.contextPath}/callingPlanForm" >
+			  <div>
 		  		
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 이름</label>
-			      		<input type="text" class="form-control" value="${office.officeName}" name="officeName">
-			    	</div>
-			    	   
-			     	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 주소</label>
-			      		<input type="text" class="form-control" value="${office.address}" name="address">
-			     	</div>
+		  		 <input type='hidden' name='callingPlanId' value="${callingPlan.callingPlanId}">
+		  		 
+		  		 
+				<div class="form-group col-md-2">
+			      <label for="inputState">통신사</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			      <option selected>통신사 선택</option>
+			        		<c:forEach items="${carrier}" var="car">
+							<option value="${car.carrierId}">${car.carrierName}</option>
+				   			</c:forEach>
+			      </select>
+			    </div>
 			    
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">지점 코드</label>
-			      		<input type="text" class="form-control" value="${office.code}" name="code">
-			    	</div>
 			    
-			    	<div class="form-group col-md-2">
-			      		<label for="inputEmail4">전화번호</label>
-			      		<input type="text" class="form-control" value="${office.tel}" name="tel">
-			    	</div>
-			 
-			  		<div class="form-group col-md-2" >
-			  		<button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
-			  		<%-- <button type="submit" id="${office.officeId}" class="btn btn-success">삭제</button> --%>
-			  		
-			  		</div>
-			  		</div>
-			  	</form>
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">요금제 이름</label>
+			      <input type="text" class="form-control" id="planName" name="planName">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">기본요금</label>
+			      <input type="text" class="form-control" id="basicFee" name="basicFee">
+			    </div>
+			
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">선택약정 할인율</label>
+			      <input type="text" class="form-control" id="bondDiscount"  placeholder="%" name="bondDiscount">
+			    </div>
+			    
+			     <div class="form-group col-md-2">
+			      <label for="inputEmail4">networkType</label>
+			      <select id="networkType" class="form-control" name="networkType">
+					<option selected>networkType 선택</option>
+					<option  value ='1'>5G </option>
+					<option  value ='0'>4G </option>
+			      </select>
+			    </div> 
+			    
+			  </div>
 			  
+			  <div class="form-group col-md-2" >
+			   <button type="submit" id="registerCallingPlan" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
 			
       </div>
       <!-- End of Main Content -->
