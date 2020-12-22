@@ -29,7 +29,15 @@ public class WiredGoods {
 	
 	Integer discount;
 	
-	String cardImg;
+	Integer circuit;
+	
+	Integer capacity;
+	
+	Integer fee;
+	
+	@ManyToOne
+	@JoinColumn(name="carrierId")
+	Carrier carrier;
 	
 	Integer state;
 	
