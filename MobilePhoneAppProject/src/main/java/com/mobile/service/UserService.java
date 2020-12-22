@@ -67,7 +67,7 @@ public interface UserService {
 	/**
 	 * 회원 로그인
 	 * */
-	int memberLogin(String phoneNumber, String password);
+	Members memberLogin(String phoneNumber, String password);
 	
 	//Blacklist table
 	/**

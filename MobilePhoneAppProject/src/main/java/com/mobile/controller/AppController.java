@@ -179,10 +179,25 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/memberLogin")
 	@ResponseBody
-	public int login(String phoneNumber, String password) {
+	public String login(String phoneNumber, String password) {
 		
-	
-		return userService.memberLogin(phoneNumber, password);
+	 	
+		
+		Members member = userService.memberLogin(phoneNumber, password);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(member);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

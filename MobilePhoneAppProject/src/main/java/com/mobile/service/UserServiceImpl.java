@@ -76,19 +76,22 @@ public class UserServiceImpl implements UserService {
 
 	}
 	@Override 
-	public int memberLogin(String phone, String password) {
+	public Members memberLogin(String phone, String password) {
 		
 		
-		Members m = membersRepo.findByPhoneAndPwd(phone, password);
-		if(m==null) {
-			return 3;
-		} else {
-			if(m.getState()==1) {
-				return 1;
-			} else {
-				return 2;
-			}
-		}
+//		Members m = membersRepo.findByPhoneAndPwd(phone, password);
+//		if(m==null) {
+//			return 3;
+//		} else {
+//			if(m.getState()==1) {
+//				return 1;
+//			} else {
+//				return 2;
+//			}
+//		}
+		
+		return membersRepo.findByPhoneAndPwd(phone, password);
+		
 	}
 	
 	

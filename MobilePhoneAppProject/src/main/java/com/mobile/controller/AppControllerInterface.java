@@ -53,7 +53,7 @@ public interface AppControllerInterface {
 	
 	//member 로그인(성공 시 1 , 승인 대기중으로 인한 실패 2, 인증오류로 인한 실패 3 )
 	@RequestMapping("/app/login")
-	public int login(String phoneNumber, String password);
+	public String login(String phoneNumber, String password);
 	
 	//member 정보 수정
 	@RequestMapping("/app/userInfoUpdate")
