@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 		
 		Members m = membersRepo.findByPhone(member.getPhone());
 		
-		if(m!=null) {
+		if(m==null) {
 			membersRepo.save(member);
 		} else {
 			System.out.println("phone number 중복");
