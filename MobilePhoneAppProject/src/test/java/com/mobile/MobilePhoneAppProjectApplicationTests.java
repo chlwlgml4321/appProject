@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.mobile.domain.Application;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
@@ -18,7 +19,9 @@ import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Recommendation;
 import com.mobile.domain.Region;
+import com.mobile.domain.Review;
 import com.mobile.domain.WiredGoods;
+import com.mobile.repository.ApplicationRepository;
 import com.mobile.repository.CallingPlanRepository;
 import com.mobile.repository.CardRepository;
 import com.mobile.repository.CarrierRepository;
@@ -29,6 +32,7 @@ import com.mobile.repository.NoticeRepository;
 import com.mobile.repository.OfficeRepository;
 import com.mobile.repository.PointRepository;
 import com.mobile.repository.ProductsRepository;
+import com.mobile.repository.ReviewRepository;
 import com.mobile.repository.WiredGoodsRepository;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
@@ -81,6 +85,12 @@ class MobilePhoneAppProjectApplicationTests {
 	@Autowired
 	WiredGoodsRepository wr;
 	
+	@Autowired
+	ReviewRepository rr;
+	
+	@Autowired
+	ApplicationRepository ar;
+	
 
 	@Test
 	void contextLoads() {
@@ -88,14 +98,18 @@ class MobilePhoneAppProjectApplicationTests {
 		
 		
 		
-		for(int i = 0; i<30; i++){
-			
-			WiredGoods w  = new WiredGoods();
-			
-			wr.save(w);
-		}
-		
+//		for(int i = 0; i<30; i++){
+//			
+//			WiredGoods w  = new WiredGoods();
+//			
+//			wr.save(w);
+//		}
+//		
 
+		
+		Application a = new Application();
+		
+		ar.save(a);
 
 
 

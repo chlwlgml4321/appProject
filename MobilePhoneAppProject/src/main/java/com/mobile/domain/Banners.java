@@ -1,7 +1,5 @@
 package com.mobile.domain;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,30 +11,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * 기기 
- * */
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Device {
+public class Banners {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_device")
-	@SequenceGenerator(sequenceName = "seq_device", name="seq_device", allocationSize = 1 )
-	Long deviceId;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_banner")
+	@SequenceGenerator(sequenceName = "seq_banner", name="seq_banner", allocationSize = 1 )
+	Long bannerId;
 	
-	String deviceName;
-	//String modelNo;
+	String bannerImg;
+
 	
-	//원가
-	Integer price;
+	String title;
 	
-	//s3 url
-	String image;
-	
-	Integer state;
+	String contents;
 }

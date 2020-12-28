@@ -14,6 +14,7 @@ import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Device;
+import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
@@ -86,6 +87,7 @@ public class AppController implements AppControllerInterface {
 		
 		if(list!=null) {
 			for(Point obj : list) {
+				System.out.println(obj.getPoint());
 				pointSum += obj.getPoint();
 			}
 		}
@@ -286,8 +288,9 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/getCallingPlan")
 	@ResponseBody
-	public String getCallingPlan(java.lang.Long callingPlanId) {
+	public String getCallingPlan(Long callingPlanId) {
 		
+		System.out.println("c");
 		CallingPlan callinPlan = productService.callingPlanSelectById(callingPlanId);
 		
 		
@@ -844,8 +847,50 @@ public class AppController implements AppControllerInterface {
 	}
 	
 
-
 	
+	@Override
+	@RequestMapping("/app/getAllGuestProduct")
+	@ResponseBody
+	public String getAllGuestProduct() {
+		List<GuestProduct> list = productService.guestProductSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	@Override
+	@RequestMapping("/app/getGuestProduct")
+	@ResponseBody
+	public String getGuestProduct(Long id) {
+		GuestProduct guestProduct = productService.guestProductSelectById(id);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(guestProduct);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
 	
 	
 

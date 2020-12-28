@@ -9,6 +9,7 @@ import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Device;
+import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Products;
@@ -267,6 +268,35 @@ public interface ProductService {
 	List<Products> productFindReccomendaion();
 
 	List<Card> cardSelectByCarrierId(Long carrierId);
+	
+	
+	//GuestProduct
+	
+	/**
+	 * 방문 회원 상품 전체 조회
+	 * */
+	public List<GuestProduct> guestProductSelectAll(); 
+	
+	/**
+	 * 방문 회원 상품 id로 조회
+	 * */
+	public GuestProduct guestProductSelectById(Long id);
+	
+	/**
+	 * 방문 회원 상품 삽입
+	 * */
+	public void guestProductInsert(GuestProduct guestProduct);
+	
+	/**
+	 * 방문 회원 상품 수정
+	 * */
+	public void guestProductUpdate(GuestProduct guestProduct);
+	
+	/**
+	 * 방문 회원 상품 삭제
+	 * */
+	public void guestProductDelete(Long id);
+	
 	
 	
 }

@@ -18,18 +18,34 @@ import com.mobile.service.UserService;
 
 @Controller
 public class WebController2 {
-	
+
 	@Autowired
 	private UserService userService;
-	
-	
-	
+
+
+
 	//index
 	@RequestMapping("/loginPage")
 	public String loginPage() {
-		
-		
+
+
 		return "/admin/login";
+	}
+
+	//image test
+	@RequestMapping("/imageTest")
+	public String imageTest() {
+
+
+		return "/admin/imageTest";
+	}
+
+	//card
+	@RequestMapping("/admin/card")
+	public String card() {
+		
+		
+		return "/admin/imageTest";
 	}
 	
 

@@ -10,6 +10,7 @@ import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Device;
+import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
@@ -18,6 +19,7 @@ import com.mobile.repository.CallingPlanRepository;
 import com.mobile.repository.CardRepository;
 import com.mobile.repository.CarrierRepository;
 import com.mobile.repository.DeviceRepository;
+import com.mobile.repository.GuestProductRepository;
 import com.mobile.repository.InstallmentRepository;
 import com.mobile.repository.ProductsRepository;
 import com.mobile.repository.WiredGoodsRepository;
@@ -48,6 +50,8 @@ public class ProductServiceImpl implements ProductService {
 	WiredGoodsRepository wiredGoodsRepository;
 	@Autowired
 	CardRepository cardRepository;
+	@Autowired
+	GuestProductRepository guestProductRepository;
 	
 	
 	@Override
@@ -425,19 +429,82 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void cardInsert(Card card) {
-		// TODO Auto-generated method stub
+		cardRepository.save(card);
 		
 	}
 
 	@Override
 	public void cardUpdate(Card card) {
-		// TODO Auto-generated method stub
+
+		Card c = cardRepository.findById(card.getCardId()).orElse(null);
+		if(c!=null & card !=null) {
+			if(card.getCardImg()!=null) {
+				c.setCardImg(card.getCardImg());
+			}
+			
+			if(card.getCardName()!=null) {
+				c.setCardName(card.getCardName());
+			}
+			
+			if(card.getCarrier()!=null) {
+				c.setCarrier(card.getCarrier());
+			}
+			
+			if(card.getDiscount()!=null) {
+				c.setDiscount(card.getDiscount());
+			}
+			
+			if(card.getMinCardFee()!=null) {
+				c.setMinCardFee(card.getMinCardFee());
+			}
+			
+			if(card.getState()!=null) {
+				c.setState(card.getState());
+			}
+			cardRepository.save(c);
+			
+		}
 		
 	}
 
 	@Override
 	public void cardDelete(Long cardId) {
-		// TODO Auto-generated method stub
+		
+		Card card = cardRepository.findById(cardId).orElse(null);
+		
+		card.setState(0);
+		
+		cardRepository.save(card);
+	}
+
+	@Override
+	public List<GuestProduct> guestProductSelectAll() {
+		
+		return guestProductRepository.findAll();
+	}
+
+	@Override
+	public GuestProduct guestProductSelectById(Long id) {
+		
+		return guestProductRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public void guestProductInsert(GuestProduct guestProduct) {
+		
+		guestProductRepository.save(guestProduct);
+		
+	}
+
+	@Override
+	public void guestProductUpdate(GuestProduct guestProduct) {
+		
+		
+	}
+
+	@Override
+	public void guestProductDelete(Long id) {
+		guestProductRepository.deleteById(id);
 		
 	}
 

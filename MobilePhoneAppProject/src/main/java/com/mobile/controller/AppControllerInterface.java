@@ -217,6 +217,10 @@ public interface AppControllerInterface {
 	// memembers id로 리뷰 조회
 	@RequestMapping("/app/getReviewByMemberId")
 	public String getReviewByMemberId(Long memberId);
+
+	String getAllGuestProduct();
+
+	String getGuestProduct(Long id);
 	
 	
 	
