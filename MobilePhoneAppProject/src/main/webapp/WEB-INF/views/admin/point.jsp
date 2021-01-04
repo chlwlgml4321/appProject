@@ -29,53 +29,11 @@
 	
 	
 <script type="text/javascript">
-	$(document).ready(function(){
-		$(".btn").click(function(){
-			if($(this).attr("class") == "btn btn-success"){
-				
-				
-				var result = confirm('회원의 상태를 비활성화 시키겠습니까?');
-						
-				if(result){
-					
-					$(this).attr("class","btn btn-warning");
-					$(this).children().text("탈퇴");
-					
-					changeState($(this).attr("id"));
-					
-					
-				}
-			} else if(($(this).attr("class") == "btn btn-warning")){
-				var result = confirm('회원을 상태를 활성화 시키겠습니까?');
-				if(result){
-					
-					
-					
-					$(this).attr("class","btn btn-success");
-					$(this).children().text("정상");
-					
-					changeState($(this).attr("id"));
-				}
-			}
-			
-			
-		});
-		
-		
-		function changeState(id) {  
-		    alert(id);
-		    $.ajax({
-		        type : 'GET',
-		        url : "/changeUserSate",
-		        data : {"id" : id},
-		        success : function (data) {
-		                         
-		        }
+$(document).ready(function(){
+	
+	
+});
 
-		    });
-		}
-		
-	});
 
 </script>	
 </head>
@@ -129,7 +87,8 @@
           <span>BlackList</span></a>
       </li>
       
-     <!-- 대기중인고객 관리 -->
+      
+      <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
         <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
@@ -137,8 +96,7 @@
           
       </li>  
       
-
- <!-- 지역 관리 Divider -->
+      <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -150,7 +108,7 @@
       <li class="nav-item  active">
         <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
-          <span>Region</span></a>
+          <span>REGION</span></a>
           
       </li>
       
@@ -161,10 +119,10 @@
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li> 
+      </li>  
       
-
-    <!-- 지점 관리 Divider -->
+      
+      <!-- 지점 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -188,6 +146,7 @@
           <span>지점 등록</span></a>
           
       </li>  
+      
 
 
       
@@ -214,8 +173,7 @@
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
-      </li>      
-
+      </li>  
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
@@ -227,20 +185,10 @@
       <li class="nav-item">
         <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>공지사항 보기</span></a>
+          <span>NOTICE</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="product">
-          <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -516,7 +464,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">회원 목록</h1>
+          <h1 class="h3 mb-2 text-gray-800"> ${members.name}님의 포인트 목록</h1>
           
 
           <!-- DataTales Example -->
@@ -525,87 +473,56 @@
             <div class="card-body">
               <div class="table-responsive">
               	<c:choose>
-	              	<c:when test="${empty members}">
-	              		<h3>등록된 회원이 없습니다.</h3>
-	              	</c:when>
-	              	
-	              	<c:otherwise>
+					<c:when test="${empty point}">
+						<h3>등록된 포인트가 없습니다.</h3>
+					</c:when>
+					<c:otherwise>
+						
+					<div class="form-group col-md-2" style="float:right;">
+					<input type='hidden' id ="searchMemberId" name='memberId' value="${members.memberId}">
+					
+					 	<select id="searchPointState" class="form-control" name="pointState">
+							<option value="1">사용포인트 </option>
+							<option value="0">미사용 포인트</option>
+				      	</select>
+				      	
+							<button type="button" onclick="location.href='${pageContext.request.contextPath}/usingPoint'" class="btn btn-primary">조회하기</button>
+			    	</div>
+			    	<br>
+			    	<br>
+			    	
+			    
+			    
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr>
-	                      <th>profile</th>
-	                      <th>ID</th>
-	                      <th>방문여부</th>
-	                      <th>회원코드</th>
-	                      <th>이름</th>
-	                      <th>비밀번호</th>
-	                      <th>핸드폰</th>
-	                      <th>가입일자</th>
-	                      <th>지역</th>
-	                      
-	                      <th>지점 id</th>
-	                      <th>회원상태</td>
-	                      <th>포인트 관리</td>
+	                   
+	                  
+	                      <th>pointId</th>
+	                      <th>포인트 이름</th>
+	                      <th> 포인트 </th>
+	                      <th>발급일</th>
+	                      <th>수정</th>
+	                      <th>삭제</th>
 	                      
 	                    </tr>
 	                  </thead>
 	                 
 	                  <tbody>
-	                  	<c:forEach items="${members}" var="members">
+	                  	<c:forEach items="${points}" var="points">
 	                    <tr>
-	                      <td>${members.profileImg}</td>
-	                      <td>${members.memberId}</td>
-	                      <td>${members.isVisitor}</td>
-	                      <td>${members.memberCode}</td>
-	                      <td>${members.name}</td>
-	                      <td>${members.password}</td>
-	                      <td>${members.phone}</td>
-	                      <td>${members.regDate}</td>
-	                      <td>${members.regions}</td>
-	  					  <td>${members.office.officeId}</td> 
-	  					 <c:choose>
-	  					 	<c:when test="${members.state==1}">
-	  					 		<td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${members.memberId}">
-                    					<span class="text">정상</span>
-                  					</a>
-	  					 	</c:when>
-	  					 	
-	  					 	<c:otherwise>
-	  					 		<td style="color: red;">
-	  					 		<a href="#" class="btn btn-warning" id= "${members.memberId}">
-                    					<span class="text">탈퇴</span>
-                  					</a>
-	  					 	</c:otherwise>
-	  					 </c:choose>
+	                      <td> 
+	                      ${points.pointId}
+	              		  </td>
+	                      <td>${points.point}</td>
+	                      <td>${points.pointName}</td>
+	                      <td>${points.regDate}</td>
 	  					 
-	                      <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/point/${members.memberId}"  class="btn btn-primary"  id="${products.productsId}">
-                    					<span class="text">관리</span>
+	  					  <td style="color: green;">
+	  					 		<a href="${pageContext.request.contextPath}/pointDetail/${callingPlan.callingPlanId}"  class="btn btn-primary"  id="${callingPlan.callingPlanId}">
+                    					<span class="text">수정</span>
                   					</a>
-	                     
-	                     
-	                      <%--  <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td> --%> 
-	                   
-	                     <%--  <c:choose>
-	                      	<c:when test="${members.state==1}">
-	                      		<td style="color: green;">
-	                      		
-	                      			<a href="#" class="btn btn-success" id="${members.memberId}">
-                    					<span class="text">추가</span>
-                  					</a>
-	                      		</td>
-	                      	</c:when>
-	                      	
-	                      	<c:otherwise>
-	                      		<td style="color: red;">
-	                	      		<a href="#" class="btn btn-warning" id= "${members.memberId}">
-                    					<span class="text">블랙리스트</span>
-                  					</a>
-	                      		</td>
-	                      	</c:otherwise>
-	                      
-	                      </c:choose> --%>
+	                      <td>${points.regDate}</td>
 	                    </tr>
 	                    </c:forEach>
 	                   
@@ -613,6 +530,11 @@
 	                </table>
 	                </c:otherwise>
                 </c:choose>
+                
+                </br>
+                						<div class="form-group col-md-2">
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/callingPlanRegister'" class="btn btn-primary">요금제 등록하기</button>
+										</div>
               </div>
             </div>
           </div>

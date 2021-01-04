@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +28,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Products {
 
 	@Id
@@ -48,12 +53,24 @@ public class Products {
 	@JoinColumn(name="deviceId")
 	Device device;
 	
+	
+	/* activation_type :
+	* 0 – 번호이동
+	* 1 – 기기변경
+	*/
 	Integer activationType;
 	
+	//마켓지원금
 	Integer marketSupportFund;
 	
+	//공시지원금
 	Integer mainSupportFund;
 	
+	
+	/*isReccomendationProduct : 
+	* 0 - 추천 상품 아님(디폴트)
+	* 1 - 추천 상품임
+	*/
 	Integer isReccomendationProducts;
 	
 	/**

@@ -29,54 +29,15 @@
 	
 	
 <script type="text/javascript">
-	$(document).ready(function(){
-		$(".btn").click(function(){
-			if($(this).attr("class") == "btn btn-success"){
-				
-				
-				var result = confirm('회원의 상태를 비활성화 시키겠습니까?');
-						
-				if(result){
-					
-					$(this).attr("class","btn btn-warning");
-					$(this).children().text("탈퇴");
-					
-					changeState($(this).attr("id"));
-					
-					
-				}
-			} else if(($(this).attr("class") == "btn btn-warning")){
-				var result = confirm('회원을 상태를 활성화 시키겠습니까?');
-				if(result){
-					
-					
-					
-					$(this).attr("class","btn btn-success");
-					$(this).children().text("정상");
-					
-					changeState($(this).attr("id"));
-				}
-			}
-			
-			
-		});
-		
-		
-		function changeState(id) {  
-		    alert(id);
-		    $.ajax({
-		        type : 'GET',
-		        url : "/changeUserSate",
-		        data : {"id" : id},
-		        success : function (data) {
-		                         
-		        }
 
-		    });
-		}
+$(document).ready(function(){
+	
+	$("#registerProduct").click(function(){
+		$("#productForm").submit();
 		
 	});
-
+});
+	
 </script>	
 </head>
 <body id="page-top">
@@ -100,12 +61,15 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index">
+        <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
 
       <!-- 유저관리 Divider -->
+      <hr class="sidebar-divider">
+
+     <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
@@ -129,7 +93,8 @@
           <span>BlackList</span></a>
       </li>
       
-     <!-- 대기중인고객 관리 -->
+      
+      <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
         <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
@@ -137,8 +102,7 @@
           
       </li>  
       
-
- <!-- 지역 관리 Divider -->
+      <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -150,7 +114,7 @@
       <li class="nav-item  active">
         <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
-          <span>Region</span></a>
+          <span>REGION</span></a>
           
       </li>
       
@@ -161,10 +125,10 @@
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li> 
+      </li>  
       
-
-    <!-- 지점 관리 Divider -->
+      
+      <!-- 지점 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -214,20 +178,21 @@
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
-      </li>      
+      </li> 
+      
+      
 
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        공지사항
+        상품 관리
       </div>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="notice">
+      <li class="nav-item active">
+        <a class="nav-link" href="category">
           <i class="fas fa-fw fa-table"></i>
-          <span>공지사항 보기</span></a>
+          <span>카테고리 관리</span></a>
       </li>
       
       <li class="nav-item">
@@ -512,114 +477,90 @@
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+<!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">회원 목록</h1>
-          
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            
-            <div class="card-body">
-              <div class="table-responsive">
-              	<c:choose>
-	              	<c:when test="${empty members}">
-	              		<h3>등록된 회원이 없습니다.</h3>
-	              	</c:when>
-	              	
-	              	<c:otherwise>
-	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-	                  <thead>
-	                    <tr>
-	                      <th>profile</th>
-	                      <th>ID</th>
-	                      <th>방문여부</th>
-	                      <th>회원코드</th>
-	                      <th>이름</th>
-	                      <th>비밀번호</th>
-	                      <th>핸드폰</th>
-	                      <th>가입일자</th>
-	                      <th>지역</th>
-	                      
-	                      <th>지점 id</th>
-	                      <th>회원상태</td>
-	                      <th>포인트 관리</td>
-	                      
-	                    </tr>
-	                  </thead>
-	                 
-	                  <tbody>
-	                  	<c:forEach items="${members}" var="members">
-	                    <tr>
-	                      <td>${members.profileImg}</td>
-	                      <td>${members.memberId}</td>
-	                      <td>${members.isVisitor}</td>
-	                      <td>${members.memberCode}</td>
-	                      <td>${members.name}</td>
-	                      <td>${members.password}</td>
-	                      <td>${members.phone}</td>
-	                      <td>${members.regDate}</td>
-	                      <td>${members.regions}</td>
-	  					  <td>${members.office.officeId}</td> 
-	  					 <c:choose>
-	  					 	<c:when test="${members.state==1}">
-	  					 		<td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${members.memberId}">
-                    					<span class="text">정상</span>
-                  					</a>
-	  					 	</c:when>
-	  					 	
-	  					 	<c:otherwise>
-	  					 		<td style="color: red;">
-	  					 		<a href="#" class="btn btn-warning" id= "${members.memberId}">
-                    					<span class="text">탈퇴</span>
-                  					</a>
-	  					 	</c:otherwise>
-	  					 </c:choose>
-	  					 
-	                      <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/point/${members.memberId}"  class="btn btn-primary"  id="${products.productsId}">
-                    					<span class="text">관리</span>
-                  					</a>
-	                     
-	                     
-	                      <%--  <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td> --%> 
-	                   
-	                     <%--  <c:choose>
-	                      	<c:when test="${members.state==1}">
-	                      		<td style="color: green;">
-	                      		
-	                      			<a href="#" class="btn btn-success" id="${members.memberId}">
-                    					<span class="text">추가</span>
-                  					</a>
-	                      		</td>
-	                      	</c:when>
-	                      	
-	                      	<c:otherwise>
-	                      		<td style="color: red;">
-	                	      		<a href="#" class="btn btn-warning" id= "${members.memberId}">
-                    					<span class="text">블랙리스트</span>
-                  					</a>
-	                      		</td>
-	                      	</c:otherwise>
-	                      
-	                      </c:choose> --%>
-	                    </tr>
-	                    </c:forEach>
-	                   
-	                  </tbody>
-	                </table>
-	                </c:otherwise>
-                </c:choose>
-              </div>
-            </div>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            상품 등록하기</h1>
           </div>
 
-        </div>
-        <!-- /.container-fluid -->
-
+            
+			   <form method="post" id="productForm" action="${pageCotext.request.contextPath}/productForm" >
+			  <div>
+		  		
+		  		 <input type='hidden' name='productsId' value="${products.productsId}">
+		  		 
+		  		 
+				<div class="form-group col-md-2">
+			      <label for="inputState">통신사</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			      <option selected>통신사 선택</option>
+			        		<c:forEach items="${carrier}" var="car">
+							<option value="${car.carrierId}">${car.carrierName}</option>
+				   			</c:forEach>
+			      </select>
+			    </div>
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">디바이스 이름</label>
+			      <select id="deviceId" class="form-control" name="deviceId">
+			      <option selected>디바이스 선택</option>
+			        		<c:forEach items="${device}" var="device">
+							<option value="${device.deviceId}">${device.deviceName}</option>
+				   			</c:forEach>
+			      </select>
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">요금제 이름</label>
+			      <select id="callingPlanId" class="form-control" name="callingPlanId">
+			      <option selected>요금제 선택</option>
+			        		<c:forEach items="${callingPlan}" var="callingPlan">
+							<option value="${callingPlan.callingPlanId}">${callingPlan.planName}</option>
+				   			</c:forEach>
+			      </select>
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">지점 이름</label>
+			      <select id="officeId" class="form-control" name="officeId">
+			      <option selected>지점 선택</option>
+			        		<c:forEach items="${office}" var="office">
+							<option value="${office.officeId}">${office.officeName}</option>
+				   			</c:forEach>
+			      </select>
+			      </div>
+			      
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">activationType</label>
+			      <select id="activationType" class="form-control" name="activationType">
+					<option selected>activationType 선택</option>
+					<option  value ='1'>기기변경 </option>
+					<option  value ='0'>번호이동 </option>
+			      </select>
+			    </div> 
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">공시지원금</label>
+			      <input type="text" class="form-control" id="mainSupportFund"  placeholder="원" name="mainSupportFund">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">마켓지원금</label>
+			      <input type="text" class="form-control" id="marketSupportFund"  placeholder="원" name="marketSupportFund">
+			    </div>
+			    
+			    
+			  </div>
+			  
+			  <div class="form-group col-md-2" >
+			   <button type="submit" id="registerProduct" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
 

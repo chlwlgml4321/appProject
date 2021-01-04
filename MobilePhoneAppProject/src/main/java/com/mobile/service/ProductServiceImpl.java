@@ -12,6 +12,7 @@ import com.mobile.domain.Carrier;
 import com.mobile.domain.Device;
 import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
+import com.mobile.domain.Office;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.ApplicationRepository;
@@ -353,7 +354,19 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void productChangeState(Long productsId) {
-		// TODO Auto-generated method stub
+		Products p =productsRepository.findById(productsId).orElse(null);
+		int state;
+		
+		if(p !=null) {
+			state = p.getState();
+			
+			if(state ==0) {
+				p.setState(1);
+			} else {
+				p.setState(0);
+			}
+			productsRepository.save(p);
+		}
 
 	}
 

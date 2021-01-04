@@ -12,9 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Carrier;
+import com.mobile.domain.Device;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.Point;
+import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
@@ -62,15 +65,15 @@ public class WebController {
 			
 
 	
-	@RequestMapping("/memberInsert")
-	public String memberInsert() {
-		
-		Members member= new Members(null, "이하", "01065534732", "강릉", null,"ABCD", "byeluv", 1, 2, null, null);
-		
-		userService.memberInsert(member);
-		return null;
-		
-	}
+//	@RequestMapping("/memberInsert")
+//	public String memberInsert() {
+//		
+//		Members member= new Members(null, "이하", "01065534732", "강릉", null,"ABCD", "byeluv", 1, 2, null, null);
+//		
+//		userService.memberInsert(member);
+//		return null;
+//		
+//	}
 	
 	//멤버 state 바꾸기 
 	@RequestMapping("/changeUserSate")
@@ -315,11 +318,17 @@ public class WebController {
 		
 		//office 디테일
 		@RequestMapping("/officeDetail/{officeId}")
-		public ModelAndView officeDetail(@PathVariable Long officeId) {
+		public ModelAndView officeDetail(@PathVariable Long officeId, Model model) {
 				
 			Office office = userService.officeSelectById(officeId);
 			System.out.println("officeDetail 진입");
 			System.out.println(officeId);
+			
+			List<Region> regions= userService.regionSelectAll();
+			
+			
+			model.addAttribute("regions", regions);
+			
 			return new ModelAndView("admin/officeUpdate","office", office);
 		}
 		
@@ -410,5 +419,180 @@ public class WebController {
 							
 			return "/admin/callingPlan";
 		}
+		
+		
+		@RequestMapping("/device")
+		public String device(Model model) {
+			
+			List<Device> device = productService.deviceSelectAll();
+			model.addAttribute("device", device);
+			return "/admin/device";
+		}
+		
+		//deviceRegister 진입
+		@RequestMapping("/deviceRegister")
+		public String deviceRegister(Model model) {
+			System.out.println("deviceRegister 진입");
+			
+			return "/admin/deviceRegister";
+			
+		}
+
+		
+		//device 등록 
+		@RequestMapping("/deviceForm")
+		public String deviceForm(Device device, Model model) {
+			
+			List<Device> devices = productService.deviceSelectAll();
+			
+			model.addAttribute("device", devices);
+			
+			productService.deviceInsert(device);
+			
+			return "redirect:/device";
+			
+		}
+		
+		//deviceDetail
+		@RequestMapping("/deviceDetail/{deviceId}")
+		public ModelAndView deviceDetail(@PathVariable Long deviceId, Model model) {
+					
+			Device device= productService.deviceSelectById(deviceId);
+			System.out.println("##deviceDetail");
+			System.out.println(deviceId);
+			
+			return new ModelAndView("/admin/deviceUpdate", "device", device);
+		}
+		
+		//DeviceState 바꾸기 
+		@RequestMapping("/changeDeviceState")
+		@ResponseBody
+		public String changeDeviceSate(Long id) {
+							
+			Device device= new Device();
+			device.setDeviceId(id);
+			productService.deviceChangeState(id);
+			return "";
+		}
+		
+		@RequestMapping("/products")
+		public String product(Model model) {
+			
+			List<Products> products = productService.productsSelectAll();
+			model.addAttribute("products", products);
+			return "/admin/products";
+		}
+		
+		
+		//deviceRegister 진입
+		@RequestMapping("/productRegister")
+		public String productRegister(Model model) {
+			System.out.println("productRegister 진입");
+			
+			List<Carrier> carrier= productService.carrierSelectAll();
+			model.addAttribute("carrier",carrier);	
+			
+			List<CallingPlan> callingPlan = productService.callingPlanSelectAll();
+			model.addAttribute("callingPlan", callingPlan);
+			
+			List<Device> device = productService.deviceSelectAll();
+			model.addAttribute("device", device);
+			
+			List<Office> office = userService.officeSelectAll();
+			model.addAttribute("office", office);
+			
+			return "/admin/productRegister";
+					
+		}
+
+		//product 등록 
+		@RequestMapping("/productForm")
+		public String productForm(Products products, Model model, Long carrierId, Long callingPlanId, Long officeId, Long deviceId) {
+			List<Products> product = productService.productsSelectAll();
+			
+			model.addAttribute("products", products);
+			
+			Carrier carrier= productService.carrierSelectById(carrierId);
+			products.setCarrier(carrier);
+			
+			CallingPlan callingPlan=productService.callingPlanSelectById(callingPlanId);
+			products.setCallingPlan(callingPlan);
+			
+			Office office = userService.officeSelectById(officeId);
+			products.setOffice(office);
+			
+			Device device= productService.deviceSelectById(deviceId);
+			products.setDevice(device);
+			
+			productService.productInsert(products);
+			
+			return "redirect:/products";	
+		}	
+		
+		
+		//productDetail
+		@RequestMapping("/productDetail/{productsId}")
+		public ModelAndView productDetail(@PathVariable Long productsId, Model model) {
+			// 상품아이디로 상품을 조회해서 디테일에 뿌려주는 기능임 	
+			
+			Products products= productService.productsSelectById(productsId);
+			System.out.println("##productDetail");
+			
+			
+			List<CallingPlan> callingPlans= productService.callingPlanSelectAll();
+			List<Office> offices= userService.officeSelectAll();
+			List<Device> devices= productService.deviceSelectAll();
+			
+			
+			model.addAttribute("callingPlans", callingPlans);
+			model.addAttribute("offices", offices);
+			model.addAttribute("devices", devices);
+			
+			return new ModelAndView("/admin/productUpdate", "products", products);
+		}
+		
+		//callingPlanUpdate 수정하기 
+		@RequestMapping("/productUpdate/{productsId}")
+		public String productUpdate(@PathVariable Long productsId,  Products products, Model model) {
+			
+			// 수정해서 - 새로운 디비를update 치고  -> 새로운 데이터를 이용해서 화면으로 보여주는 로직  
+			System.out.println("##productUpdate");
+			productService.productUpdate(products);
+			List<Products> product = productService.productsSelectAll();
+			
+			model.addAttribute("products", products);	
+			
+			return "/admin/products";
+		}
+			
+		//ProductSate 바꾸기 
+		@RequestMapping("/changeProductSate")
+		@ResponseBody
+		public String changeProductSate(Long id) {
+									
+			Products products=new Products();
+			products.setProductsId(id);
+			System.out.println("비활성화");
+			productService.productChangeState(id);
+			return "";
+		}
+		
+		
+		//memberId에 해당하는 point목록으로 가기 
+		@RequestMapping("/point/{memberId}")
+		public String point(@PathVariable Long memberId, Point point, Model model) {
+			
+			List<Point> points= userService.pointSelectByMemberId(memberId);
+			Members member= userService.memberSelectById(memberId);
+			System.out.println("이름: "+member.getName());
+			
+			System.out.println("//memberId에 해당하는 point목록으로 가기 ");
+			model.addAttribute("members", member);
+			model.addAttribute("points", points);
+			return "/admin/point";
+		}
+		
+	
+		
 		
 }

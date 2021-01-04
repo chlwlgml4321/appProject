@@ -471,6 +471,23 @@
 			  
 			  		<input type='hidden' name='regionId' value="${office.officeId}">
 		  		
+		  		
+		  			 <div class="form-group col-md-2">
+			      <label for="inputState">지역</label>
+			      <select id="regionId" class="form-control" name="regionId">
+			     	 <option selected>지역 선택</option>
+			        		<c:forEach items="${regions}" var="regions">
+			        			<c:choose>
+				        			<c:when test = "${regions.regionId == office.region.regionId}">
+				        				<option value="${regions.regionId}" selected="selected" >${regions.regionName}</option>
+				        			</c:when>
+				        			<c:otherwise>
+				        				<option value="${regions.regionId}">${regions.regionName}</option>
+				        			</c:otherwise>
+								</c:choose>
+				   			</c:forEach>
+					</select>
+			    </div> 
 			    	<div class="form-group col-md-2">
 			      		<label for="inputEmail4">지점 이름</label>
 			      		<input type="text" class="form-control" value="${office.officeName}" name="officeName">
