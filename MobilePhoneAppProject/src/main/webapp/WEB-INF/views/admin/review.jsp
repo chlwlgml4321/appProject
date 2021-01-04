@@ -30,15 +30,41 @@
 	
 <script type="text/javascript">
 $(document).ready(function(){
-		$("#updateNotice").click(function(){
-			$("#updateForm").submit();
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-warning"){
 			
-		});
+			
+			var result = confirm('삭제하시겠습니까?');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-success");
+				$(this).children().text("삭제됨");
+				
+				changeDelete($(this).attr("id"));
+				
+				
+			}
+		} 
+		
 		
 	});
+	
+	
+	function changeDelete(id) {  
+	    alert(id);
+	    $.ajax({
+	        type : 'GET',
+	        url : "/changeDelete",
+	        data : {"id" : id},
+	        success : function (data) {
+	        	 location.reload();              
+	        }
 
-		
-
+	    });
+	}
+	
+});
 
 
 </script>	
@@ -77,9 +103,9 @@ $(document).ready(function(){
         유저 관리
       </div>
 
-      		 <!-- 유저 관리 -->
+      <!-- 유저 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -88,21 +114,21 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
       
+      
       <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+        <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
           
-      </li> 
-
-
- <!-- 지역 관리 Divider -->
+      </li>  
+      
+      <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -112,18 +138,72 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
-          <span>Region</span></a>
+          <span>REGION</span></a>
           
       </li>
       
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
+          
+      </li>  
+      
+      
+      <!-- 지점 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        office 관리
+      </div>
+
+      <!-- 지점 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="office">
+          <i class="fas fa-fw fa-table"></i>
+          <span>OFFICE</span></a>
+          
+      </li>
+      
+      
+      <!-- 지역 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="officeRegister">
+          <i class="fas fa-fw fa-table"></i>
+          <span>지점 등록</span></a>
+          
+      </li>  
+      
+
+
+      
+       <!-- 요금제 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        요금제 관리
+      </div>
+
+      <!-- 요금제 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="callingPlan">
+          <i class="fas fa-fw fa-table"></i>
+          <span>요금제</span></a>
+          
+      </li>
+      
+      
+      <!-- 요금제 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="callingPlanRegister">
+          <i class="fas fa-fw fa-table"></i>
+          <span>요금제 등록</span></a>
           
       </li>  
       <!-- 상품 관리 Divider -->
@@ -135,22 +215,12 @@ $(document).ready(function(){
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/notice">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>공지사항 보기</span></a>
+          <span>NOTICE</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="product">
-          <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -426,72 +496,71 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
+          <h1 class="h3 mb-2 text-gray-800">리뷰 목록</h1>
           
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             
             <div class="card-body">
-             <div class="col-lg-12">
-
-              <!-- Roitation Utilities -->
-              
-              <div class="card">
-             
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate} </h6>
-                </div>
-                <div class="card-body text-left">
-                ${notice.contents}
-               
-                </div>
-             
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty review}">
+	              		<h3>등록된 리뷰가 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
+	                   
+	                  
+	                      <th>reviewId</th>
+	                      <th>제목</th>
+	                      <th>작성자</th>
+	                      <th>디바이스 이름</th>
+	                      <th>지점</th>
+	                      <th>작성일</th>
+	                      <th>삭제</th>
+	                      
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${review}" var="review">
+	                    <tr>
+	                     
+	                      <td>${review.reviewId}</td>
+	                      <td>
+	                      	<a href="${pageContext.request.contextPath}/reviewDetail/${review.reviewId}">${review.content}</a>
+	                      </td>
+	                      <td>${review.member.name}</td>
+	                      <td>${review.device.deviceName}</td>
+	                      <td>${review.office.officeName}</td>
+	                      <td>${review.regDate}</td>
+	  					  <td style="color: red;">
+	  					 		<button class="btn btn-warning"  id="${review.reviewId}">
+                    					<span class="text">삭제</span>
+                  					</button>
+	                     
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
               </div>
-
             </div>
-            
-            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="contents" value="${notice.contents}">
-			</form>
-
-				 <div class="form-group col-md-2" >
-				 </br>
-			   <button type="submit" id="updateNotice" class="btn btn-primary">
-			   수정</button>
-			  </div>
-			 
-            </div>
-				
-				
-				
-				
-				
-				
-				
-				
-			<!-- <table >
-				<tr>
-				<td>
-				<input type="submit" value="수정하기" style="text-align: center;">
-				</td>
-				</tr>
-			</table> -->
-							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="content" value="${notice.content}">
-			</form> --%>
-			
-             
-             
           </div>
 
         </div>
         <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

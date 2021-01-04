@@ -22,7 +22,8 @@
 
   <!-- Custom styles for this template-->
   <link href="${pageCotext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/css/style.css">
+  
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
@@ -426,7 +427,7 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
+          <h1 class="h3 mb-2 text-gray-800">${review.member.name}님의 리뷰 </h1>
           
 
           <!-- DataTales Example -->
@@ -440,27 +441,63 @@ $(document).ready(function(){
               <div class="card">
              
                 <div class="card-header py-3">
+                <h5>${review.member.name}님</h5>
+                
                   <h6 class="m-0 font-weight-bold text-primary">
-                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate} </h6>
+                 	모델명 : ${review.device.deviceName}
+                 </h6>
+                 
+                  <h6 class="m-0 font-weight-bold text-primary">
+                 	${review.carrier.carrierName} / 
+                 	<c:choose>
+	  					 <c:when test="${review.activationType==0}">
+	  					 	<th>번호이동</th>
+	  					 </c:when>
+	  					 	
+	  					 <c:otherwise>
+	  					 	<th>기기변경</th>
+	  					 </c:otherwise>
+	  				</c:choose>/ ${review.office.officeName}
+                 </h6>
+                 <h6 align="right" class="mb-1 small">
+                 
+	  				
+	  					<%-- <c:forEach begin="0" end="${review.rate-1}" items="${reviewBest}" var="reviewBest"  >
+	                            
+	                    	<i class="fa fa-star icolor"></i>
+<!-- 	                    <i class="fa fa-star"></i> -->
+	                   </c:forEach> --%>
+	                   
+	                <div class="rating-icon">
+					<c:forEach begin="1" end="5" varStatus="st">
+						<c:choose >
+							<c:when test="${st.count<=review.rate}">
+							<i class="fa fa-star icolor"></i>
+							</c:when>
+						<c:otherwise>
+							<i class="fa fa-star"></i>
+						</c:otherwise>
+					</c:choose>
+					</c:forEach> 
+                    </div>  
+                      
+				 </h6>
+				 
+				 
+                  <h6 align="right" class="mb-1 small">${review.regDate}2021년 01월 04일  </h6>
+                  
                 </div>
                 <div class="card-body text-left">
-                ${notice.contents}
+                	${review.content}
                
                 </div>
              
               </div>
 
             </div>
-            
-            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="contents" value="${notice.contents}">
-			</form>
 
 				 <div class="form-group col-md-2" >
 				 </br>
-			   <button type="submit" id="updateNotice" class="btn btn-primary">
-			   수정</button>
 			  </div>
 			 
             </div>

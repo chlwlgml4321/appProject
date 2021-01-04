@@ -19,6 +19,7 @@ import com.mobile.domain.Office;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
+import com.mobile.domain.Review;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
 
@@ -592,7 +593,33 @@ public class WebController {
 			return "/admin/point";
 		}
 		
+		@RequestMapping("/review")
+		public String review(Model model) {
+			
+			List<Review> review = userService.reviewSelectAll();
+			model.addAttribute("review", review);
+			return "/admin/review";
+		}
 	
+		//review delete
+		@RequestMapping("/changeDelete")
+		@ResponseBody
+		public String changeDelete(Long id) {
+			
+			userService.reviewDelete(id);
+			return "";
+		}
+		
+		
+		//review 디테일
+		@RequestMapping("/reviewDetail/{reviewId}")
+		public ModelAndView reviewDetail(@PathVariable Long reviewId) {
+		
+			Review review= userService.reviewSelectById(reviewId);
+			System.out.println("##reviewDetail");
+			
+			return new ModelAndView("admin/reviewDetail","review", review);
+		}
 		
 		
 }
