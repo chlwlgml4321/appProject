@@ -25,5 +25,6 @@ public interface PointRepository extends JpaRepository<Point, Long> {
 	@Query("select p from Point p where p.member.memberId=?1 and p.pointState=1")
 	public List<Point> findByUsedPoint(Long memberId);
 	
+	
 		
 }
