@@ -239,7 +239,7 @@ $(document).ready(function(){
       </div>
 
       <!-- 결합 상품 관리 -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="office">
           <i class="fas fa-fw fa-table"></i>
           <span>유선 상품</span></a>
@@ -250,7 +250,7 @@ $(document).ready(function(){
   
       
       <!-- 카드 결합 -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="officeRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>카드 결합</span></a>
@@ -508,7 +508,7 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">지점 목록</h1>
+          <h1 class="h3 mb-2 text-gray-800">유선상품 목록</h1>
           
 
           <!-- DataTales Example -->
@@ -517,7 +517,7 @@ $(document).ready(function(){
             <div class="card-body">
               <div class="table-responsive">
               	<c:choose>
-	              	<c:when test="${empty cards}">
+	              	<c:when test="${empty wiredGoods}">
 	              		<h3>등록된 카드가 없습니다.</h3>
 	              	</c:when>
 	              	
@@ -525,48 +525,52 @@ $(document).ready(function(){
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr>
-	                      <th>카드 Id</th>
-	                      <th>카드 이미지</th>
-	                      <th>카드 이름</th>
+	                      <th>유선상품 Id</th>
+	                      <th>유선상품 이미지</th>
+	                      <th>유선상품 이름</th>
 	                      <th>할인</th>
-	                      <th>최소 사용 금액</th>
-	                      <th>요금제</th>
+	                      <th>통신사</th>
+	                      <th>용량</th>
+	                      <th>회선</th>
+	                      <th>요금</th>
 	                      <th>상태</th>
 	                      <th>수정</th>
 	                    </tr>
 	                  </thead>
 	                 
 	                  <tbody>
-	                  	<c:forEach items="${cards}" var="card">
+	                  	<c:forEach items="${wiredGoods}" var="wg">
 	                    <tr>
 	                      <td> 
-	                      ${card.cardId}
+	                      ${wg.wiredGoodsId}
 	              		  </td>
 	              		  
-	              		  <td><img src=${card.cardImg} width ="100px" height = "110px" ></td>
-	                      <td>${card.cardName}</td>
-	                      <td>${card.discount}</td>
-	                      <td>${card.minCardFee}</td>
-	                      <td>${card.carrier.carrierName}</td>
+	              		  <td><img src="${wg.wiredGoodsImg}" width ="100px" height = "110px" ></td>
+	                      <td>${wg.wiredGoodsName}</td>
+	                      <td>${wg.discount}</td>
+	                      <td>${wg.carrier.carrierName}</td>
+	                      <td>${wg.capacity}</td>
+	                      <td>${wg.circuit}</td>
+	                      <td>${wg.fee}</td>
 	                      
 	                     <c:choose>
-	  					 	<c:when test="${card.state==1}">
+	  					 	<c:when test="${wg.state==1}">
 	  					 		<td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${card.cardId}">
+	  					 		<a href="#" class="btn btn-success" id="${wg.wiredGoodsId}">
                     					<span class="text">활성화</span>
                   					</a>
 	  					 	</c:when>
 	  					 	
 	  					 	<c:otherwise>
 	  					 		<td style="color: red;">
-	  					 		<a href="#" class="btn btn-warning" id= "${card.cardId}">
+	  					 		<a href="#" class="btn btn-warning" id= "${wg.wiredGoodsId}">
                     					<span class="text">비활성화</span>
                   					</a>
 	  					 	</c:otherwise>
 	  					 </c:choose>
 	                      
 	                      <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/cardDetail/${card.cardId}"  class="btn btn-primary" id="${card.cardId}">
+	  					 		<a href="${pageContext.request.contextPath}/wiredGoodsDetail/${wg.wiredGoodsId}"  class="btn btn-primary" id="${wg.wiredGoodsId}">
                     					<span class="text">수정</span>
                   					</a>
 	                      <%-- <td style="color: green;">
@@ -583,7 +587,7 @@ $(document).ready(function(){
                 
                 </br>
                 						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/admin/cardRegister'" class="btn btn-primary">카드 등록하기</button>
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/wiredGoodsRegister'" class="btn btn-primary">유선상품 등록하기</button>
 										</div>
               </div>
             </div>

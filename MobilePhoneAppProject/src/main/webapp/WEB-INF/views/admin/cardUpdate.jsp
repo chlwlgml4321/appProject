@@ -29,55 +29,15 @@
 	
 	
 <script type="text/javascript">
+
 $(document).ready(function(){
-	$(".btn").click(function(){
-		if($(this).attr("class") == "btn btn-success"){
-			
-			
-			var result = confirm('지점 상태를 비활성화 시키겠습니까?');
-					
-			if(result){
-				
-				$(this).attr("class","btn btn-warning");
-				$(this).children().text("비활성화");
-				
-				changeOfficeState($(this).attr("id"));
-				
-				
-			}
-		} else if(($(this).attr("class") == "btn btn-warning")){
-			var result = confirm('지점 상태를 활성화 시키겠습니까?');
-			if(result){
-				
-				
-				
-				$(this).attr("class","btn btn-success");
-				$(this).children().text("활성화");
-				
-				changeOfficeState($(this).attr("id"));
-			}
-		}
-		
+	
+	$("#registerOffice").click(function(){
+		$("#officeForm").submit();
 		
 	});
-	
-	
-	function changeOfficeState(id) {  
-	    alert(id);
-	    $.ajax({
-	        type : 'GET',
-	        url : "/changeOfficeState",
-	        data : {"id" : id},
-	        success : function (data) {
-	                         
-	        }
-
-	    });
-	}
-	
 });
-
-
+	
 </script>	
 </head>
 <body id="page-top">
@@ -93,10 +53,23 @@ $(document).ready(function(){
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">PHONESTOR Admin</div>
+        <div class="sidebar-brand-text mx-3">Hooli Admin</div>
       </a>
 
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
       <!-- 유저관리 Divider -->
+      <hr class="sidebar-divider">
+
+     <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
@@ -105,7 +78,7 @@ $(document).ready(function(){
       </div>
 
       <!-- 유저 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
@@ -114,7 +87,7 @@ $(document).ready(function(){
       
       
        <!-- 블랙리스트 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
@@ -122,40 +95,15 @@ $(document).ready(function(){
       
       
       <!-- 대기중인고객 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
-      </li>
-      
-      <!-- 대기중인고객 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="inactiveUser">
-          <i class="fas fa-fw fa-table"></i>
-          <span>포인트 관리</span></a>
+          
       </li>  
       
-      
-     <!-- 지역 관리 Divider -->
-      <hr class="sidebar-divider">
-      
-      
-      
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        신청서 관리
-      </div>
-      
-      <!-- 지역 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="region">
-          <i class="fas fa-fw fa-table"></i>
-          <span>신청서</span></a>
-          
-      </li>
-      
-      
-      <!-- 신청서 관리 Divider -->
+
+ <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -164,24 +112,24 @@ $(document).ready(function(){
       </div>
 
       <!-- 지역 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
-          <span>REGION</span></a>
+          <span>Region</span></a>
           
       </li>
       
       
       <!-- 지역 등록 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
-      </li>  
+      </li> 
       
-      
-      <!-- 지점 관리 Divider -->
+
+    <!-- 지점 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -190,7 +138,7 @@ $(document).ready(function(){
       </div>
 
       <!-- 지점 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="office">
           <i class="fas fa-fw fa-table"></i>
           <span>OFFICE</span></a>
@@ -199,13 +147,14 @@ $(document).ready(function(){
       
       
       <!-- 지역 등록 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="officeRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>지점 등록</span></a>
           
       </li>  
-      
+
+
       
        <!-- 요금제 관리 Divider -->
       <hr class="sidebar-divider">
@@ -216,7 +165,7 @@ $(document).ready(function(){
       </div>
 
       <!-- 요금제 관리 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="callingPlan">
           <i class="fas fa-fw fa-table"></i>
           <span>요금제</span></a>
@@ -225,95 +174,117 @@ $(document).ready(function(){
       
       
       <!-- 요금제 등록 -->
-      <li class="nav-item">
+      <li class="nav-item  active">
         <a class="nav-link" href="callingPlanRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
       </li> 
-      
-            <hr class="sidebar-divider">
-      
-           <div class="sidebar-heading">
-      	결합상품 관리
-      </div>
-
-      <!-- 결합 상품 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="office">
-          <i class="fas fa-fw fa-table"></i>
-          <span>유선 상품</span></a>
-          
-      </li>
-      
-      
-  
-      
-      <!-- 카드 결합 -->
-      <li class="nav-item active">
-        <a class="nav-link" href="officeRegister">
-          <i class="fas fa-fw fa-table"></i>
-          <span>카드 결합</span></a>
-          
-      </li>  
-
-	<hr class="sidebar-divider">
-      
-           <div class="sidebar-heading">
-      	제품 관리
-      </div>
-
-      <!-- 기기 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="office">
-          <i class="fas fa-fw fa-table"></i>
-          <span>디바이스</span></a>
-          
-      </li>
-      
-      
-  
-      
-      <!-- 상품 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
-          <i class="fas fa-fw fa-table"></i>
-          <span>특가 상품</span></a>
-          
-      </li>  
-      
-      <!-- 방문 고객 상품 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
-          <i class="fas fa-fw fa-table"></i>
-          <span>방문고객 상품</span></a>
-          
-      </li>  
-      
-     <!-- 추천 상품 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
-          <i class="fas fa-fw fa-table"></i>
-          <span>추천 상품</span></a>
-          
-      </li>
-
-      
-      
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        리뷰 관리
+        상품 관리
       </div>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="notice">
+      <li class="nav-item active">
+        <a class="nav-link" href="category">
           <i class="fas fa-fw fa-table"></i>
-          <span>리뷰</span></a>
+          <span>카테고리 관리</span></a>
       </li>
       
+      <li class="nav-item">
+        <a class="nav-link" href="product">
+          <i class="fas fa-fw fa-table"></i>
+          <span>상픔 관리</span></a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="hotDealProduct">
+          <i class="fas fa-fw fa-table"></i>
+          <span>핫딜 상품 관리</span></a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="myList">
+          <i class="fas fa-fw fa-table"></i>
+          <span>마이 리스트 관리</span></a>
+      </li>
+      
+		<li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>모든 핫딜 관리</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="recommendation">추천 상품 관리</a>
+            <a class="collapse-item" href="homeRecommendation">홈 화면 추천 상품 관리</a>
+            <a class="collapse-item" href="childRecommendation">아이 추천 상품 관리</a>
+            <a class="collapse-item" href="timeLimtRecommendation">Time Limit 상품 관리</a>
+            <a class="collapse-item" href="newProduct">신상품 관리</a>
+            <a class="collapse-item" href="bestSeling">Best Selling 관리</a>
+            
+          </div>
+        </div>
+      </li>
+      
+      
+	  <!-- 데이터 관리 Divider -->
+      <hr class="sidebar-divider">
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Data 통계
+      </div>
+	
+	  <li class="nav-item">
+        <a class="nav-link" href="tracking">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>트래킹 조회</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="purchase">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>구매 내역 조회</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="price">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>가격 변동 조회</span></a>
+      </li>
+	
+      <!-- 알림 관리 Divider -->
+      <hr class="sidebar-divider">
+	  <div class="sidebar-heading">
+        알림 관리
+      </div>
+	  <li class="nav-item">
+        <a class="nav-link" href="benefitAlert">
+          <i class="fas fa-fw fa-table"></i>
+          <span>혜택 알림 관리</span></a>
+      </li>
+	  
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Feedback & Message
+      </div>
+            
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+	  <li class="nav-item">
+        <a class="nav-link" href="feedback">
+          <i class="fas fa-fw fa-table"></i>
+          <span>피드백 조회</span></a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="message">
+          <i class="fas fa-fw fa-table"></i>
+          <span>메시지 조회</span></a>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -504,94 +475,62 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+<!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">지점 목록</h1>
-          
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            
-            <div class="card-body">
-              <div class="table-responsive">
-              	<c:choose>
-	              	<c:when test="${empty cards}">
-	              		<h3>등록된 카드가 없습니다.</h3>
-	              	</c:when>
-	              	
-	              	<c:otherwise>
-	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-	                  <thead>
-	                    <tr>
-	                      <th>카드 Id</th>
-	                      <th>카드 이미지</th>
-	                      <th>카드 이름</th>
-	                      <th>할인</th>
-	                      <th>최소 사용 금액</th>
-	                      <th>요금제</th>
-	                      <th>상태</th>
-	                      <th>수정</th>
-	                    </tr>
-	                  </thead>
-	                 
-	                  <tbody>
-	                  	<c:forEach items="${cards}" var="card">
-	                    <tr>
-	                      <td> 
-	                      ${card.cardId}
-	              		  </td>
-	              		  
-	              		  <td><img src=${card.cardImg} width ="100px" height = "110px" ></td>
-	                      <td>${card.cardName}</td>
-	                      <td>${card.discount}</td>
-	                      <td>${card.minCardFee}</td>
-	                      <td>${card.carrier.carrierName}</td>
-	                      
-	                     <c:choose>
-	  					 	<c:when test="${card.state==1}">
-	  					 		<td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${card.cardId}">
-                    					<span class="text">활성화</span>
-                  					</a>
-	  					 	</c:when>
-	  					 	
-	  					 	<c:otherwise>
-	  					 		<td style="color: red;">
-	  					 		<a href="#" class="btn btn-warning" id= "${card.cardId}">
-                    					<span class="text">비활성화</span>
-                  					</a>
-	  					 	</c:otherwise>
-	  					 </c:choose>
-	                      
-	                      <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/cardDetail/${card.cardId}"  class="btn btn-primary" id="${card.cardId}">
-                    					<span class="text">수정</span>
-                  					</a>
-	                      <%-- <td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${office.officeId}">
-                    					<span class="text">삭제</span>
-                  					</a> --%>
-	                    </tr>
-	                    </c:forEach>
-	                   
-	                  </tbody>
-	                </table>
-	                </c:otherwise>
-                </c:choose>
-                
-                </br>
-                						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/admin/cardRegister'" class="btn btn-primary">카드 등록하기</button>
-										</div>
-              </div>
-            </div>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            카드 수정하기</h1>
           </div>
 
-        </div>
-        <!-- /.container-fluid -->
-
+            
+			   <form method="post" id="cardForm" action="${pageCotext.request.contextPath}/admin/cardForm" >
+			  <div>
+		  		
+		  		 <input type='hidden' name='cardId' value="${card.cardId}">
+		  		 <input type='hidden' name='state' value ="${card.state}">
+				<div class="form-group col-md-2">
+			      <label for="inputState">통신사</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			       <!-- <option  value ="1" >SKT </option>
+				   <option  value ="2" >KT </option>
+				   <option  value ='3' >LGU+ </option> -->
+			       <option  value ='1' <c:if test="${card.carrier.carrierId == '1'}"> selected="selected" </c:if>>SKT </option>
+				   <option  value ='2' <c:if test="${card.carrier.carrierId == '2'}"> selected="selected" </c:if>>KT </option>
+				   <option  value ='3' <c:if test="${card.carrier.carrierId == '3'}"> selected </c:if>>LGU+ </option> 
+			      <%-- <option value="${callingPlan.carrier.carrierId}">${callingPlan.carrier.carrierName}</option>  --%>
+			      </select>
+			    </div>
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">카드 이름</label>
+			      <input type="text" class="form-control" value = "${card.cardName}" id="cardName" name="cardName">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">할인</label>
+			      <input type="text" class="form-control" value = "${card.discount}" id="discount" name="discount">
+			    </div>
+			
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">최소 요금</label>
+			      <input type="text" class="form-control" id="minCardFee" value = "${card.minCardFee}" placeholder=" " name="minCardFee">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">카드 이미지</label>
+			      <input type="text" class="form-control" value= "${card.cardImg}" id="cardImg"  placeholder="" name="cardImg">
+			    </div>
+			    
+			  </div>
+			  
+			  <div class="form-group col-md-2" >
+			   <button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
 
