@@ -304,7 +304,7 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println(deviceId);
 		System.out.println(subcondition);
 		
-		if(subcondition!=3) {
+		if(subcondition!=2) {
 			return productsRepository.searching(activationType, carrierId, deviceId, officeId, subcondition);
 		} else {
 			return productsRepository.searchingRecoomendation(activationType, carrierId, deviceId, officeId, subcondition);

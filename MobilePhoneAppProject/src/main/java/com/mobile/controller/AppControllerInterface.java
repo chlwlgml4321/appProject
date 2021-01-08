@@ -152,7 +152,7 @@ public interface AppControllerInterface {
 	
 	//신청서 등록
 	@RequestMapping("/app/addApplication")
-	public void addApplication(Application application);
+	public void AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId);
 	
 	//신청서 member id로 조회
 	@RequestMapping("/app/getApplicationByUserId")
@@ -230,6 +230,8 @@ public interface AppControllerInterface {
 	// 예약 현황 조회
 	@RequestMapping("/app/getReservations")
 	public String getReservations();
+
+
 
 	
 	

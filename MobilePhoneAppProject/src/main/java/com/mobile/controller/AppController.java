@@ -587,8 +587,15 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/addApplication")
 	@ResponseBody
-	public void addApplication(Application application) {
+	public void AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId) {
 		
+		Members member = userService.memberSelectById(memberId);
+		Products product = productService.productsSelectById(productId);
+		Installment installment = productService.installmentSelectById(installmentId);
+		WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
+		Card card = productService.cardSelectById(cardId);
+		
+		Application application = new Application(null, member, product, activationType, purchaseType, addtionalDiscount, supportFundType, isconnectWiredGoods, null, null, installmentFee, installmentPrincipal, cash, monthlyInstallment, monthlyCallingFee, finalFee, installment, wiredGoods, card);
 		productService.applicationInsert(application);
 		
 	}
