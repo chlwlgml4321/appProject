@@ -222,9 +222,15 @@ public interface AppControllerInterface {
 
 	String getGuestProduct(Long id);
 	
+	// Main Banner 조회
+	@RequestMapping("/app/getMainBanners")
+	public String getMainBanners();
+	
+	// 예약 현황 조회
+	@RequestMapping("/app/getReservations")
+	public String getReservations();
 	
 	
-	
-	
+	// 
 	
 }

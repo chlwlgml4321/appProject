@@ -138,10 +138,13 @@ public class WebController2 {
 		List<Carrier> carriers = productService.carrierSelectAll();
 		model.addAttribute("carriers", carriers);
 		model.addAttribute("wiredGoods", wiredGoods);
-		
-		
+		System.out.println(wiredGoodsId);
+		System.out.println("진입함");
 		return "admin/wiredGoodsUpdate";
 	}
+	
+	
+	
 	
 
 

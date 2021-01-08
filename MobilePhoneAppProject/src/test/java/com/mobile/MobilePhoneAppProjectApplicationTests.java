@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mobile.domain.Application;
+import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
@@ -22,6 +23,7 @@ import com.mobile.domain.Region;
 import com.mobile.domain.Review;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.ApplicationRepository;
+import com.mobile.repository.BannersRepository;
 import com.mobile.repository.CallingPlanRepository;
 import com.mobile.repository.CardRepository;
 import com.mobile.repository.CarrierRepository;
@@ -91,6 +93,9 @@ class MobilePhoneAppProjectApplicationTests {
 	@Autowired
 	ApplicationRepository ar;
 	
+	@Autowired
+	BannersRepository br;
+	
 
 	@Test
 	void contextLoads() {
@@ -107,9 +112,12 @@ class MobilePhoneAppProjectApplicationTests {
 //		
 
 		
-		Application a = new Application();
 		
-		ar.save(a);
+		
+		Banners banners = new Banners(null, "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/banner_img/photo.png", "Galaxy20 S20+", "4 days of discovery");
+
+		
+		br.save(banners);
 
 
 

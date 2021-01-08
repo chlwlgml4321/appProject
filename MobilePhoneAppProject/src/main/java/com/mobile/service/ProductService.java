@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mobile.domain.Application;
+import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
@@ -296,6 +297,12 @@ public interface ProductService {
 	 * 방문 회원 상품 삭제
 	 * */
 	public void guestProductDelete(Long id);
+	
+	/**
+	 * 배너 상품 전체 조회
+	 * */
+	
+	public List<Banners> bannersSelectAll();
 	
 	
 	

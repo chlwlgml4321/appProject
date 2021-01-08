@@ -480,7 +480,7 @@ $(document).ready(function(){
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            유선상품 등록하기</h1>
+            유선상품 수정하기</h1>
           </div>
 
             

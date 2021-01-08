@@ -1,5 +1,6 @@
 package com.mobile.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobile.domain.Application;
+import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
@@ -22,6 +24,7 @@ import com.mobile.domain.Office;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
+import com.mobile.domain.Reservations;
 import com.mobile.domain.Review;
 import com.mobile.domain.WiredGoods;
 import com.mobile.service.ProductService;
@@ -891,9 +894,71 @@ public class AppController implements AppControllerInterface {
 		return result;
 		
 	}
+
+	@Override
+	@RequestMapping("/app/getMainBanners")
+	@ResponseBody
+	public String getMainBanners() {
+		
+		List<Banners> list = productService.bannersSelectAll();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	
+	// 예약 현황 조회
+	
+	@Override
+	@RequestMapping("/app/getReservations")
+	@ResponseBody
+	public String getReservations() {
+		
+		List<Application> appList = productService.applicationSelectAll();
+		
+		List<Reservations> list = new ArrayList<Reservations>();
+		
+		
+		for(Application obj : appList ) {
+			if(obj!=null) {
+				
+				
+				Reservations res = new Reservations(obj.getRegDate(), obj.getMember().getName(), obj.getProduct().getDevice().getDeviceName(), obj.getState());
+				list.add(res);
+			} 
+			
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
 	
 	
 
+	
 	
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mobile.domain.Application;
+import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
@@ -16,6 +17,7 @@ import com.mobile.domain.Office;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.ApplicationRepository;
+import com.mobile.repository.BannersRepository;
 import com.mobile.repository.CallingPlanRepository;
 import com.mobile.repository.CardRepository;
 import com.mobile.repository.CarrierRepository;
@@ -53,6 +55,9 @@ public class ProductServiceImpl implements ProductService {
 	CardRepository cardRepository;
 	@Autowired
 	GuestProductRepository guestProductRepository;
+	
+	@Autowired
+	BannersRepository bannersRepository;
 	
 	
 	@Override
@@ -519,6 +524,12 @@ public class ProductServiceImpl implements ProductService {
 	public void guestProductDelete(Long id) {
 		guestProductRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public List<Banners> bannersSelectAll() {
+		
+		return bannersRepository.findAll();
 	}
 
 }
