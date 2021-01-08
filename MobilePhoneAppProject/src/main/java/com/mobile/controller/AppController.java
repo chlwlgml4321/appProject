@@ -26,6 +26,7 @@ import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.Reservations;
 import com.mobile.domain.Review;
+import com.mobile.domain.SearchResults;
 import com.mobile.domain.WiredGoods;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
@@ -531,9 +532,20 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/productSearch")
 	@ResponseBody
-	public String productSearch(java.lang.Long carrierId, Integer activtaionType, java.lang.Long deviceId,
+	public String productSearch(java.lang.Long carrierId, Integer activationType, java.lang.Long deviceId,
 			java.lang.Long officeId, int subcondition) {
-		List<Products> list = productService.productsSearching(carrierId, activtaionType, deviceId, subcondition, officeId);
+		
+		List<Products> list = productService.productsSearching(carrierId, activationType, deviceId, subcondition, officeId);
+		
+		System.out.println("list size : " + list.size());
+		
+		List<SearchResults> srList = new ArrayList<SearchResults>();
+		
+		for(Products p : list) {
+			SearchResults sr = new SearchResults(p.getProductsId(), p.getDevice().getDeviceId(), p.getCarrier().getCarrierId(), p.getCallingPlan().getCallingPlanId(), p.getDevice().getDeviceName(), p.getDevice().getImage(), p.getCarrier().getCarrierName(), p.getCallingPlan().getPlanName(), p.getDevice().getPrice());
+			
+			srList.add(sr);
+		}
 		
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -542,7 +554,7 @@ public class AppController implements AppControllerInterface {
 		String result = "";
 		
 		try {
-			result = mapper.writeValueAsString(list);
+			result = mapper.writeValueAsString(srList);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -799,7 +811,16 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/registerReview")
 	@ResponseBody
-	public void registerReview(Review review) {
+	public void registerReview(Integer activationType, String content, Float rate, String reviewImg1, String reviewImg2, String reviewImg3, Long officeId, Long memberId, Long carrierId, Long deviceId) {
+		
+		
+		Members member = userService.memberSelectById(memberId);
+		Carrier carrier = productService.carrierSelectById(carrierId);
+		Office office = userService.officeSelectById(officeId);
+		Device device = productService.deviceSelectById(deviceId);
+		
+		Review review = new Review(null, member, office, device, carrier, reviewImg1, reviewImg2, reviewImg3, activationType, rate, content, null);
+		
 		userService.reviewInsert(review);
 		
 	}
@@ -954,6 +975,8 @@ public class AppController implements AppControllerInterface {
 		return result;
 		
 	}
+
+	
 	
 	
 	

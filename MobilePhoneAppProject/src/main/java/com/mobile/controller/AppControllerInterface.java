@@ -208,7 +208,8 @@ public interface AppControllerInterface {
 	 * */
 	// 리뷰 등록
 	@RequestMapping("/app/registerReview")
-	public void registerReview(Review review);
+	public void registerReview(Integer activationType, String content, Float rate, String reviewImg1, String reviewImg2,
+			String reviewImg3, Long officeId, Long memberId, Long carrierId, Long deviceId);
 	
 	// 전체 리뷰 조회
 	@RequestMapping("/app/getAllReview")
@@ -229,8 +230,8 @@ public interface AppControllerInterface {
 	// 예약 현황 조회
 	@RequestMapping("/app/getReservations")
 	public String getReservations();
+
 	
 	
-	// 
 	
 }

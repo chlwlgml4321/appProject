@@ -297,7 +297,19 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Products> productsSearching(Long carrierId, Integer activationType, Long deviceId, Integer subcondition,
 			Long officeId) {
-		return null;
+		
+		System.out.println("진입함");
+		System.out.println(carrierId);
+		System.out.println(activationType);
+		System.out.println(deviceId);
+		System.out.println(subcondition);
+		
+		if(subcondition!=3) {
+			return productsRepository.searching(activationType, carrierId, deviceId, officeId, subcondition);
+		} else {
+			return productsRepository.searchingRecoomendation(activationType, carrierId, deviceId, officeId, subcondition);
+		}
+		
 
 	}
 	
