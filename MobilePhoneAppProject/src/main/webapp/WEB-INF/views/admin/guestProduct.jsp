@@ -22,8 +22,7 @@
 
   <!-- Custom styles for this template-->
   <link href="${pageCotext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/css/style.css">
-  
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
@@ -31,26 +30,43 @@
 	
 <script type="text/javascript">
 $(document).ready(function(){
-		$("#updateNotice").click(function(){
-			$("#updateForm").submit();
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
 			
-		});
+			
+			var result = confirm('Guest 상품을 삭제하시겠습니까? ');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("삭제됨");
+				
+				deleteGusetProduct($(this).attr("id"));
+				
+				
+			}
+		} 
+		
 		
 	});
 
+		function deleteGusetProduct(id) {  
+		    alert(id);
+		    $.ajax({
+		        type : 'GET',
+		        url : "/deleteGusetProduct",
+		        data : {"id" : id},
+		        success : function (data) {
+		        	 location.reload();             
+		        }
+
+		    });
+		   
+		}
 		
-
-
+	});
 
 </script>	
-
-
-<style>
-	img{
-		width: 280px;
-		height: 310px; 
-	}
-</style>
 </head>
 <body id="page-top">
 
@@ -86,9 +102,9 @@ $(document).ready(function(){
         유저 관리
       </div>
 
-      		 <!-- 유저 관리 -->
+      <!-- 유저 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -97,21 +113,21 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
       
+      
       <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+        <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
           
-      </li> 
-
-
- <!-- 지역 관리 Divider -->
+      </li>  
+      
+      <!-- 지역 관리 Divider -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -121,18 +137,72 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/region">
+        <a class="nav-link" href="region">
           <i class="fas fa-fw fa-table"></i>
-          <span>Region</span></a>
+          <span>REGION</span></a>
           
       </li>
       
       
       <!-- 지역 등록 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/regionInsert">
+        <a class="nav-link" href="regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
+          
+      </li>  
+      
+      
+      <!-- 지점 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        office 관리
+      </div>
+
+      <!-- 지점 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="office">
+          <i class="fas fa-fw fa-table"></i>
+          <span>OFFICE</span></a>
+          
+      </li>
+      
+      
+      <!-- 지역 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="officeRegister">
+          <i class="fas fa-fw fa-table"></i>
+          <span>지점 등록</span></a>
+          
+      </li>  
+      
+
+
+      
+       <!-- 요금제 관리 Divider -->
+      <hr class="sidebar-divider">
+      
+  <!-- Heading -->
+      <div class="sidebar-heading">
+        요금제 관리
+      </div>
+
+      <!-- 요금제 관리 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="callingPlan">
+          <i class="fas fa-fw fa-table"></i>
+          <span>요금제</span></a>
+          
+      </li>
+      
+      
+      <!-- 요금제 등록 -->
+      <li class="nav-item  active">
+        <a class="nav-link" href="callingPlanRegister">
+          <i class="fas fa-fw fa-table"></i>
+          <span>요금제 등록</span></a>
           
       </li>  
       <!-- 상품 관리 Divider -->
@@ -144,22 +214,12 @@ $(document).ready(function(){
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/notice">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>공지사항 보기</span></a>
+          <span>NOTICE</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="product">
-          <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -435,114 +495,91 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${review.member.name}님의 리뷰 </h1>
+          <h1 class="h3 mb-2 text-gray-800">Guest 상품 목록</h1>
           
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             
             <div class="card-body">
-             <div class="col-lg-12">
-
-              <!-- Roitation Utilities -->
-              
-              <div class="card">
-             
-                <div class="card-header py-3">
-                <h5>${review.member.name}님</h5>
-                
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 	모델명 : ${review.device.deviceName}
-                 </h6>
-                 
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 	${review.carrier.carrierName} / 
-                 	<c:choose>
-	  					 <c:when test="${review.activationType==0}">
-	  					 	<th>번호이동</th>
-	  					 </c:when>
-	  					 	
-	  					 <c:otherwise>
-	  					 	<th>기기변경</th>
-	  					 </c:otherwise>
-	  				</c:choose>/ ${review.office.officeName}
-                 </h6>
-                 <h6 align="right" class="mb-1 small">
-                 
-	  				
-	  					<%-- <c:forEach begin="0" end="${review.rate-1}" items="${reviewBest}" var="reviewBest"  >
-	                            
-	                    	<i class="fa fa-star icolor"></i>
-<!-- 	                    <i class="fa fa-star"></i> -->
-	                   </c:forEach> --%>
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty guestProduct}">
+	              		<h3>등록된 상품이 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
 	                   
-	                <div class="rating-icon">
-					<c:forEach begin="1" end="5" varStatus="st">
-						<c:choose >
-							<c:when test="${st.count<=review.rate}">
-							<i class="fa fa-star icolor"></i>
-							</c:when>
-						<c:otherwise>
-							<i class="fa fa-star"></i>
-						</c:otherwise>
-					</c:choose>
-					</c:forEach> 
-                    </div>  
-                      
-				 </h6>
-				 
-				 
-                  <h6 align="right" class="mb-1 small">${review.regDate} </h6>
-                  
-                </div>
-                <div class="card-body text-left">
-                	${review.content}
-               
-                </div>
-                <div class="card-body text-left">
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-               
-                </div>
-             
+	                  
+	                      <th>guestProductId</th>
+	                      <th>통신사</th>
+	                      <th>디바이스 이름</th>
+	                      <th>요금제 이름</th>
+	                      <th>지점</th>
+	                      <th>개통유형</th>
+	                      <th>공시지원금</th>
+	                      <th>수정</th>
+	                      <th>삭제</th>
+	                      
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${guestProduct}" var="guestProduct">
+	                    <tr>
+	                      <td> 
+	                      ${guestProduct.guestProductId}
+	              		  </td>
+	                      <td>${guestProduct.carrier.carrierName}</td>
+	                      <td>${guestProduct.device.deviceName}</td>
+	                      <td>${guestProduct.callingPlan.planName}</td>
+	                      <td>${guestProduct.office.officeName}</td>
+	                      <c:choose>
+	  					 	<c:when test="${guestProduct.activationType==1}">
+	  					 		<th>기기변경</th>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<th>번호이동</th>
+	  					 	</c:otherwise>
+	  					 </c:choose>
+	                      <td>${guestProduct.mainSupportFund}원</td>
+	  					 
+	  					  <td style="color: green;">
+	  					 		<a href="${pageContext.request.contextPath}/guestProductDetail/${guestProduct.guestProductId}"  class="btn btn-primary"  id="${guestProduct.guestProductId}">
+                    					<span class="text">수정</span>
+                  					</a>
+                  					
+                  		  <td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${guestProduct.guestProductId}">
+                    					<span class="text">삭제</span>
+                  					</a>
+	                     
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
+                <br>
+                						<div class="form-group col-md-2">
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/guestProductRegister'" class="btn btn-primary">상품 등록하기</button>
+										</div>
               </div>
-
             </div>
-
-				 <div class="form-group col-md-2" >
-				 </br>
-			  </div>
-			 
-            </div>
-				
-				
-				
-				
-				
-				
-				
-				
-			<!-- <table >
-				<tr>
-				<td>
-				<input type="submit" value="수정하기" style="text-align: center;">
-				</td>
-				</tr>
-			</table> -->
-							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="content" value="${notice.content}">
-			</form> --%>
-			
-             
-             
           </div>
 
         </div>
         <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

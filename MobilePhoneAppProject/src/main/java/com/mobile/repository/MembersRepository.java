@@ -22,4 +22,8 @@ public interface MembersRepository extends JpaRepository<Members, Long> {
 	
 	@Query("select m from Members m where m.phone = ?1 and m.password = ?2")
 	public Members findByPhoneAndPwd(String phone, String password);
+	
+	//officeId 로 회원가져오기 
+	@Query("select m from Members m where m.office.officeId = ?1")
+	public List<Members> findByOffice(Long officeId);
 }

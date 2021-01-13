@@ -170,6 +170,12 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	
+	@Override
+	public List<Members> selectByOffice(Long officeId) {
+		
+		return membersRepo.findByOffice(officeId);
+	}
 
 	@Override
 	public List<Blacklist> blacklistSelectAll() {
@@ -320,6 +326,12 @@ public class UserServiceImpl implements UserService {
 
 		reviewRepo.deleteById(reviewId);
 
+	}
+	
+	@Override
+	public List<Review> reviewSelectByReviewId(Long officeId) {
+		
+		return reviewRepo.findByOffice(officeId);
 	}
 
 	@Override

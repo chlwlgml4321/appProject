@@ -22,35 +22,29 @@
 
   <!-- Custom styles for this template-->
   <link href="${pageCotext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/css/style.css">
-  
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
 	
 	
 <script type="text/javascript">
+
 $(document).ready(function(){
-		$("#updateNotice").click(function(){
-			$("#updateForm").submit();
-			
-		});
+	
+	console.log();
+	
+	$("#registerGuestProduct").click(function(){
+		
+		$("#guestProductForm").submit();
 		
 	});
+	
+	
+	
 
-		
-
-
-
+});
 </script>	
-
-
-<style>
-	img{
-		width: 280px;
-		height: 310px; 
-	}
-</style>
 </head>
 <body id="page-top">
 
@@ -73,7 +67,7 @@ $(document).ready(function(){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index">
+        <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -86,9 +80,9 @@ $(document).ready(function(){
         유저 관리
       </div>
 
-      		 <!-- 유저 관리 -->
+      <!-- 유저 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -97,18 +91,20 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/user">
+        <a class="nav-link" href="user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
       
+      
       <!-- 대기중인고객 관리 -->
       <li class="nav-item  active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/inactiveUser">
+        <a class="nav-link" href="inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
           
-      </li> 
+      </li>  
+      
 
 
  <!-- 지역 관리 Divider -->
@@ -144,7 +140,7 @@ $(document).ready(function(){
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/notice">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
           <span>공지사항 보기</span></a>
       </li>
@@ -431,118 +427,113 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+<!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${review.member.name}님의 리뷰 </h1>
-          
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            
-            <div class="card-body">
-             <div class="col-lg-12">
-
-              <!-- Roitation Utilities -->
-              
-              <div class="card">
-             
-                <div class="card-header py-3">
-                <h5>${review.member.name}님</h5>
-                
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 	모델명 : ${review.device.deviceName}
-                 </h6>
-                 
-                  <h6 class="m-0 font-weight-bold text-primary">
-                 	${review.carrier.carrierName} / 
-                 	<c:choose>
-	  					 <c:when test="${review.activationType==0}">
-	  					 	<th>번호이동</th>
-	  					 </c:when>
-	  					 	
-	  					 <c:otherwise>
-	  					 	<th>기기변경</th>
-	  					 </c:otherwise>
-	  				</c:choose>/ ${review.office.officeName}
-                 </h6>
-                 <h6 align="right" class="mb-1 small">
-                 
-	  				
-	  					<%-- <c:forEach begin="0" end="${review.rate-1}" items="${reviewBest}" var="reviewBest"  >
-	                            
-	                    	<i class="fa fa-star icolor"></i>
-<!-- 	                    <i class="fa fa-star"></i> -->
-	                   </c:forEach> --%>
-	                   
-	                <div class="rating-icon">
-					<c:forEach begin="1" end="5" varStatus="st">
-						<c:choose >
-							<c:when test="${st.count<=review.rate}">
-							<i class="fa fa-star icolor"></i>
-							</c:when>
-						<c:otherwise>
-							<i class="fa fa-star"></i>
-						</c:otherwise>
-					</c:choose>
-					</c:forEach> 
-                    </div>  
-                      
-				 </h6>
-				 
-				 
-                  <h6 align="right" class="mb-1 small">${review.regDate} </h6>
-                  
-                </div>
-                <div class="card-body text-left">
-                	${review.content}
-               
-                </div>
-                <div class="card-body text-left">
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-               
-                </div>
-             
-              </div>
-
-            </div>
-
-				 <div class="form-group col-md-2" >
-				 </br>
-			  </div>
-			 
-            </div>
-				
-				
-				
-				
-				
-				
-				
-				
-			<!-- <table >
-				<tr>
-				<td>
-				<input type="submit" value="수정하기" style="text-align: center;">
-				</td>
-				</tr>
-			</table> -->
-							<%-- <form id = "updateForm" action="/admin/noticeInsert" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="content" value="${notice.content}">
-			</form> --%>
-			
-             
-             
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            Guest 상품 수정하기</h1>
           </div>
 
-        </div>
-        <!-- /.container-fluid -->
+            
+			   <form method="post" id="guestProductForm" action="${pageCotext.request.contextPath}/guestProductForm" >
+			  <div>
+		  		
+		  		 <input type='hidden' name='guestProductId' value="${guestProducts.guestProductId}">
+		  		 <%-- <input type='hidden' name='carrierId' value="${carrier.carrierId}"> --%>
+					
+		  		 
+				 <div class="form-group col-md-2">
+			      <label for="inputState">통신사</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			       <option  value ='1' <c:if test="${guestProducts.carrier.carrierId == '1'}"> selected="selected" </c:if> >SKT </option>
+				   <option  value ='2' <c:if test="${guestProducts.carrier.carrierId == '2'}"> selected="selected" </c:if> >KT </option>
+				   <option  value ='3' <c:if test="${guestProducts.carrier.carrierId == '3'}"> selecsted </c:if>>LGU+ </option> 
+			      </select>
+			    </div>  
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">디바이스 이름</label>
+			      <select id="deviceId" class="form-control" name="deviceId">
+			     	 <option selected>디바이스 선택</option>
+			        		<c:forEach items="${devices}" var="devices">
+			        			<c:choose>
+				        			<c:when test = "${devices.deviceId == guestProducts.device.deviceId}">
+				        				<option value="${devices.deviceId}" selected="selected" >${devices.deviceName}</option>
+				        			</c:when>
+				        			<c:otherwise>
+				        				<option value="${devices.deviceId}">${devices.deviceName}</option>
+				        			</c:otherwise>
+								</c:choose>
+				   			</c:forEach>
+					</select>
+			    </div> 
+			
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">요금제 이름</label>
+			      <select id="callingPlanId" class="form-control" name="callingPlanId">
+			     	 <option selected>요금제 선택</option>
+			        		<c:forEach items="${callingPlans}" var="callingPlans">
+			        			<c:choose>
+				        			<c:when test = "${callingPlans.callingPlanId == guestProducts.callingPlan.callingPlanId}">
+				        				<option value="${callingPlans.callingPlanId}" selected="selected" >${callingPlans.planName}</option>
+				        			</c:when>
+				        			<c:otherwise>
+				        				<option value="${callingPlans.callingPlanId}">${callingPlans.planName}</option>
+				        			</c:otherwise>
+								</c:choose>
+				   			</c:forEach>
+					</select>
+			    </div> 
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">지점</label>
+			      <select id="officeId" class="form-control" name="officeId">
+			     	 <option selected>지점 선택</option>
+			        		<c:forEach items="${offices}" var="offices">
+			        			<c:choose>
+				        			<c:when test = "${offices.officeId == guestProducts.office.officeId}">
+				        				<option value="${offices.officeId}" selected="selected" >${offices.officeName}</option>
+				        			</c:when>
+				        			<c:otherwise>
+				        				<option value="${offices.officeId}">${offices.officeName}</option>
+				        			</c:otherwise>
+								</c:choose>
+				   			</c:forEach>
+					</select>
+			    </div> 
+			
+			    
+			      
+			     <div class="form-group col-md-2">
+			      <label for="inputEmail4">개통유형</label>
+			      <select id="activationType" class="form-control" name="activationType">
+					<option  value='1' <c:if test="${guestProducts.activationType == '1'}"> selected="selected" </c:if>>기기변경 </option>
+					<option  value ='0'<c:if test="${guestProducts.activationType == '0'}"> selected="selected" </c:if>>번호이동</option>
+			      </select>
+			    </div>  
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">공시지원금</label>
+			      <input type="text" class="form-control" id="mainSupportFund"  value="${guestProducts.mainSupportFund}"  name="mainSupportFund">
+			    </div>
+			    
+			  </div>
+			  
+			  <div class="form-group c ol-md-2" >
+			   <button type="submit" id="registerGuestProduct" class="btn btn-primary">등록</button>
+			  </div>
+			  
+			  
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">

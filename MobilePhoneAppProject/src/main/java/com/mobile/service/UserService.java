@@ -43,6 +43,10 @@ public interface UserService {
 	 * */
 	public Members memberSelectById(Long memberId);
 	
+	/**
+	 * 회원 officeId 로 조회하기 
+	 */
+	public List<Members> selectByOffice(Long officeId);
 
 	/**
 	 * 회원 가입하기
@@ -143,6 +147,10 @@ public interface UserService {
 	 * */
 	public List<Review> reviewSelectByMemberId(Long memberId);
 	
+	/**
+	 * officeId 리뷰조회 
+	 */
+	public List<Review> reviewSelectByReviewId(Long officeId);
 
 	/**
 	 * 리뷰 추가

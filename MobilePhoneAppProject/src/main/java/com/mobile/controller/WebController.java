@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Device;
+import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
@@ -485,7 +486,7 @@ public class WebController {
 		}
 		
 		
-		//deviceRegister 진입
+		//productRegister 진입
 		@RequestMapping("/productRegister")
 		public String productRegister(Model model) {
 			System.out.println("productRegister 진입");
@@ -552,7 +553,7 @@ public class WebController {
 			return new ModelAndView("/admin/productUpdate", "products", products);
 		}
 		
-		//callingPlanUpdate 수정하기 
+		//product 수정하기 
 		@RequestMapping("/productUpdate/{productsId}")
 		public String productUpdate(@PathVariable Long productsId,  Products products, Model model) {
 			
@@ -619,6 +620,112 @@ public class WebController {
 			System.out.println("##reviewDetail");
 			
 			return new ModelAndView("admin/reviewDetail","review", review);
+		}
+		
+		//guestProduct 
+		@RequestMapping("/guestProduct")
+		public String guestProduct(Model model) {
+			
+			List<GuestProduct> guestProduct= productService.guestProductSelectAll();
+			model.addAttribute("guestProduct", guestProduct);
+			return "/admin/guestProduct";
+		}
+		
+		
+		//guestProductDetail  수정할때 화면 
+		@RequestMapping("/guestProductDetail/{guestProductId}")
+		public ModelAndView guestProductDetail(@PathVariable Long guestProductId, Model model) {
+			
+			// 상품아이디로 상품을 조회해서 디테일에 뿌려주는 기능임 	
+			GuestProduct guestProducts= productService.guestProductSelectById(guestProductId);
+			System.out.println("##guestProductsDetail");
+			System.out.println(guestProducts);
+			
+			List<CallingPlan> callingPlans= productService.callingPlanSelectAll();
+			List<Office> offices= userService.officeSelectAll();
+			List<Device> devices= productService.deviceSelectAll();
+			
+			
+			model.addAttribute("callingPlans", callingPlans);
+			model.addAttribute("offices", offices);
+			model.addAttribute("devices", devices);
+			
+			return new ModelAndView("/admin/guestProductUpdate", "guestProducts", guestProducts);
+		}
+		
+		//guestProductUpdate수정하기 
+		@RequestMapping("/guestProductUpdate/{guestProductId}")
+		public String guestProductUpdate(@PathVariable Long guestProductId,  GuestProduct guestProducts, Model model) {
+			
+			// 수정해서 - 새로운 디비를update 치고  -> 새로운 데이터를 이용해서 화면으로 보여주는 로직  
+			System.out.println("##guestProductUpdate");
+			productService.guestProductUpdate(guestProducts);
+			
+			List<GuestProduct> guestProduct = productService.guestProductSelectAll();
+			
+			model.addAttribute("guestProducts", guestProducts);	
+			
+			return "/admin/guestProduct";
+		}
+		
+		
+
+		//guestProductRegister 진입
+		@RequestMapping("/guestProductRegister")
+		public String guestProductRegister(Model model) {
+			System.out.println("guestProductRegister 진입");
+			
+			List<Carrier> carrier= productService.carrierSelectAll();
+			model.addAttribute("carrier",carrier);	
+			
+			List<CallingPlan> callingPlan = productService.callingPlanSelectAll();
+			model.addAttribute("callingPlan", callingPlan);
+			
+			List<Device> device = productService.deviceSelectAll();
+			model.addAttribute("device", device);
+			
+			List<Office> office = userService.officeSelectAll();
+			model.addAttribute("office", office);
+			
+			return "/admin/guestProductRegister";
+					
+		}
+
+		//GuestProduct 등록 
+		@RequestMapping("/guestProductForm")
+		public String guestProductForm(GuestProduct guestProduct, Model model, Long carrierId, Long callingPlanId, Long officeId, Long deviceId) {
+			List<GuestProduct> guestProducts= productService.guestProductSelectAll();
+			
+			model.addAttribute("guestProducts", guestProducts);
+			
+			Carrier carrier= productService.carrierSelectById(carrierId);
+			guestProduct.setCarrier(carrier);
+			
+			CallingPlan callingPlan=productService.callingPlanSelectById(callingPlanId);
+			guestProduct.setCallingPlan(callingPlan);
+			
+			Office office = userService.officeSelectById(officeId);
+			guestProduct.setOffice(office);
+			
+			Device device= productService.deviceSelectById(deviceId);
+			guestProduct.setDevice(device);
+			
+			productService.guestProductInsert(guestProduct);
+			
+			return "redirect:/guestProduct";	
+		}	
+
+		//guestProduct 지우기 
+		@RequestMapping("/deleteGusetProduct")
+		@ResponseBody
+		public String deleteGusetProduct(Long id) {
+			
+			System.out.println("id 진입 "+id );
+			GuestProduct guestProduct = new GuestProduct();
+			guestProduct.setGuestProductId(id);
+			productService.guestProductDelete(id);
+			
+			return "redirect:/guestProduct";
 		}
 		
 		
