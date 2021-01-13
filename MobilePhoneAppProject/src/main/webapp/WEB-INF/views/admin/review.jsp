@@ -517,7 +517,7 @@ $(document).ready(function(){
 	                  
 	                      <th>reviewId</th>
 	                      <th>제목</th>
-	                      <th>작성자</th>
+	                      <th>작성자 핸드폰</th>
 	                      <th>디바이스 이름</th>
 	                      <th>지점</th>
 	                      <th>작성일</th>
@@ -534,7 +534,7 @@ $(document).ready(function(){
 	                      <td>
 	                      	<a href="${pageContext.request.contextPath}/reviewDetail/${review.reviewId}">${review.content}</a>
 	                      </td>
-	                      <td>${review.member.name}</td>
+	                      <td>${review.member.phone}</td>
 	                      <td>${review.device.deviceName}</td>
 	                      <td>${review.office.officeName}</td>
 	                      <td>${review.regDate}</td>
