@@ -528,8 +528,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void guestProductUpdate(GuestProduct guestProduct) {
-		
-		
+				
 	}
 
 	@Override
