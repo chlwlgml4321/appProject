@@ -983,6 +983,14 @@ public class AppController implements AppControllerInterface {
 		
 	}
 
+	@Override
+	public String memberFiltering() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
 	
 	
 	

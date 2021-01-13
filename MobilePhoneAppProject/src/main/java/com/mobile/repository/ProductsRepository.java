@@ -19,4 +19,8 @@ public interface ProductsRepository extends JpaRepository<Products, Long> {
 	
 	@Query("select p from Products p where p.activationType=?1 and p.carrier.carrierId=?2 and p.device.deviceId=?3 and p.office.officeId=?4 and p.isReccomendationProducts=1")
 	public List<Products> searchingRecoomendation(Integer activationType, Long carrierId, Long deviceId, Long officeId, Integer subcondition);
+	
+	//officeId 로 상품 가져오기 
+	@Query("select p from Products p where p.office.officeId= ?1")
+	public List<Products> findByOffice(Long officeId);
 }

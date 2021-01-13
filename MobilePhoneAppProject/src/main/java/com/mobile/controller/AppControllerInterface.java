@@ -231,7 +231,9 @@ public interface AppControllerInterface {
 	@RequestMapping("/app/getReservations")
 	public String getReservations();
 
-
+	// 블랙리스트 필터링
+	@RequestMapping("/app/memberFiltering")
+	public String memberFiltering();
 
 	
 	
