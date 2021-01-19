@@ -1,6 +1,7 @@
 package com.mobile.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -987,6 +988,75 @@ public class AppController implements AppControllerInterface {
 	public String memberFiltering() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/guestProductSearch")
+	public String guestProductSearch(Long carrierId, Integer activationType, Long deviceId, int subcondition) {
+		//List<Products> list = productService.productsSearching(carrierId, activationType, deviceId, subcondition, officeId);
+		
+		List<GuestProduct> list = productService.guestProductSerach(carrierId, activationType, deviceId, subcondition);
+		System.out.println("list size : " + list.size());
+		
+		List<SearchResults> srList = new ArrayList<SearchResults>();
+		
+		for(GuestProduct p : list) {
+			SearchResults sr = new SearchResults(p.getGuestProductId(), p.getDevice().getDeviceId(), p.getCarrier().getCarrierId(), p.getCallingPlan().getCallingPlanId(), p.getDevice().getDeviceName(), p.getDevice().getImage(), p.getCarrier().getCarrierName(), p.getCallingPlan().getPlanName(), p.getDevice().getPrice());
+			
+			srList.add(sr);
+		}
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		String result = "";
+		
+		try {
+			result = mapper.writeValueAsString(srList);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/reviewDelete")
+	public void reviewDelete(Long reviewId) {
+		userService.reviewDelete(reviewId);
+		
+	}
+
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/reviewUpdate")
+	public void reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, String reviewImg1,
+			String reviewImg2, String reviewImg3, Integer activationType, Float rate, String content, Date regDate) {
+		
+		
+		Office office = null;
+		Device device = null;
+		Carrier carrier = null;
+		
+		if(officeId!=null) {
+			office = userService.officeSelectById(officeId);
+		}
+		if(deviceId!=null) {
+			device = productService.deviceSelectById(deviceId);
+		}
+		
+		if(carrierId!=null) {
+			carrier = productService.carrierSelectById(carrierId);
+		}
+		
+		
+		Review review = new Review(reviewId, null, office, device, carrier, reviewImg1, reviewImg2, reviewImg3, activationType, rate, content, regDate);
+		
+		userService.reviewUpdate(review);
+		
 	}
 	
 	

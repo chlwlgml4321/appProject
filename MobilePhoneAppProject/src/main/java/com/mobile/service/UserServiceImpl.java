@@ -296,6 +296,17 @@ public class UserServiceImpl implements UserService {
 			if(review.getReviewImg1() !=null) {
 				r.setReviewImg1(review.getReviewImg1());
 			}
+			
+			if(review.getCarrier()!=null) {
+				r.setCarrier(review.getCarrier());
+			}
+			if(review.getOffice()!=null) {
+				r.setOffice(review.getOffice());
+			}
+			if(review.getDevice()!=null) {
+				r.setDevice(review.getDevice());
+			}
+			
 			if(review.getReviewImg2() !=null) {
 				r.setReviewImg2(review.getReviewImg2());
 			}

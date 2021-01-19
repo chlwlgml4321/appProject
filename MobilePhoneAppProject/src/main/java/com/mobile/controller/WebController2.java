@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mobile.domain.Application;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Members;
@@ -142,6 +143,53 @@ public class WebController2 {
 		System.out.println("진입함");
 		return "admin/wiredGoodsUpdate";
 	}
+	
+	
+	//application
+	@RequestMapping("/application")
+	public ModelAndView application() {
+
+		List<Application> application = productService.applicationSelectAll();
+	
+		return new ModelAndView("/admin/application", "application", application);
+	}
+	
+	//application register
+	@RequestMapping("/applicationRegister")
+	public ModelAndView applicationRegister() {
+
+		List<Carrier> carriers = productService.carrierSelectAll();
+
+		return new ModelAndView("/admin/application", "carriers", carriers);
+	}
+	
+	//application Insert
+	@RequestMapping("/applicationForm")
+	public String applicationForm(WiredGoods wiredGoods, Model model, Long carrierId) {
+	
+		Carrier carrier = productService.carrierSelectById(carrierId);
+
+		List<WiredGoods> wiList= productService.wiredGoodsSelectAll();
+		model.addAttribute("wiredGoods", wiredGoods);
+		wiredGoods.setCarrier(carrier);
+		productService.wiredGoodsInsert(wiredGoods);
+
+		return "redirect:/application";
+	}
+	
+	//application 디테일
+	@RequestMapping("/applicationDetail/{applicationId}")
+	public String applicationDetail(@PathVariable Long applicationId, Model model) {
+		
+		Application application = productService.applicationSelectById(applicationId);
+		
+		model.addAttribute("application", application);
+		
+		System.out.println("진입함");
+		return "admin/applicationUpdate";
+	}
+	
+	
 	
 	
 	

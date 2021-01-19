@@ -287,6 +287,12 @@ public interface ProductService {
 	 * */
 	public void guestProductInsert(GuestProduct guestProduct);
 	
+
+	/**
+	 * Guest Product 검색
+	 * */
+	public List<GuestProduct> guestProductSerach(Long carrierId, Integer activationType, Long deviceId, Integer subcondition);
+	
 	/**
 	 * 방문 회원 상품 수정
 	 * */
@@ -302,6 +308,8 @@ public interface ProductService {
 	 * */
 	
 	public List<Banners> bannersSelectAll();
+	
+	
 	
 	
 	

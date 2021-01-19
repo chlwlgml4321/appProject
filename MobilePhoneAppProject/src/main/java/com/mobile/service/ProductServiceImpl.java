@@ -543,4 +543,20 @@ public class ProductServiceImpl implements ProductService {
 		return bannersRepository.findAll();
 	}
 
+	@Override
+	public List<GuestProduct> guestProductSerach(Long carrierId, Integer activationType, Long deviceId,
+			Integer subcondition) {
+		System.out.println("진입함");
+		System.out.println(carrierId);
+		System.out.println(activationType);
+		System.out.println(deviceId);
+		System.out.println(subcondition);
+		
+		if(subcondition!=2) {
+			return guestProductRepository.searching(activationType, carrierId, deviceId, subcondition);
+		} else {
+			return guestProductRepository.searchingRecoomendation(activationType, carrierId, deviceId, subcondition);
+		}
+	}
+
 }

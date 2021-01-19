@@ -1,5 +1,7 @@
 package com.mobile.controller;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -223,6 +225,10 @@ public interface AppControllerInterface {
 
 	String getGuestProduct(Long id);
 	
+	//일반 상품을 조건에 맞게 검색(통신사, 기기변경, 모델명, 네트워크 타입), 지점
+	@RequestMapping("/app/guestProductSearch")
+	public String guestProductSearch(Long carrierId, Integer activtaionType, Long deviceId, int subcondition);
+	
 	// Main Banner 조회
 	@RequestMapping("/app/getMainBanners")
 	public String getMainBanners();
@@ -234,6 +240,17 @@ public interface AppControllerInterface {
 	// 블랙리스트 필터링
 	@RequestMapping("/app/memberFiltering")
 	public String memberFiltering();
+	
+	
+	// Reivew 삭제
+	@RequestMapping("/app/reviewDelete")
+	public void reviewDelete(Long reviewId);
+	
+	// Review 수정
+	@RequestMapping("/app/reviewUpdate")
+	public void reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, String reviewImg1, String reviewImg2, String reviewImg3, Integer activationType, Float rate, String content, Date regDate);
+	
+
 
 	
 	
