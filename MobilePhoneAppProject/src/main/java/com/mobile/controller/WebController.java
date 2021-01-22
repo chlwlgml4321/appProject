@@ -445,6 +445,8 @@ public class WebController {
 		@RequestMapping("/deviceForm")
 		public String deviceForm(Device device, Model model) {
 			
+			System.out.println(device.getDeviceName());
+			System.out.println(device.getImage());
 			
 			productService.deviceInsert(device);
 			

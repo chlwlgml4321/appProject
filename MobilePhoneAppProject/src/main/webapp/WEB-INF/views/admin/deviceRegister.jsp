@@ -50,6 +50,10 @@
 $(document).ready(function(){
 	
 	$("#registerDevice").click(function(){
+		var imageName = document.getElementById('file').files[0];
+		imageName = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/"+ imageName.name;
+		
+		$("#image").val(imageName);
 		$("#deviceForm").submit();
 		  var bucket = new AWS.S3({ params: { Bucket: 'phonestorimage' } });
 	        var fileChooser = document.getElementById('file');
@@ -62,7 +66,8 @@ $(document).ready(function(){
 	                Body: file,
 	                ACL: 'public-read' // 접근 권한
 	            };
-
+				alert(file.name);
+				
 	            bucket.putObject(params, function (err, data) {
 	                // 업로드 성공
 	                
@@ -72,7 +77,7 @@ $(document).ready(function(){
 	        } return false;
 	    })
 	    
-	    alert(file.name);
+	   
 });
 	
 
@@ -527,6 +532,7 @@ $(document).ready(function(){
 			  <div>
 		  		
 		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">
+		  		  <input type='hidden' id="image" name='image' value="">
 		  		 
 			    <div class="form-group col-md-2">
 			      <label for="inputEmail4">디바이스 사진</label>
