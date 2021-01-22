@@ -514,7 +514,7 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">요금제 목록</h1>
+          <h1 class="h3 mb-2 text-gray-800">디바이스 목록</h1>
           
 
           <!-- DataTales Example -->
@@ -550,7 +550,7 @@ $(document).ready(function(){
 	                      ${device.deviceId}
 	              		  </td>
 
-	              		  <td><img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/></td>
+	              		  <td><img src="${device.image}"/></td>
 	                      <td>${device.deviceName}</td>
 	                      <td>${device.price}원</td>
 	                      <c:choose>

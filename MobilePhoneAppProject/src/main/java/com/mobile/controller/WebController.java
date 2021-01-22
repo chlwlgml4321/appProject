@@ -445,11 +445,12 @@ public class WebController {
 		@RequestMapping("/deviceForm")
 		public String deviceForm(Device device, Model model) {
 			
+			
+			productService.deviceInsert(device);
+			
 			List<Device> devices = productService.deviceSelectAll();
 			
 			model.addAttribute("device", devices);
-			
-			productService.deviceInsert(device);
 			
 			return "redirect:/device";
 			

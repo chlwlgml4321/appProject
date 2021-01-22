@@ -27,17 +27,55 @@
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
 	
+
 	
+<script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+
+
+<script type="text/javascript">
+
+        AWS.config.update({
+
+            accessKeyId: 'AKIAQSNNSPCNWV4YQTOF',
+            secretAccessKey: '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'
+
+        });
+
+        AWS.config.region = 'ap-northeast-2';
+</script>
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){
 	
 	$("#registerDevice").click(function(){
 		$("#deviceForm").submit();
-		
-	});
+		  var bucket = new AWS.S3({ params: { Bucket: 'phonestorimage' } });
+	        var fileChooser = document.getElementById('file');
+	        var file = fileChooser.files[0];
+			
+	        if (file) {
+	            var params = {
+	                Key: file.name,
+	                ContentType: file.type,
+	                Body: file,
+	                ACL: 'public-read' // 접근 권한
+	            };
+
+	            bucket.putObject(params, function (err, data) {
+	                // 업로드 성공
+	                
+	            });
+
+	          
+	        } return false;
+	    })
+	    
+	    alert(file.name);
 });
 	
+
 </script>	
 </head>
 <body id="page-top">
@@ -482,20 +520,19 @@ $(document).ready(function(){
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-           	디바이스 등록하기</h1>
+           	<h3>디바이스 등록하기</h3>
           </div>
 
-            
-			   <form method="post" id="deviceForm" action="${pageCotext.request.contextPath}/deviceForm" >
+			   <form method="post" id="deviceForm" enctype="multipart/form-data" action="${pageCotext.request.contextPath}/deviceForm" >
 			  <div>
 		  		
 		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">
 		  		 
 			    <div class="form-group col-md-2">
 			      <label for="inputEmail4">디바이스 사진</label>
-			      <input type="text" class="form-control" id="image" name="image">
-			      <button type="submit" id="deviceImage" class="btn btn-success">업로드</button>
-			    </div>
+			      <input type="file" class="form-control" id="file" name="file" value="dataFile" required="">
+<!-- 			      <button type="submit" id="deviceImage" class="btn btn-success">업로드</button>
+ -->			</div>
 			    
 			    <div class="form-group col-md-2">
 			      <label for="inputEmail4">디바이스 이름</label>
@@ -566,7 +603,7 @@ $(document).ready(function(){
   <script src="${pageCotext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+<!--   <script src="js/sb-admin-2.min.js"></script> -->
 
   <!-- Page level plugins -->
   <script src="${pageCotext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
