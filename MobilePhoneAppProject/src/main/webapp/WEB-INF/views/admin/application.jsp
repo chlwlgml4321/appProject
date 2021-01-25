@@ -613,7 +613,6 @@ $(document).ready(function(){
 	                      
 	                      
 	                      
-	                      
 	                     <c:choose>
 	                     
 	                     	<c:when test="${ap.state==0}">
