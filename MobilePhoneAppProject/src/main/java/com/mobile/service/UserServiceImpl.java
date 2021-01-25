@@ -340,7 +340,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<Review> reviewSelectByReviewId(Long officeId) {
+	public List<Review> reviewSelectByOfficeId(Long officeId) {
 		
 		return reviewRepo.findByOffice(officeId);
 	}

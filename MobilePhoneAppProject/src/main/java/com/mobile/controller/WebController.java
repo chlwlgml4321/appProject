@@ -732,4 +732,35 @@ public class WebController {
 		}
 		
 		
+
+		//officeId에 해당하는 멤버 전체보기 
+		@RequestMapping("/officeUser")
+		public String officeUser(Model model, Long officeId) {
+			List<Members> members = userService.selectByOffice(1L);
+			
+			model.addAttribute("members", members);
+			
+			return "/admin/officeUser";
+		}
+		
+
+		//officeId에 해당하는 product 보기 
+		@RequestMapping("/officeProducts")
+		public String officeProduct(Model model) {
+			
+			List<Products> products = productService.productSelectOfficeId(1L);
+			model.addAttribute("products", products);
+			return "/admin/officeProducts";
+		}
+		
+		@RequestMapping("/officeReview")
+		public String officeReview(Model model) {
+			
+			List<Review> review = userService.reviewSelectByOfficeId(1L);
+			model.addAttribute("review", review);
+			return "/admin/officeReview";
+		}
+		
+		
+	
 }

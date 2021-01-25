@@ -27,59 +27,56 @@
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
 	
-
 	
-<script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
-
-
 <script type="text/javascript">
-
-        AWS.config.update({
-
-            accessKeyId: 'AKIAQSNNSPCNWV4YQTOF',
-            secretAccessKey: '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'
-
-        });
-
-        AWS.config.region = 'ap-northeast-2';
-</script>
-
-
-<script type="text/javascript">
-
 $(document).ready(function(){
-	
-	$("#registerDevice").click(function(){
-		var imageName = document.getElementById('file').files[0];
-		imageName = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/"+ imageName.name;
-		
-		$("#image").val(imageName);
-		$("#deviceForm").submit();
-		    var bucket = new AWS.S3({ params: { Bucket: 'phonestorimage' } });
-	        var fileChooser = document.getElementById('file');
-	        var file = fileChooser.files[0];
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
 			
-	        if (file) {
-	            var params = {
-	                Key: file.name,
-	                ContentType: file.type,
-	                Body: file,
-	                ACL: 'public-read' // 접근 권한
-	            };
-				alert(file.name);
+			
+			var result = confirm('상품을 비활성화 시키겠습니까?');
+					
+			if(result){
 				
-	            bucket.putObject(params, function (err, data) {
-	                // 업로드 성공
-	                
-	            });
-
-	          
-	        } return false;
-	    })
-	    
-	   
-});
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("비활성화");
+				
+				changeState($(this).attr("id"));
+				
+				
+			}
+		} else if(($(this).attr("class") == "btn btn-warning")){
+			var result = confirm('상품을 활성화 시키겠습니까?');
+			if(result){
+				
+				
+				
+				$(this).attr("class","btn btn-success");
+				$(this).children().text("활성화");
+				
+				changeState($(this).attr("id"));
+			}
+		}
+		
+		
+	});
 	
+	
+	function changeState(id) {  
+	    alert(id);
+	    $.ajax({
+	        type : 'GET',
+	        url : "/changeProductSate",
+	        data : {"id" : id},
+	        success : function (data) {
+	                         
+	        }
+
+	    });
+	}
+	
+});
+
 
 </script>	
 </head>
@@ -104,15 +101,12 @@ $(document).ready(function(){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
 
       <!-- 유저관리 Divider -->
-      <hr class="sidebar-divider">
-
-     <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
@@ -195,6 +189,7 @@ $(document).ready(function(){
           <span>지점 등록</span></a>
           
       </li>  
+      
 
 
       
@@ -221,34 +216,22 @@ $(document).ready(function(){
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
-      </li> 
-      
-      
-
+      </li>  
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        상품 관리
+        공지사항
       </div>
-      <li class="nav-item active">
-        <a class="nav-link" href="category">
-          <i class="fas fa-fw fa-table"></i>
-          <span>카테고리 관리</span></a>
-      </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="product">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
+          <span>NOTICE</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -520,44 +503,106 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-<!-- Begin Page Content -->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-           	<h3>디바이스 등록하기</h3>
+          <h1 class="h3 mb-2 text-gray-800">상품 목록</h1>
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty products}">
+	              		<h3>등록된 상품이 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
+	                   
+	                  
+	                      <th>productsId</th>
+	                      <th>통신사</th>
+	                      <th>디바이스 이름</th>
+	                      <th>요금제 이름</th>
+	                      <th>지점</th>
+	                      <th>개통유형</th>
+	                      <th>공시지원금</th>
+	                      <th>마켓지원금</th>
+	                      <th>상태</th>
+	                      <th>수정</th>
+	                      
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${products}" var="products">
+	                    <tr>
+	                      <td> 
+	                      ${products.productsId}
+	              		  </td>
+	                      <td>${products.carrier.carrierName}</td>
+	                      <td>${products.device.deviceName}</td>
+	                      <td>${products.callingPlan.planName}</td>
+	                      <td>${products.office.officeName}</td>
+	                      <c:choose>
+	  					 	<c:when test="${products.activationType==1}">
+	  					 		<th>기기변경</th>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<th>번호이동</th>
+	  					 	</c:otherwise>
+	  					 </c:choose>
+	                      <td>${products.mainSupportFund}원</td>
+	                      <td>${products.marketSupportFund}원</td>
+	                      
+	                      <c:choose>
+	  					 	<c:when test="${products.state==1}">
+	  					 		<td style="color: green;">
+	  					 		<a href="#" class="btn btn-success" id="${products.productsId}">
+                    					<span class="text">활성화</span>
+                  					</a>
+	  					 	</c:when>
+	  					 	
+	  					 	<c:otherwise>
+	  					 		<td style="color: red;">
+	  					 		<a href="#" class="btn btn-warning" id= "${products.productsId}">
+                    					<span class="text">비활성화</span>
+                  					</a>
+	  					 	</c:otherwise>
+	  					 	
+	  					 </c:choose>
+	  					 
+	  					  <td style="color: green;">
+	  					 		<a href="${pageContext.request.contextPath}/productDetail/${products.productsId}"  class="btn btn-primary"  id="${products.productsId}">
+                    					<span class="text">수정</span>
+                  					</a>
+	                     
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
+                </br>
+                						<div class="form-group col-md-2">
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/productRegister'" class="btn btn-primary">상품 등록하기</button>
+										</div>
+              </div>
+            </div>
           </div>
 
-			   <form method="post" id="deviceForm" enctype="multipart/form-data" action="${pageCotext.request.contextPath}/deviceForm" >
-			  <div>
-		  		
-		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">
-		  		  <input type='hidden' id="image" name='image' value="">
-		  		 
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">디바이스 사진</label>
-			      <input type="file" class="form-control" id="file" name="file" value="dataFile" required="">
-<!-- 			      <button type="submit" id="deviceImage" class="btn btn-success">업로드</button>
- -->			</div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">디바이스 이름</label>
-			      <input type="text" class="form-control" id="deviceName" name="deviceName">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">가격</label>
-			      <input type="text" class="form-control" id="price" name="price">
-			    </div>
-			
-			    
-			  </div>
-			  
-			  <div class="form-group col-md-2" >
-			   <button type="submit" id="registerDevice" class="btn btn-primary">등록</button>
-			  </div>
-			  </form>
-			
+        </div>
+        <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
 
@@ -609,7 +654,7 @@ $(document).ready(function(){
   <script src="${pageCotext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-<!--   <script src="js/sb-admin-2.min.js"></script> -->
+  <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
   <script src="${pageCotext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>

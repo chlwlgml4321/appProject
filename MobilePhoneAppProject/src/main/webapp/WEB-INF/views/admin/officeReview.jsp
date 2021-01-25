@@ -27,59 +27,45 @@
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
 	
-
 	
-<script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
-
-
 <script type="text/javascript">
-
-        AWS.config.update({
-
-            accessKeyId: 'AKIAQSNNSPCNWV4YQTOF',
-            secretAccessKey: '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'
-
-        });
-
-        AWS.config.region = 'ap-northeast-2';
-</script>
-
-
-<script type="text/javascript">
-
 $(document).ready(function(){
-	
-	$("#registerDevice").click(function(){
-		var imageName = document.getElementById('file').files[0];
-		imageName = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/"+ imageName.name;
-		
-		$("#image").val(imageName);
-		$("#deviceForm").submit();
-		    var bucket = new AWS.S3({ params: { Bucket: 'phonestorimage' } });
-	        var fileChooser = document.getElementById('file');
-	        var file = fileChooser.files[0];
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-warning"){
 			
-	        if (file) {
-	            var params = {
-	                Key: file.name,
-	                ContentType: file.type,
-	                Body: file,
-	                ACL: 'public-read' // 접근 권한
-	            };
-				alert(file.name);
+			
+			var result = confirm('삭제하시겠습니까?');
+					
+			if(result){
 				
-	            bucket.putObject(params, function (err, data) {
-	                // 업로드 성공
-	                
-	            });
-
-	          
-	        } return false;
-	    })
-	    
-	   
-});
+				$(this).attr("class","btn btn-success");
+				$(this).children().text("삭제됨");
+				
+				changeDelete($(this).attr("id"));
+				
+				
+			}
+		} 
+		
+		
+	});
 	
+	
+	function changeDelete(id) {  
+	    alert(id);
+	    $.ajax({
+	        type : 'GET',
+	        url : "/changeDelete",
+	        data : {"id" : id},
+	        success : function (data) {
+	        	 location.reload();              
+	        }
+
+	    });
+	}
+	
+});
+
 
 </script>	
 </head>
@@ -104,15 +90,12 @@ $(document).ready(function(){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
 
       <!-- 유저관리 Divider -->
-      <hr class="sidebar-divider">
-
-     <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
@@ -195,6 +178,7 @@ $(document).ready(function(){
           <span>지점 등록</span></a>
           
       </li>  
+      
 
 
       
@@ -221,34 +205,22 @@ $(document).ready(function(){
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
-      </li> 
-      
-      
-
+      </li>  
       <!-- 상품 관리 Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        상품 관리
+        공지사항
       </div>
-      <li class="nav-item active">
-        <a class="nav-link" href="category">
-          <i class="fas fa-fw fa-table"></i>
-          <span>카테고리 관리</span></a>
-      </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="product">
+        <a class="nav-link" href="notice">
           <i class="fas fa-fw fa-table"></i>
-          <span>상픔 관리</span></a>
+          <span>NOTICE</span></a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="hotDealProduct">
-          <i class="fas fa-fw fa-table"></i>
-          <span>핫딜 상품 관리</span></a>
-      </li>
+     
       
       <li class="nav-item">
         <a class="nav-link" href="myList">
@@ -520,44 +492,72 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-<!-- Begin Page Content -->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-           	<h3>디바이스 등록하기</h3>
+          <h1 class="h3 mb-2 text-gray-800">리뷰 목록</h1>
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            
+            <div class="card-body">
+              <div class="table-responsive">
+              	<c:choose>
+	              	<c:when test="${empty review}">
+	              		<h3>등록된 리뷰가 없습니다.</h3>
+	              	</c:when>
+	              	
+	              	<c:otherwise>
+	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	                  <thead>
+	                    <tr>
+	                   
+	                  
+	                      <th>reviewId</th>
+	                      <th>제목</th>
+	                      <th>작성자 핸드폰</th>
+	                      <th>디바이스 이름</th>
+	                      <th>지점</th>
+	                      <th>작성일</th>
+	                      <th>삭제</th>
+	                      
+	                    </tr>
+	                  </thead>
+	                 
+	                  <tbody>
+	                  	<c:forEach items="${review}" var="review">
+	                    <tr>
+	                     
+	                      <td>${review.reviewId}</td>
+	                      <td>
+	                      	<a href="${pageContext.request.contextPath}/reviewDetail/${review.reviewId}">${review.content}</a>
+	                      </td>
+	                      <td>${review.member.phone}</td>
+	                      <td>${review.device.deviceName}</td>
+	                      <td>${review.office.officeName}</td>
+	                      <td>${review.regDate}</td>
+	  					  <td style="color: red;">
+	  					 		<button class="btn btn-warning"  id="${review.reviewId}">
+                    					<span class="text">삭제</span>
+                  					</button>
+	                     
+	                    </tr>
+	                    </c:forEach>
+	                   
+	                  </tbody>
+	                </table>
+	                </c:otherwise>
+                </c:choose>
+                
+              </div>
+            </div>
           </div>
 
-			   <form method="post" id="deviceForm" enctype="multipart/form-data" action="${pageCotext.request.contextPath}/deviceForm" >
-			  <div>
-		  		
-		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">
-		  		  <input type='hidden' id="image" name='image' value="">
-		  		 
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">디바이스 사진</label>
-			      <input type="file" class="form-control" id="file" name="file" value="dataFile" required="">
-<!-- 			      <button type="submit" id="deviceImage" class="btn btn-success">업로드</button>
- -->			</div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">디바이스 이름</label>
-			      <input type="text" class="form-control" id="deviceName" name="deviceName">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">가격</label>
-			      <input type="text" class="form-control" id="price" name="price">
-			    </div>
-			
-			    
-			  </div>
-			  
-			  <div class="form-group col-md-2" >
-			   <button type="submit" id="registerDevice" class="btn btn-primary">등록</button>
-			  </div>
-			  </form>
-			
+        </div>
+        <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
 
@@ -609,7 +609,7 @@ $(document).ready(function(){
   <script src="${pageCotext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-<!--   <script src="js/sb-admin-2.min.js"></script> -->
+  <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
   <script src="${pageCotext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>

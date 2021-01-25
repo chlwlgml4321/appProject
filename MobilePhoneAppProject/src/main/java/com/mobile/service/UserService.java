@@ -150,7 +150,7 @@ public interface UserService {
 	/**
 	 * officeId 리뷰조회 
 	 */
-	public List<Review> reviewSelectByReviewId(Long officeId);
+	public List<Review> reviewSelectByOfficeId(Long officeId);
 
 	/**
 	 * 리뷰 추가
