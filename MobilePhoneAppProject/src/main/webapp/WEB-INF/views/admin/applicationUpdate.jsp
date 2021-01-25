@@ -480,65 +480,36 @@ $(document).ready(function(){
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-           신청서 수정하기</h1>
+           상품 [${products.device.deviceName}] 신청서 상태 변경하기</h1>
           </div>
 
-            
-			   <form method="post" id="wiredGoodsForm" action="${pageCotext.request.contextPath}/wiredGoodsForm" >
+			   <form method="post" id="applicationForm" action="${pageCotext.request.contextPath}/applicationChangeState" >
 			  <div>
 		  		
-		  		 <input type='hidden' name='wiredGoodsId' value="${wiredGoods.wiredGoodsId}">
-		  		 
-				<div class="form-group col-md-2">
-			      <label for="inputState">통신사</label>
-			      <select id="carrierId" class="form-control" name="carrierId">
-			      <option selected>통신사 선택</option>
-			        		<c:forEach items="${carriers}" var="carriers">
-							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
+		  		 <input type='hidden' name='applicationId' value="${application.applicationId}">
+
+			    <div class="form-group col-md-2">
+			      <label for="inputState">신청서 상태 변경</label>
+			      <select id="cardId" class="form-control" name="state">
+			      <option selected>상태</option>
+			      			<option value="0">개통대기</option>
+			      			<option value="1">신청접수</option>
+			      			<option value="2">개통완료</option>
+							<option value="3">삭제</option>
+			        		<c:forEach items="${cards}" var="cards">
+							<option value="${cards.cardId}">${cards.cardName}</option>
 				   </c:forEach>
 			      </select>
 			    </div>
 			    
+
 			    
 			    
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">유선상품 이름</label>
-			      <input type="text" class="form-control" id="wiredGoodsName" name="wiredGoodsName">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">할인</label>
-			      <input type="text" class="form-control" id="discount" name="discount">
-			    </div>
-			
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">용량</label>
-			      <input type="text" class="form-control" id="capacity"  placeholder=" " name="capacity">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">회선</label>
-			      <input type="text" class="form-control" id="circuit"  placeholder="" name="circuit">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">요금</label>
-			      <input type="text" class="form-control" id="fee"  placeholder="" name="fee">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">이미지</label>
-			      <input type="text" class="form-control" id="wiredGoodsImg"  placeholder="" name="wiredGoodsImg">
-			    </div>
-			    
-			    
-			    
+
 			  </div>
 			  
 			  <div class="form-group col-md-2" >
-			   <button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
+			   <button type="submit" id="registerOffice" class="btn btn-primary">수정</button>
 			  </div>
 			  </form>
 			

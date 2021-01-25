@@ -487,44 +487,65 @@ $(document).ready(function(){
 			  <div>
 		  		
 		  		 <input type='hidden' name='applicationId' value="${application.applicationId}">
+		  		 <input type='hidden' name='productId' value="${products.productsId}">
 		  		 
 				<div class="form-group col-md-2">
 			      <label for="inputState">개통유형</label>
-			      <select id="carrierId" class="form-control" name="carrierId">
+			      <select id="activationType" class="form-control" name="activationType">
 			      <option selected>개통 유형</option>
-			        		<c:forEach items="${carriers}" var="carriers">
-							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
-				   </c:forEach>
+			        	<option value="0">번호 이동</option>
+						<option value="1">기기변경</option>
 			      </select>
 			    </div>
 			    
 			    <div class="form-group col-md-2">
 			      <label for="inputState">결제 방법</label>
-			      <select id="carrierId" class="form-control" name="carrierId">
+			      <select id="purchaseType" class="form-control" name="purchaseType">
 			      <option selected>결제 방법</option>
-			        		<c:forEach items="${carriers}" var="carriers">
-							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
-				   </c:forEach>
+			        	
+					<option value="0">현금 일시불 개통</option>
+					<option value="1">할부 개통</option>
+				   
 			      </select>
 			    </div>
 			    
 			    <div class="form-group col-md-2">
 			      <label for="inputState">자동 이체 카드 결합</label>
-			      <select id="carrierId" class="form-control" name="carrierId">
+			      <select id="cardId" class="form-control" name="cardId">
 			      <option selected>결제 방법</option>
-			        		<c:forEach items="${carriers}" var="carriers">
-							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
+			      			<option value="0">미결합</option>
+			        		<c:forEach items="${cards}" var="cards">
+							<option value="${cards.cardId}">${cards.cardName}</option>
+				   </c:forEach>
+			      </select>
+			    </div>
+			    
+
+			    
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">결합 할인 선택</label>
+			      <select id="wiredGoodsId" class="form-control" name="wiredGoodsId">
+			      <option selected>결제 방법</option>
+			      			<option value="0">미결합</option>
+			        		<c:forEach items="${wiredGoods}" var="wiredGoods">
+							<option value="${wiredGoods.wiredGoodsId}">${wiredGoods.wiredGoodsName}</option>
 				   </c:forEach>
 			      </select>
 			    </div>
 			    
 			    
-			    
 			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">지원금 유형 선택</label>
-			      <input type="text" class="form-control" id="wiredGoodsName" name="wiredGoodsName">
+			      <label for="inputState">지원금 유형 선택</label>
+			      <select id="supportFundType" class="form-control" name="supportFundType">
+			      <option selected>결제 방법</option>
+			      			<option value="0">공시지원금 개통</option>
+			      			<option value="0">선택약정 개통</option>
+			        		
+			      </select>
 			    </div>
 			    
+
 			  </div>
 			  
 			  <div class="form-group col-md-2" >

@@ -124,7 +124,7 @@ public class WebController2 {
 		Carrier carrier = productService.carrierSelectById(carrierId);
 
 		List<WiredGoods> wiList= productService.wiredGoodsSelectAll();
-		model.addAttribute("wiredGoods", wiredGoods);
+		model.addAttribute("wiredGoods", wiList);
 		wiredGoods.setCarrier(carrier);
 		productService.wiredGoodsInsert(wiredGoods);
 
@@ -161,26 +161,49 @@ public class WebController2 {
 
 	
 		Products products = productService.productsSelectById(productId);
+		Long carrierId = products.getCarrier().getCarrierId();
 		
 		List<Carrier> carriers = productService.carrierSelectAll();
-		
+		List<WiredGoods> wiredGoods = productService.wiredGoodsSelectByCarrierId(carrierId);
+		List<Card> cards = productService.cardSelectByCarrierId(carrierId); 
 		
 		model.addAttribute("carriers", carriers);
 		model.addAttribute("products",products);
+		
+		model.addAttribute("cards",cards);
+		model.addAttribute("wiredGoods",wiredGoods);
+		
 		
 		return "/admin/applicationRegister";
 	}
 	
 	//application Insert
 	@RequestMapping("/applicationForm")
-	public String applicationForm(WiredGoods wiredGoods, Model model, Long carrierId) {
+	public String applicationForm(Application application, Model model, Long wiredGoodsId, Long cardId,Long productId) {
 	
-		Carrier carrier = productService.carrierSelectById(carrierId);
+		
 
-		List<WiredGoods> wiList= productService.wiredGoodsSelectAll();
-		model.addAttribute("wiredGoods", wiredGoods);
-		wiredGoods.setCarrier(carrier);
-		productService.wiredGoodsInsert(wiredGoods);
+		List<Application> apList = productService.applicationSelectAll();
+		
+		model.addAttribute("application", apList);
+		
+		
+		if(productId!=null && productId!=0) {
+			Products products = productService.productsSelectById(productId);
+			application.setProduct(products);
+		}
+		
+		if(wiredGoodsId!=null && wiredGoodsId!=0) {
+			WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
+			application.setWiredGoods(wiredGoods);
+		}
+		
+		if(cardId!=null && cardId!=0) {
+			Card card = productService.cardSelectById(cardId);
+			application.setCard(card);
+		}
+		
+		productService.applicationInsert(application);
 
 		return "redirect:/application";
 	}
@@ -198,6 +221,24 @@ public class WebController2 {
 	}
 	
 	
+	
+	@RequestMapping("/applicationChangeState")
+	public String applicationChangeState(Long applicationId, Model model, Integer state) {
+		
+		
+		
+		List<Application> apList = productService.applicationSelectAll();
+		
+		if(state !=null) {
+			Application application = productService.applicationSelectById(applicationId);
+			application.setState(state);
+			productService.applicationUpdate(application);
+		}
+		
+		model.addAttribute("application", apList);
+		
+		return "admin/application";
+	}
 	
 	
 	
