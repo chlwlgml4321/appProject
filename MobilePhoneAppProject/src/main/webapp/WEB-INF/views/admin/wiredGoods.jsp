@@ -84,8 +84,9 @@ $(document).ready(function(){
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
-      <!-- Sidebar -->
+    <!-- Content Wrapper -->
+    
+    <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -106,7 +107,7 @@ $(document).ready(function(){
 
       <!-- 유저 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="user">
+        <a class="nav-link" href="/user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -115,7 +116,7 @@ $(document).ready(function(){
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="user">
+        <a class="nav-link" href="/user">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
@@ -123,20 +124,21 @@ $(document).ready(function(){
       
       <!-- 대기중인고객 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="inactiveUser">
+        <a class="nav-link" href="/inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
       </li>
       
-      <!-- 대기중인고객 관리 -->
+      
+      <!-- point 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="inactiveUser">
+        <a class="nav-link" href="/inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>포인트 관리</span></a>
       </li>  
       
       
-     <!-- 지역 관리 Divider -->
+     <!-- 구분선 -->
       <hr class="sidebar-divider">
       
       
@@ -146,16 +148,16 @@ $(document).ready(function(){
         신청서 관리
       </div>
       
-      <!-- 지역 관리 -->
+      <!-- 신청서 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="region">
+        <a class="nav-link" href="/application">
           <i class="fas fa-fw fa-table"></i>
           <span>신청서</span></a>
           
       </li>
       
       
-      <!-- 신청서 관리 Divider -->
+      <!-- 구분선 -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -165,7 +167,7 @@ $(document).ready(function(){
 
       <!-- 지역 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="region">
+        <a class="nav-link" href="/region">
           <i class="fas fa-fw fa-table"></i>
           <span>REGION</span></a>
           
@@ -174,14 +176,14 @@ $(document).ready(function(){
       
       <!-- 지역 등록 -->
       <li class="nav-item">
-        <a class="nav-link" href="regionInsert">
+        <a class="nav-link" href="/regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
       </li>  
       
       
-      <!-- 지점 관리 Divider -->
+      <!-- 구분선 -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -191,7 +193,7 @@ $(document).ready(function(){
 
       <!-- 지점 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="office">
+        <a class="nav-link" href="/office">
           <i class="fas fa-fw fa-table"></i>
           <span>OFFICE</span></a>
           
@@ -200,14 +202,14 @@ $(document).ready(function(){
       
       <!-- 지역 등록 -->
       <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
+        <a class="nav-link" href="/officeRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>지점 등록</span></a>
           
       </li>  
       
       
-       <!-- 요금제 관리 Divider -->
+       <!-- 구분선 -->
       <hr class="sidebar-divider">
       
   <!-- Heading -->
@@ -217,7 +219,7 @@ $(document).ready(function(){
 
       <!-- 요금제 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="callingPlan">
+        <a class="nav-link" href="/callingPlan">
           <i class="fas fa-fw fa-table"></i>
           <span>요금제</span></a>
           
@@ -226,57 +228,54 @@ $(document).ready(function(){
       
       <!-- 요금제 등록 -->
       <li class="nav-item">
-        <a class="nav-link" href="callingPlanRegister">
+        <a class="nav-link" href="/callingPlanRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
       </li> 
       
-            <hr class="sidebar-divider">
+           <!-- 구분선 -->
+      <hr class="sidebar-divider">
       
-           <div class="sidebar-heading">
+      <div class="sidebar-heading">
       	결합상품 관리
       </div>
 
       <!-- 결합 상품 관리 -->
-      <li class="nav-item active">
-        <a class="nav-link" href="office">
+      <li class="nav-item">
+        <a class="nav-link" href="/wiredGoods">
           <i class="fas fa-fw fa-table"></i>
           <span>유선 상품</span></a>
           
       </li>
       
-      
-  
-      
       <!-- 카드 결합 -->
-      <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
+      <li class="nav-item active">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/card">
           <i class="fas fa-fw fa-table"></i>
           <span>카드 결합</span></a>
           
       </li>  
 
-	<hr class="sidebar-divider">
+	  	<!-- 구분선 -->
+      <hr class="sidebar-divider">
       
-           <div class="sidebar-heading">
+      
+      <div class="sidebar-heading">
       	제품 관리
       </div>
 
       <!-- 기기 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="office">
+        <a class="nav-link" href="/device">
           <i class="fas fa-fw fa-table"></i>
           <span>디바이스</span></a>
           
       </li>
       
-      
-  
-      
       <!-- 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
+        <a class="nav-link" href="/products">
           <i class="fas fa-fw fa-table"></i>
           <span>특가 상품</span></a>
           
@@ -284,7 +283,7 @@ $(document).ready(function(){
       
       <!-- 방문 고객 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
+        <a class="nav-link" href="/guestProduct">
           <i class="fas fa-fw fa-table"></i>
           <span>방문고객 상품</span></a>
           
@@ -292,7 +291,7 @@ $(document).ready(function(){
       
      <!-- 추천 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="officeRegister">
+        <a class="nav-link" href="/officeRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>추천 상품</span></a>
           
@@ -300,7 +299,7 @@ $(document).ready(function(){
 
       
       
-      <!-- 상품 관리 Divider -->
+        <!-- 구분선 -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
@@ -309,10 +308,26 @@ $(document).ready(function(){
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="notice">
+        <a class="nav-link" href="/review">
           <i class="fas fa-fw fa-table"></i>
           <span>리뷰</span></a>
       </li>
+      
+      
+       <!-- 구분선 -->
+      <hr class="sidebar-divider">
+      
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        배너 관리
+      </div>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/banners">
+          <i class="fas fa-fw fa-table"></i>
+          <span>배너</span></a>
+      </li>
+      
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -324,7 +339,6 @@ $(document).ready(function(){
 
     </ul>
     <!-- End of Sidebar -->
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
