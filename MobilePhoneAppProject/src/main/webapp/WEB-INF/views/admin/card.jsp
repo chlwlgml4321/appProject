@@ -328,6 +328,21 @@ $(document).ready(function(){
       </li>
       
       
+          <!-- 구분선 -->
+      <hr class="sidebar-divider">
+      
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        커뮤니티 관리
+      </div>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/community">
+          <i class="fas fa-fw fa-table"></i>
+          <span>community</span></a>
+      </li>
+      
+      
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
