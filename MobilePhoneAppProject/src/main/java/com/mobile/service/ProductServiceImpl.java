@@ -567,5 +567,11 @@ public class ProductServiceImpl implements ProductService {
 		
 		return wiredGoodsRepository.findByCarrier(carrierId);
 	}
+	
+	@Override
+	public List<Products> productSelectOfficeId(Long officeId) {
+
+	return productsRepository.findByOffice(officeId);
+	}
 
 }

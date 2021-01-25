@@ -325,6 +325,11 @@ public interface ProductService {
 	public List<WiredGoods> wiredGoodsSelectByCarrierId(Long carrierId);
 	
 	
+	/**
+	 * officeId 로 상품 조회 
+	 */
+	public List<Products> productSelectOfficeId(Long officeId);
+
 	
 	
 }
