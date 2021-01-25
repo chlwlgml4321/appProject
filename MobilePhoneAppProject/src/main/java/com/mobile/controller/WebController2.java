@@ -15,6 +15,7 @@ import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
+import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.WiredGoods;
 import com.mobile.service.ProductService;
@@ -156,11 +157,18 @@ public class WebController2 {
 	
 	//application register
 	@RequestMapping("/applicationRegister")
-	public ModelAndView applicationRegister() {
+	public String applicationRegister(Long productId, Model model) {
 
+	
+		Products products = productService.productsSelectById(productId);
+		
 		List<Carrier> carriers = productService.carrierSelectAll();
-
-		return new ModelAndView("/admin/application", "carriers", carriers);
+		
+		
+		model.addAttribute("carriers", carriers);
+		model.addAttribute("products",products);
+		
+		return "/admin/applicationRegister";
 	}
 	
 	//application Insert

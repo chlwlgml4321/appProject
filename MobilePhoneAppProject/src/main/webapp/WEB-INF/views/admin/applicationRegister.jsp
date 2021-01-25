@@ -480,19 +480,38 @@ $(document).ready(function(){
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            유선상품 등록하기</h1>
+           상품 [${products.device.deviceName}] 신청서 등록하기</h1>
           </div>
 
-            
-			   <form method="post" id="wiredGoodsForm" action="${pageCotext.request.contextPath}/wiredGoodsForm" >
+			   <form method="post" id="applicationForm" action="${pageCotext.request.contextPath}/applicationForm" >
 			  <div>
 		  		
-		  		 <input type='hidden' name='wiredGoodsId' value="${wiredGoods.wiredGoodsId}">
+		  		 <input type='hidden' name='applicationId' value="${application.applicationId}">
 		  		 
 				<div class="form-group col-md-2">
-			      <label for="inputState">통신사</label>
+			      <label for="inputState">개통유형</label>
 			      <select id="carrierId" class="form-control" name="carrierId">
-			      <option selected>통신사 선택</option>
+			      <option selected>개통 유형</option>
+			        		<c:forEach items="${carriers}" var="carriers">
+							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
+				   </c:forEach>
+			      </select>
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">결제 방법</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			      <option selected>결제 방법</option>
+			        		<c:forEach items="${carriers}" var="carriers">
+							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
+				   </c:forEach>
+			      </select>
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputState">자동 이체 카드 결합</label>
+			      <select id="carrierId" class="form-control" name="carrierId">
+			      <option selected>결제 방법</option>
 			        		<c:forEach items="${carriers}" var="carriers">
 							<option value="${carriers.carrierId}">${carriers.carrierName}</option>
 				   </c:forEach>
@@ -501,39 +520,10 @@ $(document).ready(function(){
 			    
 			    
 			    
-			    
 			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">유선상품 이름</label>
+			      <label for="inputEmail4">지원금 유형 선택</label>
 			      <input type="text" class="form-control" id="wiredGoodsName" name="wiredGoodsName">
 			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">할인</label>
-			      <input type="text" class="form-control" id="discount" name="discount">
-			    </div>
-			
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">용량</label>
-			      <input type="text" class="form-control" id="capacity"  placeholder=" " name="capacity">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">회선</label>
-			      <input type="text" class="form-control" id="circuit"  placeholder="" name="circuit">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">요금</label>
-			      <input type="text" class="form-control" id="fee"  placeholder="" name="fee">
-			    </div>
-			    
-			    <div class="form-group col-md-2">
-			      <label for="inputEmail4">이미지</label>
-			      <input type="text" class="form-control" id="wiredGoodsImg"  placeholder="" name="wiredGoodsImg">
-			    </div>
-			    
-			    
 			    
 			  </div>
 			  

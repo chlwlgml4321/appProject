@@ -365,6 +365,9 @@ public class ProductServiceImpl implements ProductService {
 			if(product.getState()!=null) {
 				p.setState(product.getState());
 			}
+			if(product.getInstallmentFee()!=null) {
+				p.setInstallmentFee(product.getInstallmentFee());
+			}
 		}
 
 	}
@@ -448,7 +451,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Card> cardSelectByCarrierId(Long carrierId){
-		return null;
+		return cardRepository.findByCarrier(carrierId);
 	}
 	
 	@Override
@@ -557,6 +560,12 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			return guestProductRepository.searchingRecoomendation(activationType, carrierId, deviceId, subcondition);
 		}
+	}
+
+	@Override
+	public List<WiredGoods> wiredGoodsSelectByCarrierId(Long carrierId) {
+		
+		return wiredGoodsRepository.findByCarrier(carrierId);
 	}
 
 }

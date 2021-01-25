@@ -648,7 +648,7 @@ $(document).ready(function(){
                 
                 </br>
                 						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/wiredGoodsRegister'" class="btn btn-primary">유선상품 등록하기</button>
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/applicationRegister'" class="btn btn-primary">신청서 등록하기</button>
 										</div>
               </div>
             </div>

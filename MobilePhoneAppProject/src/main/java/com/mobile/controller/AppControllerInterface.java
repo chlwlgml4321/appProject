@@ -251,6 +251,12 @@ public interface AppControllerInterface {
 	public void reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, String reviewImg1, String reviewImg2, String reviewImg3, Integer activationType, Float rate, String content, Date regDate);
 	
 
+	
+	// wiredGoods를 carrier id로 가져오기
+	@RequestMapping("/app/getWiredGoodsByCarrierId")
+	public String getWiredGoodsByCarrierId(Long carrierId);
+	
+
 
 	
 	

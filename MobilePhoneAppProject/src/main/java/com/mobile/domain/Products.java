@@ -53,6 +53,7 @@ public class Products {
 	@JoinColumn(name="deviceId")
 	Device device;
 	
+	Integer cash;
 	
 	/* activation_type :
 	* 0 – 번호이동
@@ -78,4 +79,12 @@ public class Products {
 	 * 1 - 활성화
 	 * */
 	Integer state;
+	
+	
+	/**
+	 * 할부 수수료
+	 * */
+	Integer installmentFee;
+	
+	
 }

@@ -268,6 +268,10 @@ public interface ProductService {
 
 	List<Products> productFindReccomendaion();
 
+	/**
+	 * 통신사 id로 card 조회
+	 * */
+	
 	List<Card> cardSelectByCarrierId(Long carrierId);
 	
 	
@@ -309,6 +313,16 @@ public interface ProductService {
 	
 	public List<Banners> bannersSelectAll();
 	
+	
+	
+	
+	
+	
+	/**
+	 * 통신사 id로 유선상품 조회
+	 * */
+	
+	public List<WiredGoods> wiredGoodsSelectByCarrierId(Long carrierId);
 	
 	
 	

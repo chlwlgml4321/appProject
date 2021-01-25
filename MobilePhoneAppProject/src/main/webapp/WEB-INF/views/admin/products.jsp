@@ -61,6 +61,14 @@ $(document).ready(function(){
 		
 	});
 	
+	$(".pi").click(function(){
+		//location.href = "/applicationRegister"
+		//alert($(this).children().attr("id")); 
+		
+		location.href = "/applicationRegister?productId=" + $(this).children().attr("id"); 
+		
+	});
+	
 	
 	function changeState(id) {  
 	    alert(id);
@@ -74,6 +82,7 @@ $(document).ready(function(){
 
 	    });
 	}
+	
 	
 });
 
@@ -543,8 +552,10 @@ $(document).ready(function(){
 	                  <tbody>
 	                  	<c:forEach items="${products}" var="products">
 	                    <tr>
-	                      <td> 
+	                      <td class = "pi">
+	                      <p id = "${products.productsId}">
 	                      ${products.productsId}
+	                      </p>
 	              		  </td>
 	                      <td>${products.carrier.carrierName}</td>
 	                      <td>${products.device.deviceName}</td>
