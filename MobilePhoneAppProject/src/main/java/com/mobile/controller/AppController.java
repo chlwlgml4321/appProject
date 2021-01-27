@@ -1,13 +1,17 @@
 package com.mobile.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,10 +34,16 @@ import com.mobile.domain.Review;
 import com.mobile.domain.SearchResults;
 import com.mobile.domain.WiredGoods;
 import com.mobile.service.ProductService;
+import com.mobile.service.S3Service;
 import com.mobile.service.UserService;
 
 @Controller
+@Transactional
 public class AppController implements AppControllerInterface {
+
+	@Autowired
+	private S3Service s3Service;
+
 
 	@Autowired
 	private UserService userService;
@@ -819,17 +829,68 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/registerReview")
 	@ResponseBody
-	public void registerReview(Integer activationType, String content, Float rate, String reviewImg1, String reviewImg2, String reviewImg3, Long officeId, Long memberId, Long carrierId, Long deviceId) {
+	public Integer registerReview(Integer activationType, String content, Float rate, Long officeId, Long memberId, Long carrierId, Long deviceId,  MultipartFile file) {
 
 
-		Members member = userService.memberSelectById(memberId);
-		Carrier carrier = productService.carrierSelectById(carrierId);
-		Office office = userService.officeSelectById(officeId);
-		Device device = productService.deviceSelectById(deviceId);
+		
+		if(file==null) {
+			System.out.println("file is null");
+		} else {
+			System.out.println("file is not null");
+		}
 
-		Review review = new Review(null, member, office, device, carrier, reviewImg1, reviewImg2, reviewImg3, activationType, rate, content, null);
+		
+		Members member = null;
+		Carrier carrier = null;
+		Office office = null;
+		Device device = null;
 
-		userService.reviewInsert(review);
+		if(memberId!=null) {
+			member = userService.memberSelectById(memberId);
+		}
+		if(carrierId!=null) {
+			carrier = productService.carrierSelectById(carrierId);
+		}
+		
+		if(officeId!=null) {
+			office = userService.officeSelectById(officeId);
+
+		}
+		
+		if(deviceId!=null) {
+			device  = productService.deviceSelectById(deviceId);
+		}
+		
+		
+		
+
+		String imgPath = null;
+
+		String reviewImg = null;
+		String ext = null;
+		
+		if(file!=null) {
+			String strFileName = file.getOriginalFilename();
+			int pos = strFileName.lastIndexOf( "." );
+			ext = strFileName.substring( pos + 1 );
+			
+			reviewImg = "null";
+		}
+		
+		Review review = new Review(null, member, office, device, carrier, reviewImg, ext, null, activationType, rate, content, null);
+
+
+		try {
+			if(file!=null) {
+				imgPath = s3Service.upload(file);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		return userService.reviewInsert(review);
 
 	}
 

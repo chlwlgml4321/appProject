@@ -2,6 +2,8 @@ package com.mobile.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ import com.mobile.repository.ReviewRepository;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -76,7 +79,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 
-		
+
 	}
 	@Override 
 	public Members memberLogin(String phone, String password) {
@@ -170,10 +173,10 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
-	
+
 	@Override
 	public List<Members> selectByOffice(Long officeId) {
-		
+
 		return membersRepo.findByOffice(officeId);
 	}
 
@@ -281,9 +284,36 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void reviewInsert(Review review) {
+	public Integer reviewInsert(Review review) {
 
-		reviewRepo.save(review);
+		if(review.getReviewImg1()!= null) {
+
+
+			if(!review.getReviewImg1().equals("null")) {
+				review.setReviewImg1(null);
+			} else {
+
+				int seq = reviewRepo.getNextValMySequence();
+				String fileName = "review_image_"+ seq;
+
+				String url = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/" +  fileName + "."+ review.getReviewImg2();
+
+
+				review.setReviewImg1(url);
+				review.setReviewImg2(null);
+			}
+		} else {
+			review.setReviewImg2(null);
+		}
+		
+		Review rv = reviewRepo.save(review);
+		
+		if(rv!=null) {
+			return 1;
+		} else {
+			return 0;
+		}
+		 
 
 	}
 
@@ -296,7 +326,7 @@ public class UserServiceImpl implements UserService {
 			if(review.getReviewImg1() !=null) {
 				r.setReviewImg1(review.getReviewImg1());
 			}
-			
+
 			if(review.getCarrier()!=null) {
 				r.setCarrier(review.getCarrier());
 			}
@@ -306,7 +336,7 @@ public class UserServiceImpl implements UserService {
 			if(review.getDevice()!=null) {
 				r.setDevice(review.getDevice());
 			}
-			
+
 			if(review.getReviewImg2() !=null) {
 				r.setReviewImg2(review.getReviewImg2());
 			}
@@ -338,10 +368,10 @@ public class UserServiceImpl implements UserService {
 		reviewRepo.deleteById(reviewId);
 
 	}
-	
+
 	@Override
 	public List<Review> reviewSelectByOfficeId(Long officeId) {
-		
+
 		return reviewRepo.findByOffice(officeId);
 	}
 

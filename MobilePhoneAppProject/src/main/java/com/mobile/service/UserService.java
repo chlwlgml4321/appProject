@@ -154,8 +154,9 @@ public interface UserService {
 
 	/**
 	 * 리뷰 추가
+	 * @return 
 	 * */
-	public void reviewInsert(Review review);
+	public Integer reviewInsert(Review review);
 	
 	/**
 	 * 리뷰 정보 수정하기

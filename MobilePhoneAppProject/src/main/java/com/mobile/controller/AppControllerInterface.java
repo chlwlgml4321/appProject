@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mobile.domain.Application;
 import com.mobile.domain.Members;
@@ -207,11 +208,11 @@ public interface AppControllerInterface {
 	
 	/**
 	 * 리뷰
+	 * @return 
 	 * */
 	// 리뷰 등록
 	@RequestMapping("/app/registerReview")
-	public void registerReview(Integer activationType, String content, Float rate, String reviewImg1, String reviewImg2,
-			String reviewImg3, Long officeId, Long memberId, Long carrierId, Long deviceId);
+	public Integer registerReview(Integer activationType, String content, Float rate, Long officeId, Long memberId, Long carrierId, Long deviceId, MultipartFile multipartFile);
 	
 	// 전체 리뷰 조회
 	@RequestMapping("/app/getAllReview")

@@ -1,5 +1,7 @@
 package com.mobile;
 
+import java.math.BigDecimal;
+
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
@@ -55,6 +57,8 @@ class MobilePhoneAppProjectApplicationTests {
 	@Autowired
 	UserService uSerivce;
 
+	@Autowired
+	ReviewRepository reviewRepo;
 
 	@Autowired
 	CallingPlanRepository callRepo;
@@ -100,29 +104,10 @@ class MobilePhoneAppProjectApplicationTests {
 	@Test
 	void contextLoads() {
 		
+		System.out.println("===========");
 		
-		
-		
-//		for(int i = 0; i<30; i++){
-//			
-//			WiredGoods w  = new WiredGoods();
-//			
-//			wr.save(w);
-//		}
-//		
-
-		
-		
-		
-		Banners banners = new Banners(null, "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/banner_img/photo.png", "Galaxy20 S20+", "4 days of discovery");
-
-		
-		br.save(banners);
-
-
-
-
-
+		int a = reviewRepo.getNextValMySequence();
+		System.out.println("seq = " + a);
 	}
 
 }

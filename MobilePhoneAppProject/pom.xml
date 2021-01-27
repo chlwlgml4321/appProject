@@ -108,23 +108,20 @@
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-security</artifactId> 
 			</dependency> <dependency> <groupId>org.springframework.security</groupId> 
 			<artifactId>spring-security-test</artifactId> <scope>test</scope> </dependency> -->
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-autoconfigure -->
-<!-- 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-aws-autoconfigure</artifactId>
-			<version>2.2.3.RELEASE</version>
-		</dependency>
-
-		https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-context
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-aws-context</artifactId>
-			<version>2.2.3.RELEASE</version>
-		</dependency> -->
+			<artifactId>spring-cloud-aws</artifactId>
+			<version>2.2.1.RELEASE</version>
+			<type>pom</type>
+		</dependency>
 
-
-
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.11.942</version>
+		</dependency>
 
 	</dependencies>
 
