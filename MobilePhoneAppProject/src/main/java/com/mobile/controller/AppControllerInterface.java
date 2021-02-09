@@ -143,7 +143,8 @@ public interface AppControllerInterface {
 	
 	// 특가 상품을 조건에 맞게 검색(통신사, 기기변경, 모델명, 네트워크 타입), 지점
 	@RequestMapping("/app/productSearch")
-	public String productSearch(Long carrierId, Integer activtaionType, Long deviceId, Long officeId, int subcpndition);
+	public String productSearch(Long carrierId, Integer activtaionType,
+			Long deviceId, Long officeId, int subcpndition);
 	
 	//추천 특가 상품 조회
 	@RequestMapping("/app/getReccomendationProduct")
@@ -155,7 +156,12 @@ public interface AppControllerInterface {
 	
 	//신청서 등록
 	@RequestMapping("/app/addApplication")
-	public void AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId);
+	public void AddaddApplication(Long memberId, Long productId, 
+			Integer activationType, Integer purchaseType, Integer addtionalDiscount,
+			Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,
+			Integer installmentFee, Integer installmentPrincipal,
+			Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId,
+			Long wiredGoodsId, Long cardId);
 	
 	//신청서 member id로 조회
 	@RequestMapping("/app/getApplicationByUserId")
@@ -212,7 +218,8 @@ public interface AppControllerInterface {
 	 * */
 	// 리뷰 등록
 	@RequestMapping("/app/registerReview")
-	public Integer registerReview(Integer activationType, String content, Float rate, Long officeId, Long memberId, Long carrierId, Long deviceId, MultipartFile multipartFile);
+	public Integer registerReview(Integer activationType, String content, 
+			Float rate, Long officeId, Long memberId, Long carrierId, Long deviceId, MultipartFile multipartFile);
 	
 	// 전체 리뷰 조회
 	@RequestMapping("/app/getAllReview")

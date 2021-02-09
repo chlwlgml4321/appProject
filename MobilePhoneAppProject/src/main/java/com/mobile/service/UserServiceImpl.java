@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mobile.domain.Admin;
+import com.mobile.domain.Authority;
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
@@ -14,6 +16,8 @@ import com.mobile.domain.Office;
 import com.mobile.domain.Point;
 import com.mobile.domain.Region;
 import com.mobile.domain.Review;
+import com.mobile.repository.AdminRepository;
+import com.mobile.repository.AuthorityRepository;
 import com.mobile.repository.BlacklistRepository;
 import com.mobile.repository.MembersRepository;
 import com.mobile.repository.NoticeRepository;
@@ -41,13 +45,16 @@ public class UserServiceImpl implements UserService {
 	OfficeRepository officeRepo;
 	@Autowired
 	PointRepository pointRepo;
-
+	@Autowired
+	AdminRepository adminRepo;	
+	@Autowired
+	AuthorityRepository authorityRepo;
 
 	@Override
 	public List<Members> memberSelectAll() {
 		return membersRepo.findAll();
 	}
-
+	
 	@Override
 	public List<Members> mamberSelectActivatedAll() {
 		return membersRepo.findActiveMember();
@@ -439,10 +446,20 @@ public class UserServiceImpl implements UserService {
 
 		return officeRepo.findById(officeId).orElse(null);
 	}
+	
+	@Override
+	public Office officeSelectByTel(String tel) {
+		
+		return officeRepo.findByTel(tel);
+	}
 
 	@Override
 	public void officeInsert(Office office) {
 
+		
+		Authority authority = new Authority(null, "0", office.getTel());
+		
+		authorityRepo.save(authority);
 		officeRepo.save(office);
 
 	}
@@ -561,6 +578,13 @@ public class UserServiceImpl implements UserService {
 	public List<Point> pointSelectUsedPoint(Long memberId) {
 
 		return pointRepo.findByUnusedPoint(memberId);
+	}
+
+	
+	@Override
+	public Admin adminSelectByTel(String tel) {
+		
+		return adminRepo.findByTel(tel);
 	}
 
 }

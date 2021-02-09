@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mobile.domain.Application;
@@ -104,10 +105,7 @@ class MobilePhoneAppProjectApplicationTests {
 	@Test
 	void contextLoads() {
 		
-		System.out.println("===========");
 		
-		int a = reviewRepo.getNextValMySequence();
-		System.out.println("seq = " + a);
 	}
 
 }

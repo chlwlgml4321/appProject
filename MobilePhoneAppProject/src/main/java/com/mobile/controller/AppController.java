@@ -9,8 +9,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -826,12 +829,27 @@ public class AppController implements AppControllerInterface {
 		return result;
 	}
 
-	@Override
+	@RequestMapping("/app/reviewTest")
+	@ResponseBody
+	public void reviewTest(String title, MultipartFile file) {
+		System.out.println("enter....");
+		
+		System.out.println(title);
+		
+		if(file==null) {
+			System.out.println("file is null");
+		} else {
+			System.out.println("file is not null");
+		}
+
+	}
+	
+	@Override 
 	@RequestMapping("/app/registerReview")
 	@ResponseBody
 	public Integer registerReview(Integer activationType, String content, Float rate, Long officeId, Long memberId, Long carrierId, Long deviceId,  MultipartFile file) {
 
-
+		System.out.println("enter....");
 		
 		if(file==null) {
 			System.out.println("file is null");

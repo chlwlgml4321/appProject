@@ -20,4 +20,8 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
 	@Query("select o from Office o where o.state=1")
 	public List<Office> findByState();
 	
+	//tel 로 office 가져오기 
+	@Query("select o from Office o where o.tel=?1")
+	public Office findByTel(String tel);
+	
 }

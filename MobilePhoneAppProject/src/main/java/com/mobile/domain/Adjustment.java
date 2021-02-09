@@ -1,37 +1,41 @@
 package com.mobile.domain;
 
+import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Authority {
-
+@ToString
+public class Adjustment {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_authority")
-	@SequenceGenerator(sequenceName = "seq_authority", name="seq_authority", allocationSize = 1 )
-	private Long authorityNo;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_adjustment")
+	@SequenceGenerator(sequenceName = "seq_adjustment", name="seq_adjustment", allocationSize = 1 )
+	Long adjustmentId;
 	
-	@Column(name = "role")
-	private String role;
-	 
-	@Column(name = "tel")
-	private String tel;
+	Date regDate;
+	
+	@ManyToOne
+	@JoinColumn(name="officeId")
+	Office office;
+	
+	Integer amount;
 	
 }

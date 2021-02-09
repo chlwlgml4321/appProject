@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mobile.domain.Admin;
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
@@ -181,6 +182,10 @@ public interface UserService {
 	public Region regionSelectById(Long regionId);
 
 	/**
+	 * 지점 번호로 조회
+	 * */
+	public Office officeSelectByTel(String tel);
+	/**
 	 * 지역 추가
 	 * */
 	public void regionInsert(Region region);
@@ -273,6 +278,11 @@ public interface UserService {
 	 * */
 	public List<Point> pointSelectUsedPoint(Long memberId);
 
+	
+	/**
+	 * 관리자 번호로 관리자 조회
+	 * */
+	public Admin adminSelectByTel(String tel);
 	
 
 }
