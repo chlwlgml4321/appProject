@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.mobile.domain.Application;
+import com.mobile.domain.Members;
 
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
@@ -18,4 +19,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	//멤버 아이디로 신청서 찾기
 	@Query("select a from Application a where a.member.memberId=?1")
 	public List<Application> findBymemberId(Long memberId);
+	
+	
+
 }

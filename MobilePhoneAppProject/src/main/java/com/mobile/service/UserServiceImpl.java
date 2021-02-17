@@ -5,9 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.mobile.domain.Admin;
+
 import com.mobile.domain.Authority;
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
@@ -16,7 +18,6 @@ import com.mobile.domain.Office;
 import com.mobile.domain.Point;
 import com.mobile.domain.Region;
 import com.mobile.domain.Review;
-import com.mobile.repository.AdminRepository;
 import com.mobile.repository.AuthorityRepository;
 import com.mobile.repository.BlacklistRepository;
 import com.mobile.repository.MembersRepository;
@@ -45,8 +46,7 @@ public class UserServiceImpl implements UserService {
 	OfficeRepository officeRepo;
 	@Autowired
 	PointRepository pointRepo;
-	@Autowired
-	AdminRepository adminRepo;	
+	
 	@Autowired
 	AuthorityRepository authorityRepo;
 
@@ -62,7 +62,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<Members> mamberSelectInactivatedAll() {
-		return membersRepo.findInactiveMember();
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		Office office = (Office) authentication.getPrincipal();
+
+		if(office.getState()==2) {
+			return membersRepo.findInactiveMember();
+		} else {
+			return membersRepo.findInActiveMemberByOfficeId(office.getOfficeId());
+		}
+		
 	}
 
 	@Override
@@ -457,7 +467,7 @@ public class UserServiceImpl implements UserService {
 	public void officeInsert(Office office) {
 
 		
-		Authority authority = new Authority(null, "0", office.getTel());
+		Authority authority = new Authority(null, "0", office.getTel(),office);
 		
 		authorityRepo.save(authority);
 		officeRepo.save(office);
@@ -581,10 +591,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	
-	@Override
-	public Admin adminSelectByTel(String tel) {
-		
-		return adminRepo.findByTel(tel);
-	}
+	
 
 }

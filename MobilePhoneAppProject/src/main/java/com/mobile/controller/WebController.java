@@ -1,8 +1,11 @@
 package com.mobile.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,10 +48,19 @@ public class WebController {
 	
 	
 	//멤버 전체보기 
-	@RequestMapping("/user")
-	public String user(Model model) {
-		List<Members> members = userService.mamberSelectActivatedAll();
+	@RequestMapping("/common/user")
+	public String user(Model model, Principal principal) {
+		List<Members> members = null;
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		Office office = (Office) authentication.getPrincipal();
+		
+		if(office.getState()==2) {
+			members = userService.mamberSelectActivatedAll();
+		} else {
+			members = userService.selectByOffice(office.getOfficeId());
+		}
 		model.addAttribute("members", members);
 		
 		return "/admin/user";
@@ -56,7 +68,7 @@ public class WebController {
 	
 	
 	//승인대기중인 멤버 보기 
-	@RequestMapping("/inactiveUser")
+	@RequestMapping("/common/inactiveUser")
 	public String inactiveUser(Model model) {
 		System.out.println("wlsdlq");
 		List<Members> members = userService.mamberSelectInactivatedAll();
@@ -78,7 +90,7 @@ public class WebController {
 //	}
 	
 	//멤버 state 바꾸기 
-	@RequestMapping("/changeUserSate")
+	@RequestMapping("/common/changeUserSate")
 	@ResponseBody
 	public String changeUserSate(Long id) {
 		
@@ -95,7 +107,7 @@ public class WebController {
 	}
 	
 	//멤버 active 시키기
-	@RequestMapping("/changeActive")
+	@RequestMapping("/common/changeActive")
 	@ResponseBody
 	public String changeActive(Long id) {
 		Members member = new Members();
@@ -107,15 +119,15 @@ public class WebController {
 	}
 	
 	//공지사항 작성 폼으로 가기  
-	@RequestMapping("/admin/noticeRegister")
-	public void noticeForm() {
-		
-		
-		
-	}
+//	@RequestMapping("/admin/noticeRegister")
+//	public void noticeForm() {
+//		
+//		
+//		
+//	}
 	
 	//공지사항 insert
-	@RequestMapping("/noticeRegister")
+	@RequestMapping("/admin/noticeRegister")
 	public String registerNotice(Notice notice, Model model) {
 		System.out.println("진입");
 		System.out.println(notice.getTitle());
@@ -127,12 +139,12 @@ public class WebController {
 		userService.noticeInsert(notice);
 		
 
-		return "redirect:/notice";
+		return "redirect:/admin/notice";
 	}
 	
 	
 	//수정페이지로 이동 
-	@RequestMapping("/noticeInsert")
+	@RequestMapping("/admin/noticeInsert")
 	public String noticeInsert(Notice notice) {
 		System.out.println("##insert");
 		
@@ -143,7 +155,7 @@ public class WebController {
 	}
 	
 	//공지사항 전체보기
-	@RequestMapping("/notice")
+	@RequestMapping("/admin/notice")
 	public String notice(Model model) {
 		
 		List<Notice> notice= userService.noticeSelectAll();
@@ -155,7 +167,7 @@ public class WebController {
 	}
 	
 	//공지사항 디테일
-	@RequestMapping("/noticeDetail/{noticeId}")
+	@RequestMapping("/admin/noticeDetail/{noticeId}")
 	public ModelAndView noticeDetail(@PathVariable Long noticeId) {
 	
 		Notice notice = userService.noticeSelectById(noticeId);
@@ -166,7 +178,7 @@ public class WebController {
 	
 
 	//notice 글지우기 
-	@RequestMapping("/deleteNotice")
+	@RequestMapping("/admin/deleteNotice")
 	@ResponseBody
 	public String deleteNotice(Long id) {
 		
@@ -174,12 +186,12 @@ public class WebController {
 		Notice notice = new Notice();
 		notice.setNoticeId(id);
 		userService.noticeDelete(id);
-		return "redirect:/notice";
+		return "redirect:/admin/notice";
 	}
 	
 	
 	//notice 수정하기 
-	@RequestMapping("/noticeUpdate")
+	@RequestMapping("/admin/noticeUpdate")
 	public String noticeUpdate( Notice notice) {
 		
 		System.out.println("title: "+ notice.getTitle());
@@ -193,7 +205,7 @@ public class WebController {
 	
 	
 	//regionInsert 들어가기 
-	@RequestMapping("/regionInsert")
+	@RequestMapping("/admin/regionInsert")
 	public String regionInsert() {
 		return "/admin/regionInsert";
 	}
@@ -201,7 +213,7 @@ public class WebController {
 	
 	
 	//regionInsert
-	@RequestMapping("/regionForm")
+	@RequestMapping("/admin/regionForm")
 	public String regionForm(Region region, Model model) {
 		System.out.println("##regionInsert");
 		System.out.println(region.getRegionName());
@@ -211,12 +223,12 @@ public class WebController {
 		model.addAttribute("region", regions);
 		userService.regionInsert(region);
 		
-		return "redirect:/region";
+		return "redirect:/admin/region";
 	}
 	
 	
 	//지역 전체보기
-		@RequestMapping("/region")
+		@RequestMapping("/admin/region")
 		public String region(Model model) {
 			
 			List<Region> region= userService.regionSelectAll();
@@ -228,7 +240,7 @@ public class WebController {
 		}
 		
 		//region 글지우기 
-		@RequestMapping("/deleteRegion")
+		@RequestMapping("/admin/deleteRegion")
 		@ResponseBody
 		public String deleteRegion(Long id) {
 			
@@ -236,11 +248,11 @@ public class WebController {
 			Region region = new Region();
 			region.setRegionId(id);
 			userService.regionDelete(id);
-			return "redirect:/region";
+			return "redirect:/admin/region";
 		}
 		
 		//region 디테일
-		@RequestMapping("/regionDetail/{regionId}")
+		@RequestMapping("/admin/regionDetail/{regionId}")
 		public ModelAndView regionDetail(@PathVariable Long regionId) {
 		
 			Region region = userService.regionSelectById(regionId);
@@ -251,7 +263,7 @@ public class WebController {
 		
 		
 		//region 수정하기 
-		@RequestMapping("/regionUpdate")
+		@RequestMapping("/admin/regionUpdate")
 		public String regionUpdate(Region region, Model model) {
 			
 			System.out.println(region.getRegionName());
@@ -265,7 +277,7 @@ public class WebController {
 		}
 		
 
-		@RequestMapping("/officeRegister")
+		@RequestMapping("/admin/officeRegister")
 		public String register(Model model) {
 			System.out.println("##officeregister");
 			List<Region> region= userService.regionSelectAll();
@@ -275,7 +287,7 @@ public class WebController {
 		}
 
 	
-		@RequestMapping("/officeForm")
+		@RequestMapping("/admin/officeForm")
 		public String officeForm(Office office, Model model, Long regionId) {
 			System.out.println("##officeInsert");
 			System.out.println("id: "+office.getOfficeId());
@@ -291,12 +303,12 @@ public class WebController {
 			Region region= userService.regionSelectById(regionId);
 			office.setRegion(region);
 			userService.officeInsert(office);
-			return "redirect:/office";
+			return "redirect:/admin/office";
 			
 		}
 		
 		//office selectALL
-		@RequestMapping("/office")
+		@RequestMapping("/admin/office")
 		public String office(Model model) {
 			
 			List<Office> office = userService.officeSelectAll();
@@ -308,7 +320,7 @@ public class WebController {
 	
 		
 		//officeState 바꾸기 
-		@RequestMapping("/changeOfficeState")
+		@RequestMapping("/admin/changeOfficeState")
 		@ResponseBody
 		public String changeOfficeState(Long id) {
 			
@@ -319,7 +331,7 @@ public class WebController {
 		}
 		
 		//office 디테일
-		@RequestMapping("/officeDetail/{officeId}")
+		@RequestMapping("/admin/officeDetail/{officeId}")
 		public ModelAndView officeDetail(@PathVariable Long officeId, Model model) {
 				
 			Office office = userService.officeSelectById(officeId);
@@ -336,7 +348,7 @@ public class WebController {
 		
 		
 		//office 수정하기 
-		@RequestMapping("/officeUpdate/{officeId}")
+		@RequestMapping("/admin/officeUpdate/{officeId}")
 		public String officeUpdate(@PathVariable Long officeId, Office office, Model model) {
 			System.out.println("##officeUpdate");
 			System.out.println(office.getOfficeId());
@@ -351,7 +363,7 @@ public class WebController {
 		}
 		
 		//callingPlan 
-		@RequestMapping("/callingPlan")
+		@RequestMapping("/admin/callingPlan")
 			public String callingPlan(Model model) {
 				
 			List<CallingPlan> callingPlan= productService.callingPlanSelectAll();
@@ -360,7 +372,7 @@ public class WebController {
 		}
 
 		//callingPlanDetail
-		@RequestMapping("/callingPlanDetail/{callingPlanId}")
+		@RequestMapping("/admin/callingPlanDetail/{callingPlanId}")
 		public ModelAndView callingDetail(@PathVariable Long callingPlanId, Long carrierId, Model model) {
 			
 			CallingPlan callingPlan= productService.callingPlanSelectById(callingPlanId);
@@ -373,7 +385,7 @@ public class WebController {
 			return new ModelAndView("/admin/callingPlanUpdate", "callingPlan", callingPlan);
 		}
 		
-		@RequestMapping("/callingPlanRegister")
+		@RequestMapping("/admin/callingPlanRegister")
 		public String callRegister(Model model) {
 			System.out.println("callRegister 진입");
 			List<Carrier> carrier= productService.carrierSelectAll();
@@ -384,7 +396,7 @@ public class WebController {
 
 		
 		//요금제 등록 
-		@RequestMapping("/callingPlanForm")
+		@RequestMapping("/admin/callingPlanForm")
 		public String callingPlanForm(CallingPlan callingPlan, Model model, Long carrierId) {
 			
 			List<CallingPlan> callingPlans = productService.callingPlanSelectAll();
@@ -395,12 +407,12 @@ public class WebController {
 			callingPlan.setCarrier(carrier);
 			productService.callingPlanInsert(callingPlan);
 			
-			return "redirect:/callingPlan";
+			return "redirect:/admin/callingPlan";
 			
 		}
 		
 		//CallingPlanSate 바꾸기 
-		@RequestMapping("/changeCallingPlanSate")
+		@RequestMapping("/admin/changeCallingPlanSate")
 		@ResponseBody
 		public String changeCallingPlanSate(Long id) {
 					
@@ -411,7 +423,7 @@ public class WebController {
 		}
 		
 		//callingPlanUpdate 수정하기 
-		@RequestMapping("/callingPlanUpdate/{callingPlanId}")
+		@RequestMapping("/admin/callingPlanUpdate/{callingPlanId}")
 		public String callingPlanUpdate(@PathVariable Long callingPlanId, CallingPlan callingPlan, Model model) {
 			System.out.println("##callingPlanUpdate");
 			productService.callingPlanUpdate(callingPlan);
@@ -423,7 +435,7 @@ public class WebController {
 		}
 		
 		
-		@RequestMapping("/device")
+		@RequestMapping("/admin/device")
 		public String device(Model model) {
 			
 			List<Device> device = productService.deviceSelectAll();
@@ -432,7 +444,7 @@ public class WebController {
 		}
 		
 		//deviceRegister 진입
-		@RequestMapping("/deviceRegister")
+		@RequestMapping("/admin/deviceRegister")
 		public String deviceRegister(Model model) {
 			System.out.println("deviceRegister 진입");
 			
@@ -442,7 +454,7 @@ public class WebController {
 
 		
 		//device 등록 
-		@RequestMapping("/deviceForm")
+		@RequestMapping("/admin/deviceForm")
 		public String deviceForm(Device device, Model model) {
 			
 			System.out.println(device.getDeviceName());
@@ -454,12 +466,12 @@ public class WebController {
 			
 			model.addAttribute("device", devices);
 			
-			return "redirect:/device";
+			return "redirect:/admin/device";
 			
 		}
 		
 		//deviceDetail
-		@RequestMapping("/deviceDetail/{deviceId}")
+		@RequestMapping("/admin/deviceDetail/{deviceId}")
 		public ModelAndView deviceDetail(@PathVariable Long deviceId, Model model) {
 					
 			Device device= productService.deviceSelectById(deviceId);
@@ -470,7 +482,7 @@ public class WebController {
 		}
 		
 		//DeviceState 바꾸기 
-		@RequestMapping("/changeDeviceState")
+		@RequestMapping("/admin/changeDeviceState")
 		@ResponseBody
 		public String changeDeviceSate(Long id) {
 							
@@ -480,7 +492,7 @@ public class WebController {
 			return "";
 		}
 		
-		@RequestMapping("/products")
+		@RequestMapping("/common/products")
 		public String product(Model model) {
 			
 			List<Products> products = productService.productsSelectAll();
@@ -490,7 +502,7 @@ public class WebController {
 		
 		
 		//productRegister 진입
-		@RequestMapping("/productRegister")
+		@RequestMapping("/common/productRegister")
 		public String productRegister(Model model) {
 			System.out.println("productRegister 진입");
 			
@@ -511,7 +523,7 @@ public class WebController {
 		}
 
 		//product 등록 
-		@RequestMapping("/productForm")
+		@RequestMapping("/common/productForm")
 		public String productForm(Products products, Model model, Long carrierId, Long callingPlanId, Long officeId, Long deviceId) {
 			List<Products> product = productService.productsSelectAll();
 			
@@ -531,12 +543,12 @@ public class WebController {
 			
 			productService.productInsert(products);
 			
-			return "redirect:/products";	
+			return "redirect:/common/products";	
 		}	
 		
 		
 		//productDetail
-		@RequestMapping("/productDetail/{productsId}")
+		@RequestMapping("/common/productDetail/{productsId}")
 		public ModelAndView productDetail(@PathVariable Long productsId, Model model) {
 			// 상품아이디로 상품을 조회해서 디테일에 뿌려주는 기능임 	
 			
@@ -557,7 +569,7 @@ public class WebController {
 		}
 		
 		//product 수정하기 
-		@RequestMapping("/productUpdate/{productsId}")
+		@RequestMapping("/common/productUpdate/{productsId}")
 		public String productUpdate(@PathVariable Long productsId,  Products products, Model model) {
 			
 			// 수정해서 - 새로운 디비를update 치고  -> 새로운 데이터를 이용해서 화면으로 보여주는 로직  
@@ -571,7 +583,7 @@ public class WebController {
 		}
 			
 		//ProductSate 바꾸기 
-		@RequestMapping("/changeProductSate")
+		@RequestMapping("/common/changeProductSate")
 		@ResponseBody
 		public String changeProductSate(Long id) {
 									
@@ -584,7 +596,7 @@ public class WebController {
 		
 		
 		//memberId에 해당하는 point목록으로 가기 
-		@RequestMapping("/point/{memberId}")
+		@RequestMapping("/admin/point/{memberId}")
 		public String point(@PathVariable Long memberId, Point point, Model model) {
 			
 			List<Point> points= userService.pointSelectByMemberId(memberId);
@@ -597,7 +609,7 @@ public class WebController {
 			return "/admin/point";
 		}
 		
-		@RequestMapping("/review")
+		@RequestMapping("/admin/review")
 		public String review(Model model) {
 			
 			List<Review> review = userService.reviewSelectAll();
@@ -606,7 +618,7 @@ public class WebController {
 		}
 	
 		//review delete
-		@RequestMapping("/changeDelete")
+		@RequestMapping("/admin/changeDelete")
 		@ResponseBody
 		public String changeDelete(Long id) {
 			
@@ -616,7 +628,7 @@ public class WebController {
 		
 		
 		//review 디테일
-		@RequestMapping("/reviewDetail/{reviewId}")
+		@RequestMapping("/admin/reviewDetail/{reviewId}")
 		public ModelAndView reviewDetail(@PathVariable Long reviewId) {
 		
 			Review review= userService.reviewSelectById(reviewId);
@@ -626,7 +638,7 @@ public class WebController {
 		}
 		
 		//guestProduct 
-		@RequestMapping("/guestProduct")
+		@RequestMapping("/admin/guestProduct")
 		public String guestProduct(Model model) {
 			
 			List<GuestProduct> guestProduct= productService.guestProductSelectAll();
@@ -636,7 +648,7 @@ public class WebController {
 		
 		
 		//guestProductDetail  수정할때 화면 
-		@RequestMapping("/guestProductDetail/{guestProductId}")
+		@RequestMapping("/admin/guestProductDetail/{guestProductId}")
 		public ModelAndView guestProductDetail(@PathVariable Long guestProductId, Model model) {
 			
 			// 상품아이디로 상품을 조회해서 디테일에 뿌려주는 기능임 	
@@ -657,7 +669,7 @@ public class WebController {
 		}
 		
 		//guestProductUpdate수정하기 
-		@RequestMapping("/guestProductUpdate/{guestProductId}")
+		@RequestMapping("/admin/guestProductUpdate/{guestProductId}")
 		public String guestProductUpdate(@PathVariable Long guestProductId,  GuestProduct guestProducts, Model model) {
 			
 			// 수정해서 - 새로운 디비를update 치고  -> 새로운 데이터를 이용해서 화면으로 보여주는 로직  
@@ -674,7 +686,7 @@ public class WebController {
 		
 
 		//guestProductRegister 진입
-		@RequestMapping("/guestProductRegister")
+		@RequestMapping("/admin/guestProductRegister")
 		public String guestProductRegister(Model model) {
 			System.out.println("guestProductRegister 진입");
 			
@@ -695,7 +707,7 @@ public class WebController {
 		}
 
 		//GuestProduct 등록 
-		@RequestMapping("/guestProductForm")
+		@RequestMapping("/admin/guestProductForm")
 		public String guestProductForm(GuestProduct guestProduct, Model model, Long carrierId, Long callingPlanId, Long officeId, Long deviceId) {
 			List<GuestProduct> guestProducts= productService.guestProductSelectAll();
 			
@@ -715,11 +727,11 @@ public class WebController {
 			
 			productService.guestProductInsert(guestProduct);
 			
-			return "redirect:/guestProduct";	
+			return "redirect:/admin/guestProduct";	
 		}	
 
 		//guestProduct 지우기 
-		@RequestMapping("/deleteGusetProduct")
+		@RequestMapping("/admin/deleteGusetProduct")
 		@ResponseBody
 		public String deleteGusetProduct(Long id) {
 			
@@ -728,7 +740,7 @@ public class WebController {
 			guestProduct.setGuestProductId(id);
 			productService.guestProductDelete(id);
 			
-			return "redirect:/guestProduct";
+			return "redirect:/admin/guestProduct";
 		}
 		
 		

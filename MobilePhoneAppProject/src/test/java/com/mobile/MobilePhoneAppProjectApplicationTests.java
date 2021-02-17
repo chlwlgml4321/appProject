@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 import com.mobile.domain.Application;
+import com.mobile.domain.Authority;
 import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
@@ -26,6 +28,7 @@ import com.mobile.domain.Region;
 import com.mobile.domain.Review;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.ApplicationRepository;
+import com.mobile.repository.AuthorityRepository;
 import com.mobile.repository.BannersRepository;
 import com.mobile.repository.CallingPlanRepository;
 import com.mobile.repository.CardRepository;
@@ -75,37 +78,49 @@ class MobilePhoneAppProjectApplicationTests {
 
 	@Autowired
 	CardRepository c;
-	
+
 
 	@Autowired
 	DeviceRepository d;
-	
+
 	@Autowired
 	PointRepository p;
-	
+
 	@Autowired
 	ProductsRepository pr;
-	
+
 	@Autowired
 	CallingPlanRepository cr;
-	
+
 	@Autowired
 	WiredGoodsRepository wr;
-	
+
 	@Autowired
 	ReviewRepository rr;
-	
+
 	@Autowired
 	ApplicationRepository ar;
-	
+
 	@Autowired
 	BannersRepository br;
-	
+
+
+	@Autowired
+	AuthorityRepository aur;
+
 
 	@Test
 	void contextLoads() {
-		
-		
+
+
+		Office office = officeRepo.findById(5L).orElse(null);
+		Authority at = new Authority(null, "1", office.getTel(), office);
+
+		aur.save(at);
+
+
+		//	Office office = new Office(null, "관리자", "관리자", "admin", null, "admin123", null, 2, null);
+		//	officeRepo.save(office);
 	}
 
 }

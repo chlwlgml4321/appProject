@@ -39,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		
 		auth.inMemoryAuthentication()
-		.withUser("admin")
-		.password("admin")
+		.withUser("manager")
+		.password("1111")
 		.roles("ADMIN");
 	}
 	
@@ -60,19 +60,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 
-//	
 		http.authorizeRequests().antMatchers("/").permitAll();
-//		http.authorizeRequests().antMatchers("/shop/cart/orderForm","/shop/mypage/**","/shop/cart/**",
-//				"/shop/cart/cartList","/community/register").hasRole("MEMBER");
-//		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
 		
+		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
+		http.authorizeRequests().antMatchers("/common/*").hasAnyRole("ADMIN","OFFICE");
 		
-		http.formLogin().loginPage("/loginPage").defaultSuccessUrl("/admin/category");
+		http.formLogin().loginPage("/login/loginPage").defaultSuccessUrl("/admin/card");
 		
 		http.exceptionHandling().accessDeniedPage("/accessDenied");
 	//	 http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
 		http.logout().logoutUrl("/logout").invalidateHttpSession(true);
-		
+//		
         http
         .csrf().disable();
 	}

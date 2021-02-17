@@ -32,14 +32,39 @@ public class WebController2 {
 	@Autowired
 	private ProductService productService;
 
+	
+	//login
+	@RequestMapping("/login")
+	public void login() {
+		
+		
+		System.out.println("로그인");
 
+	}
+	
+	//logout
+	@RequestMapping("/logout")
+	public void logout() {
+		
+		
+		System.out.println("로그아웃");
 
+	}
+
+///accessDenied
 	//index
-	@RequestMapping("/loginPage")
+	@RequestMapping("/login/loginPage")
 	public String loginPage() {
 
 
-		return "/admin/login";
+		return "/login/login";
+	}
+	
+	@RequestMapping("/accessDenied")
+	public String accessDenied() {
+
+
+		return "/accessDenied";
 	}
 
 	//image test
@@ -84,7 +109,7 @@ public class WebController2 {
 	}
 
 	//card 디테일
-	@RequestMapping("/cardDetail/{cardId}")
+	@RequestMapping("/admin/cardDetail/{cardId}")
 	public String cardDetail(@PathVariable Long cardId, Model model) {
 
 		Card card = productService.cardSelectById(cardId);
@@ -95,12 +120,12 @@ public class WebController2 {
 		model.addAttribute("card", card);
 		
 		
-		return "admin/cardUpdate";
+		return "/admin/cardUpdate";
 	}
 	
 	
 	//wiredGoods
-	@RequestMapping("/wiredGoods")
+	@RequestMapping("/admin/wiredGoods")
 	public ModelAndView wiredGoods() {
 
 		List<WiredGoods> wiredGoods = productService.wiredGoodsSelectAll();
@@ -109,7 +134,7 @@ public class WebController2 {
 	}
 	
 	//card register
-	@RequestMapping("/wiredGoodsRegister")
+	@RequestMapping("/admin/wiredGoodsRegister")
 	public ModelAndView wiredGoodsRegister() {
 
 		List<Carrier> carriers = productService.carrierSelectAll();
@@ -118,7 +143,7 @@ public class WebController2 {
 	}
 	
 	//wiredGoods Insert
-	@RequestMapping("/wiredGoodsForm")
+	@RequestMapping("/admin/wiredGoodsForm")
 	public String wiredGoodsForm(WiredGoods wiredGoods, Model model, Long carrierId) {
 	
 		Carrier carrier = productService.carrierSelectById(carrierId);
@@ -128,11 +153,11 @@ public class WebController2 {
 		wiredGoods.setCarrier(carrier);
 		productService.wiredGoodsInsert(wiredGoods);
 
-		return "redirect:/wiredGoods";
+		return "redirect:/admin/wiredGoods";
 	}
 	
 	//card 디테일
-	@RequestMapping("/wiredGoodsDetail/{wiredGoodsId}")
+	@RequestMapping("/admin/wiredGoodsDetail/{wiredGoodsId}")
 	public String wiredGoodsDetail(@PathVariable Long wiredGoodsId, Model model) {
 
 		WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
@@ -142,12 +167,12 @@ public class WebController2 {
 		model.addAttribute("wiredGoods", wiredGoods);
 		System.out.println(wiredGoodsId);
 		System.out.println("진입함");
-		return "admin/wiredGoodsUpdate";
+		return "/admin/wiredGoodsUpdate";
 	}
 	
 	
 	//application
-	@RequestMapping("/application")
+	@RequestMapping("/common/application")
 	public ModelAndView application() {
 
 		List<Application> application = productService.applicationSelectAll();
@@ -156,7 +181,7 @@ public class WebController2 {
 	}
 	
 	//application register
-	@RequestMapping("/applicationRegister")
+	@RequestMapping("/common/applicationRegister")
 	public String applicationRegister(Long productId, Model model) {
 
 	
@@ -178,7 +203,7 @@ public class WebController2 {
 	}
 	
 	//application Insert
-	@RequestMapping("/applicationForm")
+	@RequestMapping("/common/applicationForm")
 	public String applicationForm(Application application, Model model, Long wiredGoodsId, Long cardId,Long productId) {
 	
 		
@@ -205,11 +230,11 @@ public class WebController2 {
 		
 		productService.applicationInsert(application);
 
-		return "redirect:/application";
+		return "redirect:/common/application";
 	}
 	
 	//application 디테일
-	@RequestMapping("/applicationDetail/{applicationId}")
+	@RequestMapping("/common/applicationDetail/{applicationId}")
 	public String applicationDetail(@PathVariable Long applicationId, Model model) {
 		
 		Application application = productService.applicationSelectById(applicationId);
@@ -222,7 +247,7 @@ public class WebController2 {
 	
 	
 	
-	@RequestMapping("/applicationChangeState")
+	@RequestMapping("/common/applicationChangeState")
 	public String applicationChangeState(Long applicationId, Model model, Integer state) {
 		
 		
