@@ -1039,9 +1039,7 @@ public class AppController implements AppControllerInterface {
 
 
 		for(Application obj : appList ) {
-			if(obj!=null) {
-
-
+			if(obj!=null & obj.getRegDate()!=null & obj.getMember()!=null & obj.getProduct() !=null & obj.getState() !=null) {
 				Reservations res = new Reservations(obj.getRegDate(), obj.getMember().getName(), obj.getProduct().getDevice().getDeviceName(), obj.getState());
 				list.add(res);
 			} 

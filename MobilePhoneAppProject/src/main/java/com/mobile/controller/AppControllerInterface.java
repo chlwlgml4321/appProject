@@ -240,7 +240,8 @@ public interface AppControllerInterface {
 	//일반 상품을 조건에 맞게 검색(통신사, 기기변경, 모델명, 네트워크 타입), 지점
 	@RequestMapping("/app/guestProductSearch")
 	public String guestProductSearch(Long carrierId, Integer activtaionType, Long deviceId, int subcondition);
-
+	
+	//지점에 해당되는 모든 상품 가져오기
 	@RequestMapping("/app/getProductByOffice")
 	public String getProductByOffice(Long officeId);
 	
