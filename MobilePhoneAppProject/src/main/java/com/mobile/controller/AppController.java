@@ -833,9 +833,9 @@ public class AppController implements AppControllerInterface {
 	@ResponseBody
 	public void reviewTest(String title, MultipartFile file) {
 		System.out.println("enter....");
-		
+
 		System.out.println(title);
-		
+
 		if(file==null) {
 			System.out.println("file is null");
 		} else {
@@ -843,21 +843,21 @@ public class AppController implements AppControllerInterface {
 		}
 
 	}
-	
+
 	@Override 
 	@RequestMapping("/app/registerReview")
 	@ResponseBody
 	public Integer registerReview(Integer activationType, String content, Float rate, Long officeId, Long memberId, Long carrierId, Long deviceId,  MultipartFile file) {
 
 		System.out.println("enter....");
-		
+
 		if(file==null) {
 			System.out.println("file is null");
 		} else {
 			System.out.println("file is not null");
 		}
 
-		
+
 		Members member = null;
 		Carrier carrier = null;
 		Office office = null;
@@ -869,32 +869,32 @@ public class AppController implements AppControllerInterface {
 		if(carrierId!=null) {
 			carrier = productService.carrierSelectById(carrierId);
 		}
-		
+
 		if(officeId!=null) {
 			office = userService.officeSelectById(officeId);
 
 		}
-		
+
 		if(deviceId!=null) {
 			device  = productService.deviceSelectById(deviceId);
 		}
-		
-		
-		
+
+
+
 
 		String imgPath = null;
 
 		String reviewImg = null;
 		String ext = null;
-		
+
 		if(file!=null) {
 			String strFileName = file.getOriginalFilename();
 			int pos = strFileName.lastIndexOf( "." );
 			ext = strFileName.substring( pos + 1 );
-			
+
 			reviewImg = "null";
 		}
-		
+
 		Review review = new Review(null, member, office, device, carrier, reviewImg, ext, null, activationType, rate, content, null);
 
 
@@ -902,12 +902,12 @@ public class AppController implements AppControllerInterface {
 			if(file!=null) {
 				imgPath = s3Service.upload(file);
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			return 0;
 		}
-		
+
 		return userService.reviewInsert(review);
 
 	}
@@ -1159,6 +1159,60 @@ public class AppController implements AppControllerInterface {
 
 		return result;
 	}
+
+	@Override
+	@ResponseBody
+	public String getUserByPhone(String phone) {
+
+
+		Members member = userService.memberSelectByPhone(phone);
+
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+		if(member == null) {
+			return null;
+		}  else {
+			try {
+				result = mapper.writeValueAsString(member);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+
+	}
+
+	@Override
+	@ResponseBody
+	public String getProductByOffice(Long officeId) {
+
+
+		List<Products> list = productService.productSelectOfficeId(officeId);
+
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+
+
+	}
+
 
 
 

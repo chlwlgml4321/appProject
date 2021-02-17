@@ -66,6 +66,10 @@ public interface AppControllerInterface {
 	//회원 탈퇴 
 	@RequestMapping("/app/userDropout")
 	public void userDropout(Long membersId);
+	
+	//폰 번호로 멤버 가져오기
+	@RequestMapping("/app/getUserByPhone")
+	public String getUserByPhone(String phone);
 		
 	/**
 	 * 통신사
@@ -236,6 +240,9 @@ public interface AppControllerInterface {
 	//일반 상품을 조건에 맞게 검색(통신사, 기기변경, 모델명, 네트워크 타입), 지점
 	@RequestMapping("/app/guestProductSearch")
 	public String guestProductSearch(Long carrierId, Integer activtaionType, Long deviceId, int subcondition);
+
+	@RequestMapping("/app/getProductByOffice")
+	public String getProductByOffice(Long officeId);
 	
 	// Main Banner 조회
 	@RequestMapping("/app/getMainBanners")

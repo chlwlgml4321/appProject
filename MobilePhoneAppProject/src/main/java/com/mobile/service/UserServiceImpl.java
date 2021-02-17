@@ -590,6 +590,11 @@ public class UserServiceImpl implements UserService {
 		return pointRepo.findByUnusedPoint(memberId);
 	}
 
+	@Override
+	public Members memberSelectByPhone(String phone) {
+		return membersRepo.findByPhone(phone);
+	}
+
 	
 	
 

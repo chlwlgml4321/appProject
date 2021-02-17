@@ -30,4 +30,5 @@ public interface MembersRepository extends JpaRepository<Members, Long> {
 	//회원의 상태가 1인 회원 가져오기
 	@Query("select m from Members m where m.state=2 and m.office.officeId = ?1")
 	public List<Members> findInActiveMemberByOfficeId(Long officeId);
+	
 }

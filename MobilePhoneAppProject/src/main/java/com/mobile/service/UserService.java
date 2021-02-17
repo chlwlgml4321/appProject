@@ -44,6 +44,11 @@ public interface UserService {
 	public Members memberSelectById(Long memberId);
 	
 	/**
+	 * phone로 멤버 조회
+	 * */
+	public Members memberSelectByPhone(String phone);
+	
+	/**
 	 * 회원 officeId 로 조회하기 
 	 */
 	public List<Members> selectByOffice(Long officeId);
