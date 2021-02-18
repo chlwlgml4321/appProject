@@ -65,6 +65,8 @@ public class Review {
 	
 	Date regDate;
 	
+	Integer updateCnt;
+	
 	
 	
 }

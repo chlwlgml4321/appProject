@@ -376,6 +376,8 @@ public class UserServiceImpl implements UserService {
 			if(review.getRegDate() !=null) {
 				r.setRegDate(review.getRegDate());
 			}
+			
+			r.setUpdateCnt(r.getUpdateCnt()+1);
 			reviewRepo.save(r);
 		}
 		

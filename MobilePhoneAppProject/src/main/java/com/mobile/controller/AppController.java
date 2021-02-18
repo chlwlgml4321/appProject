@@ -895,7 +895,7 @@ public class AppController implements AppControllerInterface {
 			reviewImg = "null";
 		}
 
-		Review review = new Review(null, member, office, device, carrier, reviewImg, ext, null, activationType, rate, content, null);
+		Review review = new Review(null, member, office, device, carrier, reviewImg, ext, null, activationType, rate, content, null,0);
 
 
 		try {
@@ -957,7 +957,7 @@ public class AppController implements AppControllerInterface {
 		}
 
 
-		Review review = new Review(reviewId, null, office, device, carrier, reviewImg, ext, null, activationType, rate, content, regDate);
+		Review review = new Review(reviewId, null, office, device, carrier, reviewImg, ext, null, activationType, rate, content, regDate,0);
 
 		return userService.reviewUpdate(review);
 		
