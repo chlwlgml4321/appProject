@@ -65,7 +65,7 @@ $(document).ready(function(){
 		//location.href = "/applicationRegister"
 		//alert($(this).children().attr("id")); 
 		
-		location.href = "/applicationRegister?productId=" + $(this).children().attr("id"); 
+		location.href = "/common/applicationRegister?productId=" + $(this).children().attr("id"); 
 		
 	});
 	
@@ -74,7 +74,7 @@ $(document).ready(function(){
 	    alert(id);
 	    $.ajax({
 	        type : 'GET',
-	        url : "/changeProductSate",
+	        url : "/common/changeProductSate",
 	        data : {"id" : id},
 	        success : function (data) {
 	                         
@@ -630,7 +630,7 @@ $(document).ready(function(){
 	  					 </c:choose>
 	  					 
 	  					  <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/productDetail/${products.productsId}"  class="btn btn-primary"  id="${products.productsId}">
+	  					 		<a href="${pageContext.request.contextPath}/common/productDetail/${products.productsId}"  class="btn btn-primary"  id="${products.productsId}">
                     					<span class="text">수정</span>
                   					</a>
 	                     
@@ -644,7 +644,7 @@ $(document).ready(function(){
                 
                 </br>
                 						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/productRegister'" class="btn btn-primary">상품 등록하기</button>
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/common/productRegister'" class="btn btn-primary">상품 등록하기</button>
 										</div>
               </div>
             </div>

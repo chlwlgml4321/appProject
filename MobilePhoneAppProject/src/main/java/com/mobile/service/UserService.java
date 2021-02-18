@@ -166,7 +166,7 @@ public interface UserService {
 	/**
 	 * 리뷰 정보 수정하기
 	 * */
-	public void reviewUpdate(Review review);
+	public Integer reviewUpdate(Review review);
 	
 	/**
 	 * 리뷰 삭제

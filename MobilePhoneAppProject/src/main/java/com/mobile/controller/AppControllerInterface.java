@@ -264,7 +264,7 @@ public interface AppControllerInterface {
 	
 	// Review 수정
 	@RequestMapping("/app/reviewUpdate")
-	public void reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, String reviewImg1, String reviewImg2, String reviewImg3, Integer activationType, Float rate, String content, Date regDate);
+	public Integer reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, MultipartFile file, Integer activationType, Float rate, String content, Date regDate);
 	
 
 	

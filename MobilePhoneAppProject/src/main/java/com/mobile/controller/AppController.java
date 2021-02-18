@@ -911,6 +911,59 @@ public class AppController implements AppControllerInterface {
 		return userService.reviewInsert(review);
 
 	}
+	
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/reviewUpdate")
+	public Integer reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, MultipartFile file, Integer activationType, Float rate, String content, Date regDate) {
+
+
+		Office office = null;
+		Device device = null;
+		Carrier carrier = null;
+		
+		String imgPath = null;
+
+		String reviewImg = null;
+		String ext = null;
+
+		if(officeId!=null) {
+			office = userService.officeSelectById(officeId);
+		}
+		if(deviceId!=null) {
+			device = productService.deviceSelectById(deviceId);
+		}
+
+		if(carrierId!=null) {
+			carrier = productService.carrierSelectById(carrierId);
+		}
+		
+		if(file!=null) {
+			String strFileName = file.getOriginalFilename();
+			int pos = strFileName.lastIndexOf( "." );
+			ext = strFileName.substring( pos + 1 );
+
+			reviewImg = "null";
+		}
+		
+		try {
+			if(file!=null) {
+				imgPath = s3Service.update(file, reviewId);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 0;
+		}
+
+
+		Review review = new Review(reviewId, null, office, device, carrier, reviewImg, ext, null, activationType, rate, content, regDate);
+
+		return userService.reviewUpdate(review);
+		
+		
+
+	}
 
 	@Override
 	@RequestMapping("/app/getAllReview")
@@ -1104,35 +1157,6 @@ public class AppController implements AppControllerInterface {
 	@RequestMapping("/app/reviewDelete")
 	public void reviewDelete(Long reviewId) {
 		userService.reviewDelete(reviewId);
-
-	}
-
-	@Override
-	@ResponseBody
-	@RequestMapping("/app/reviewUpdate")
-	public void reviewUpdate(Long reviewId, Long officeId, Long deviceId, Long carrierId, String reviewImg1,
-			String reviewImg2, String reviewImg3, Integer activationType, Float rate, String content, Date regDate) {
-
-
-		Office office = null;
-		Device device = null;
-		Carrier carrier = null;
-
-		if(officeId!=null) {
-			office = userService.officeSelectById(officeId);
-		}
-		if(deviceId!=null) {
-			device = productService.deviceSelectById(deviceId);
-		}
-
-		if(carrierId!=null) {
-			carrier = productService.carrierSelectById(carrierId);
-		}
-
-
-		Review review = new Review(reviewId, null, office, device, carrier, reviewImg1, reviewImg2, reviewImg3, activationType, rate, content, regDate);
-
-		userService.reviewUpdate(review);
 
 	}
 

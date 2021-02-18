@@ -335,8 +335,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void reviewUpdate(Review review) {
+	public Integer reviewUpdate(Review review) {
 
+		
+		try {
+			
+		
 		Review r= reviewRepo.findById(review.getReviewId()).orElse(null);
 
 		if(r !=null) {
@@ -374,6 +378,12 @@ public class UserServiceImpl implements UserService {
 			}
 			reviewRepo.save(r);
 		}
+		
+		} catch(Exception e) {
+			return 0;
+		}
+		
+		return 1;
 
 
 

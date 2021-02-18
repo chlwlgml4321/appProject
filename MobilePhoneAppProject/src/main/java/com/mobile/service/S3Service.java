@@ -17,6 +17,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.mobile.domain.Review;
 import com.mobile.repository.ReviewRepository;
 
 import lombok.NoArgsConstructor;
@@ -65,6 +66,19 @@ public class S3Service {
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 		return s3Client.getUrl(bucket, fileName).toString();
 	}
+	
+	public String update(MultipartFile file, Long reviewId) throws IOException {
+		String strFileName = file.getOriginalFilename();
+		
+		int pos = strFileName.lastIndexOf( "." );
+		String ext = strFileName.substring( pos + 1 );
+
+		String fileName = "review_image_"+ reviewId + "." + ext;
+		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		return s3Client.getUrl(bucket, fileName).toString();
+	}
+	
 	
 	public String upload(MultipartFile file, Integer reviewId) throws IOException {
 		String fileName = file.getOriginalFilename();

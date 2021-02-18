@@ -113,14 +113,7 @@ class MobilePhoneAppProjectApplicationTests {
 	void contextLoads() {
 
 
-		Office office = officeRepo.findById(5L).orElse(null);
-		Authority at = new Authority(null, "1", office.getTel(), office);
-
-		aur.save(at);
-
-
-		//	Office office = new Office(null, "관리자", "관리자", "admin", null, "admin123", null, 2, null);
-		//	officeRepo.save(office);
+	
 	}
 
 }
