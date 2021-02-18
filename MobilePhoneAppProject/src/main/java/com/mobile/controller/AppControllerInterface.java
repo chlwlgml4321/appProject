@@ -160,7 +160,7 @@ public interface AppControllerInterface {
 	
 	//신청서 등록
 	@RequestMapping("/app/addApplication")
-	public void AddaddApplication(Long memberId, Long productId, 
+	public Integer AddaddApplication(Long memberId, Long productId, 
 			Integer activationType, Integer purchaseType, Integer addtionalDiscount,
 			Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,
 			Integer installmentFee, Integer installmentPrincipal,

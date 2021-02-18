@@ -601,8 +601,9 @@ public class AppController implements AppControllerInterface {
 	@Override
 	@RequestMapping("/app/addApplication")
 	@ResponseBody
-	public void AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId) {
+	public Integer AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId) {
 
+		try {
 		Members member = userService.memberSelectById(memberId);
 		Products product = productService.productsSelectById(productId);
 		Installment installment = productService.installmentSelectById(installmentId);
@@ -611,7 +612,11 @@ public class AppController implements AppControllerInterface {
 
 		Application application = new Application(null, member, product, activationType, purchaseType, addtionalDiscount, supportFundType, isconnectWiredGoods, null, null, installmentFee, installmentPrincipal, cash, monthlyInstallment, monthlyCallingFee, finalFee, installment, wiredGoods, card);
 		productService.applicationInsert(application);
+		} catch(Exception e) {
+			return 0;
+		}
 
+		return 1;
 	}
 
 	@Override
