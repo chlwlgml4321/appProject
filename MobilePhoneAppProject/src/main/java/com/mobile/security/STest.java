@@ -48,6 +48,7 @@ public class STest implements AuthenticationProvider {
 		//멤버 파트너 분기
 		
 		office = officeRepo.findByTel(tel);
+		System.out.println("size : " + office.getRoles().size());
 				
 		if(office!=null) {
 			if(!office.getPassword().equals(password)) {

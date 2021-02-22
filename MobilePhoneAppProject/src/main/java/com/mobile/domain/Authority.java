@@ -35,9 +35,7 @@ public class Authority {
 	@Column(name = "tel")
 	private String tel;
 	
-	
-	@ManyToOne
-	@JoinColumn(name = "officeId")
-	Office office;
+	@Column(name = "officeId")
+	Long officeId;
 	
 }

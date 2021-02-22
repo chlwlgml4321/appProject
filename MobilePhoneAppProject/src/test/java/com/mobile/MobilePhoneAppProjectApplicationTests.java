@@ -109,11 +109,18 @@ class MobilePhoneAppProjectApplicationTests {
 	AuthorityRepository aur;
 
 
+	@Autowired
+	DeviceRepository dr;
+	
+	@Transactional
 	@Test
 	void contextLoads() {
 
 
-	
+		System.out.println("get...");
+		int seq = rr.getNextValMySequence();
+
+		System.out.println("seq  : " + seq);
 	}
 
 }

@@ -1,7 +1,10 @@
 package com.mobile.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mobile.domain.CallingPlan;
@@ -24,7 +28,9 @@ import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.Review;
+import com.mobile.repository.ReviewRepository;
 import com.mobile.service.ProductService;
+import com.mobile.service.S3Service;
 import com.mobile.service.UserService;
 
 
@@ -37,6 +43,9 @@ public class WebController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	//index
 	@RequestMapping("/index")
@@ -286,7 +295,6 @@ public class WebController {
 			
 		}
 
-	
 		@RequestMapping("/admin/officeForm")
 		public String officeForm(Office office, Model model, Long regionId) {
 			System.out.println("##officeInsert");
@@ -297,9 +305,8 @@ public class WebController {
 			System.out.println(office.getTel());
 			
 			List<Office> offices = userService.officeSelectAll();
-			
+			System.out.println(office.getPassword());
 			model.addAttribute("office", offices);
-			
 			Region region= userService.regionSelectById(regionId);
 			office.setRegion(region);
 			userService.officeInsert(office);
@@ -454,13 +461,47 @@ public class WebController {
 
 		
 		//device 등록 
+		@Transactional
 		@RequestMapping("/admin/deviceForm")
-		public String deviceForm(Device device, Model model) {
+		public String deviceForm(Device device, MultipartFile file , Model model) {
 			
 			System.out.println(device.getDeviceName());
 			System.out.println(device.getImage());
 			
-			productService.deviceInsert(device);
+			if(file==null) {
+				System.out.println("file is null");
+			} else {
+				System.out.println("file is not null");
+			}
+			
+			
+			
+			String imgPath = null;
+
+			String deviceImg = null;
+			String ext = null;
+
+			if(file!=null) {
+				String strFileName = file.getOriginalFilename();
+				int pos = strFileName.lastIndexOf( "." );
+				ext = strFileName.substring( pos + 1 );
+
+				deviceImg = "null";
+			}
+			
+			try {
+				if(file!=null) {
+					imgPath = s3Service.deviceUpload(file);
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				
+			}
+			
+			device.setImage(deviceImg);
+			
+			productService.deviceInsert(device, ext);
 			
 			List<Device> devices = productService.deviceSelectAll();
 			
@@ -472,7 +513,7 @@ public class WebController {
 		
 		//deviceDetail
 		@RequestMapping("/admin/deviceDetail/{deviceId}")
-		public ModelAndView deviceDetail(@PathVariable Long deviceId, Model model) {
+		public ModelAndView deviceDetail(@PathVariable Long deviceId,MultipartFile file, Model model) {
 					
 			Device device= productService.deviceSelectById(deviceId);
 			System.out.println("##deviceDetail");
@@ -480,6 +521,8 @@ public class WebController {
 			
 			return new ModelAndView("/admin/deviceUpdate", "device", device);
 		}
+				
+		
 		
 		//DeviceState 바꾸기 
 		@RequestMapping("/admin/changeDeviceState")

@@ -18,6 +18,7 @@ import com.mobile.domain.Notice;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.WiredGoods;
+import com.mobile.repository.ReviewRepository;
 import com.mobile.service.ProductService;
 import com.mobile.service.UserService;
 
@@ -33,6 +34,9 @@ public class WebController2 {
 	private ProductService productService;
 
 	
+	
+	@Autowired
+	private ReviewRepository rr;
 	//login
 	@RequestMapping("/login")
 	public void login() {
@@ -72,6 +76,8 @@ public class WebController2 {
 	public String imageTest() {
 
 
+		System.out.println(rr.getNextValMySequence());
+		
 		return "/admin/imageTest";
 	}
 

@@ -546,7 +546,7 @@ $(document).ready(function(){
           </div>
 
             
-			   <form method="post" id="callingPlanForm" action="${pageCotext.request.contextPath}/callingPlanForm" >
+			   <form method="post" id="callingPlanForm" action="${pageCotext.request.contextPath}/admin/callingPlanForm" >
 			  <div>
 		  		
 		  		 <input type='hidden' name='callingPlanId' value="${callingPlan.callingPlanId}">

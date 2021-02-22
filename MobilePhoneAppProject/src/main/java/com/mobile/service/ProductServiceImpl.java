@@ -229,7 +229,24 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void deviceInsert(Device device) {
+	public void deviceInsert(Device device, String ext) {
+		System.out.println("in.... product service : ");
+
+		if(device.getImage()!=null) {
+			
+			if(!device.getImage().equals("null")) {
+				device.setImage(null);
+			} else {
+
+				int seq = deviceRepository.getNextValMySequenceInDevice();
+				String fileName = "device_image_" + seq;
+				
+				String url = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/" +  fileName + "."+ ext;
+				
+				device.setImage(url);
+			}
+		}
+		
 		deviceRepository.save(device);
 
 	}

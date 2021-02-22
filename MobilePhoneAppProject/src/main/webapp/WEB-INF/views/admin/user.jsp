@@ -66,7 +66,7 @@
 		    alert(id);
 		    $.ajax({
 		        type : 'GET',
-		        url : "/changeUserSate",
+		        url : "/common/changeUserSate",
 		        data : {"id" : id},
 		        success : function (data) {
 		                         
@@ -92,18 +92,13 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Hooli Admin</div>
+        <div class="sidebar-brand-text mx-3">Phonestor Admin</div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="index">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
+      
   <!-- 유저관리 Divider -->
       <hr class="sidebar-divider">
 
@@ -113,8 +108,8 @@
       </div>
 
       <!-- 유저 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="/user">
+      <li class="nav-item active">
+        <a class="nav-link" href="/common/user">
           <i class="fas fa-fw fa-table"></i>
           <span>Users</span></a>
           
@@ -123,7 +118,7 @@
       
        <!-- 블랙리스트 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/user">
+        <a class="nav-link" href="/common/blackList">
           <i class="fas fa-fw fa-table"></i>
           <span>BlackList</span></a>
       </li>
@@ -131,7 +126,7 @@
       
       <!-- 대기중인고객 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/inactiveUser">
+        <a class="nav-link" href="/common/inactiveUser">
           <i class="fas fa-fw fa-table"></i>
           <span>대기중인 고객</span></a>
       </li>
@@ -139,7 +134,7 @@
       
       <!-- point 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/inactiveUser">
+        <a class="nav-link" href="/admin/point">
           <i class="fas fa-fw fa-table"></i>
           <span>포인트 관리</span></a>
       </li>  
@@ -157,7 +152,7 @@
       
       <!-- 신청서 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/application">
+        <a class="nav-link" href="/common/application">
           <i class="fas fa-fw fa-table"></i>
           <span>신청서</span></a>
           
@@ -174,7 +169,7 @@
 
       <!-- 지역 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/region">
+        <a class="nav-link" href="/admin/region">
           <i class="fas fa-fw fa-table"></i>
           <span>REGION</span></a>
           
@@ -183,7 +178,7 @@
       
       <!-- 지역 등록 -->
       <li class="nav-item">
-        <a class="nav-link" href="/regionInsert">
+        <a class="nav-link" href="/admin/regionInsert">
           <i class="fas fa-fw fa-table"></i>
           <span>지역 등록</span></a>
           
@@ -200,7 +195,7 @@
 
       <!-- 지점 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/office">
+        <a class="nav-link" href="/admin/office">
           <i class="fas fa-fw fa-table"></i>
           <span>OFFICE</span></a>
           
@@ -209,7 +204,7 @@
       
       <!-- 지역 등록 -->
       <li class="nav-item">
-        <a class="nav-link" href="/officeRegister">
+        <a class="nav-link" href="/admin/officeRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>지점 등록</span></a>
           
@@ -226,7 +221,7 @@
 
       <!-- 요금제 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/callingPlan">
+        <a class="nav-link" href="/admin/callingPlan">
           <i class="fas fa-fw fa-table"></i>
           <span>요금제</span></a>
           
@@ -235,7 +230,7 @@
       
       <!-- 요금제 등록 -->
       <li class="nav-item">
-        <a class="nav-link" href="/callingPlanRegister">
+        <a class="nav-link" href="/admin/callingPlanRegister">
           <i class="fas fa-fw fa-table"></i>
           <span>요금제 등록</span></a>
           
@@ -250,14 +245,14 @@
 
       <!-- 결합 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/wiredGoods">
+        <a class="nav-link" href="/admin/wiredGoods">
           <i class="fas fa-fw fa-table"></i>
           <span>유선 상품</span></a>
           
       </li>
       
       <!-- 카드 결합 -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/admin/card">
           <i class="fas fa-fw fa-table"></i>
           <span>카드 결합</span></a>
@@ -274,7 +269,7 @@
 
       <!-- 기기 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/device">
+        <a class="nav-link" href="/admin/device">
           <i class="fas fa-fw fa-table"></i>
           <span>디바이스</span></a>
           
@@ -282,7 +277,7 @@
       
       <!-- 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/products">
+        <a class="nav-link" href="/common/products">
           <i class="fas fa-fw fa-table"></i>
           <span>특가 상품</span></a>
           
@@ -290,7 +285,7 @@
       
       <!-- 방문 고객 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/guestProduct">
+        <a class="nav-link" href="/admin/guestProduct">
           <i class="fas fa-fw fa-table"></i>
           <span>방문고객 상품</span></a>
           
@@ -298,7 +293,7 @@
       
      <!-- 추천 상품 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/admin/recommendation">
           <i class="fas fa-fw fa-table"></i>
           <span>추천 상품</span></a>
           
@@ -315,7 +310,7 @@
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="/review">
+        <a class="nav-link" href="/admin/review">
           <i class="fas fa-fw fa-table"></i>
           <span>리뷰</span></a>
       </li>
@@ -330,7 +325,7 @@
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="/banners">
+        <a class="nav-link" href="/admin/banners">
           <i class="fas fa-fw fa-table"></i>
           <span>배너</span></a>
       </li>
@@ -346,7 +341,7 @@
       </div>
       
       <li class="nav-item">
-        <a class="nav-link" href="/community">
+        <a class="nav-link" href="/common/community">
           <i class="fas fa-fw fa-table"></i>
           <span>community</span></a>
       </li>
@@ -609,7 +604,7 @@
 	  					 </c:choose>
 	  					 
 	                      <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/point/${members.memberId}"  class="btn btn-primary"  id="${products.productsId}">
+	  					 		<a href="${pageContext.request.contextPath}/admin/point/${members.memberId}"  class="btn btn-primary"  id="${products.productsId}">
                     					<span class="text">관리</span>
                   					</a>
 	                     

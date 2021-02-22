@@ -178,8 +178,20 @@ public class AppController implements AppControllerInterface {
 
 
 		Office office = userService.officeSelectById(officeId);
+		
 		String memberCode = "";
-
+		
+		String[] temp = phone.substring(3).split("");
+		
+		for(String s : temp) {
+			
+			char tempChar = (char)(Integer.parseInt(s) + 65);
+			
+			memberCode += Character.toString(tempChar);
+		}
+		
+		
+		
 		Members member = new Members(null, name, phone, regions, null, memberCode, password, isvisitor, null, null, office);
 
 		return userService.memberInsert(member);

@@ -476,14 +476,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void officeInsert(Office office) {
 
-		
-		Authority authority = new Authority(null, "0", office.getTel(),office);
-		
-		authorityRepo.save(authority);
 		officeRepo.save(office);
+		
+		Office of = officeRepo.findByTel(office.getTel()); 
 
+		Authority authority = new Authority(null, "0", office.getTel(),of.getOfficeId());
+		authorityRepo.save(authority);
+
+	}
+	
+	@Override
+	public void authorityInsert(Office office) {
+	
+		//Office of = officeRepo.findByTel(office.getTel());
+		
 	}
 
 	@Override
@@ -498,12 +507,12 @@ public class UserServiceImpl implements UserService {
 			if(office.getAddress() !=null) {
 				o.setAddress(office.getAddress());
 			}
-			if(office.getCode() !=null) {
-				o.setCode(office.getCode());
+			if(office.getPassword() !=null) {
+				o.setCode(office.getPassword());
 			}
 			if(office.getTel() !=null) {
 				o.setTel(office.getTel());
-			}
+			} 
 			officeRepo.save(o);
 		}
 

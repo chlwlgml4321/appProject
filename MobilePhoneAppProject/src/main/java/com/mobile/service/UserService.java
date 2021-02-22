@@ -282,6 +282,8 @@ public interface UserService {
 	 * */
 	public List<Point> pointSelectUsedPoint(Long memberId);
 
+	void authorityInsert(Office office);
+
 
 	
 

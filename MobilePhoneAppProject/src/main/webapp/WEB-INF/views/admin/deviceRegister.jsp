@@ -554,7 +554,7 @@ $(document).ready(function(){
            	<h3>디바이스 등록하기</h3>
           </div>
 
-			   <form method="post" id="deviceForm" enctype="multipart/form-data" action="${pageCotext.request.contextPath}/deviceForm" >
+			   <form method="post" id="deviceForm" enctype="multipart/form-data" action="${pageCotext.request.contextPath}/admin/deviceForm">
 			  <div>
 		  		
 		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">

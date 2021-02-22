@@ -18,6 +18,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.mobile.domain.Review;
+import com.mobile.repository.DeviceRepository;
 import com.mobile.repository.ReviewRepository;
 
 import lombok.NoArgsConstructor;
@@ -31,6 +32,9 @@ public class S3Service {
 	
 	@Autowired
 	private ReviewRepository reviewRepo;
+	
+	@Autowired
+	private DeviceRepository deviceRepo;
 
 	@Value("${cloud.aws.credentials.accessKey}")
 	private String accessKey;
@@ -87,6 +91,36 @@ public class S3Service {
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 		return s3Client.getUrl(bucket, fileName).toString();
 		
+	}
+	
+	
+	public String deviceUpload(MultipartFile file) throws IOException {
+		
+		String strFileName = file.getOriginalFilename();
+		
+		int pos = strFileName.lastIndexOf( "." );
+		String ext = strFileName.substring( pos + 1 );
+		
+		int seq = deviceRepo.getNextValMySequenceInDevice();
+		
+		System.out.println("seq_device : " + seq);
+		
+		String fileName = "device_image_"+ seq + "." + ext;
+		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		return s3Client.getUrl(bucket, fileName).toString();
+	}
+	
+	public String deviceUpdate(MultipartFile file, Long deviceId) throws IOException {
+		String strFileName = file.getOriginalFilename();
+		
+		int pos = strFileName.lastIndexOf( "." );
+		String ext = strFileName.substring( pos + 1 );
+
+		String fileName = "device_image_"+ deviceId + "." + ext;
+		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		return s3Client.getUrl(bucket, fileName).toString();
 	}
 
 }

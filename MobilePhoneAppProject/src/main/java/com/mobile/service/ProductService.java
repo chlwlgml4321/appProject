@@ -130,7 +130,7 @@ public interface ProductService {
 	/**
 	 * 기기 삽입 
 	 * */
-	public void deviceInsert(Device device);
+	public void deviceInsert(Device device, String ext);
 	
 	/**
 	 * 기기 수정하기

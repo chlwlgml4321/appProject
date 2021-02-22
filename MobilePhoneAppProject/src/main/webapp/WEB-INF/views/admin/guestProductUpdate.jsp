@@ -436,7 +436,7 @@ $(document).ready(function(){
           </div>
 
             
-			   <form method="post" id="guestProductForm" action="${pageCotext.request.contextPath}/guestProductForm" >
+			   <form method="post" id="guestProductForm" action="${pageCotext.request.contextPath}/admin/guestProductForm" >
 			  <div>
 		  		
 		  		 <input type='hidden' name='guestProductId' value="${guestProducts.guestProductId}">

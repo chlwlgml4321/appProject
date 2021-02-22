@@ -57,8 +57,7 @@ $(document).ready(function(){
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
-      <!-- Sidebar -->
+  <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -525,7 +524,7 @@ $(document).ready(function(){
           </div>
 
             
-			   <form method="post" id="deviceForm" action="${pageCotext.request.contextPath}/deviceForm" >
+			   <form method="post" id="deviceForm"  enctype="multipart/form-data" action="${pageCotext.request.contextPath}/deviceForm" >
 			  <div>
 		  		
 		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">
@@ -538,8 +537,9 @@ $(document).ready(function(){
 			    
 			     <div class="form-group col-md-2">
 			      <label for="inputEmail4">디바이스 사진</label>
-			      <input type="text" class="form-control" id="image"  value="${device.image}"  name="image">
-			    </div>
+			      <input type="file" class="form-control" id="file" name="file" value="dataFile" required="">
+<!-- 			      <button type="submit" id="deviceImage" class="btn btn-success">업로드</button>
+ -->			</div>
 			    
 			    <div class="form-group col-md-2">
 			      <label for="inputEmail4">가격</label>
