@@ -30,6 +30,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @ToString
+@DynamicInsert
+@DynamicUpdate
 public class Application {
 
 	@Id
