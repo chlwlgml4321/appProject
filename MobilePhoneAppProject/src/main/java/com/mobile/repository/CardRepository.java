@@ -18,5 +18,9 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 	@Query("select c from Card c where c.carrier.carrierId=?1")
 	public List<Card> findByCarrier(Long carrierId);
 	
+	
+	//마지막 device id 가져오기
+	@Query(value = "SELECT next_val from seq_card c", nativeQuery = true)
+    public int getNextValMySequence();
 
 }

@@ -220,7 +220,7 @@ public interface ProductService {
 	/**
 	 * 유선 상품 삽입
 	 * */
-	public void wiredGoodsInsert(WiredGoods wiredGoods);
+	public void wiredGoodsInsert(WiredGoods wiredGoods, String ext);
 	
 	/**
 	 * 유선 상품 수정
@@ -254,7 +254,7 @@ public interface ProductService {
 	/**
 	 * 카드 삽입
 	 * */
-	public void cardInsert(Card card);
+	public void cardInsert(Card card, String ext);
 	
 	/**
 	 * 카드 수정

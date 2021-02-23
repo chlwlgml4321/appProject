@@ -18,8 +18,11 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.mobile.domain.Review;
+import com.mobile.domain.WiredGoods;
+import com.mobile.repository.CardRepository;
 import com.mobile.repository.DeviceRepository;
 import com.mobile.repository.ReviewRepository;
+import com.mobile.repository.WiredGoodsRepository;
 
 import lombok.NoArgsConstructor;
 
@@ -35,6 +38,12 @@ public class S3Service {
 	
 	@Autowired
 	private DeviceRepository deviceRepo;
+	
+	@Autowired
+	private CardRepository cardRepo;
+	
+	@Autowired
+	private WiredGoodsRepository wiredGoodsRepo;
 
 	@Value("${cloud.aws.credentials.accessKey}")
 	private String accessKey;
@@ -47,6 +56,7 @@ public class S3Service {
 
 	@Value("${cloud.aws.region.static}")
 	private String region;
+	
 	
 	@PostConstruct
 	public void setS3Client() {
@@ -118,6 +128,41 @@ public class S3Service {
 		String ext = strFileName.substring( pos + 1 );
 
 		String fileName = "device_image_"+ deviceId + "." + ext;
+		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		return s3Client.getUrl(bucket, fileName).toString();
+	}
+	
+	
+	public String cardUpload(MultipartFile file) throws IOException {
+		
+		String strFileName = file.getOriginalFilename();
+		
+		int pos = strFileName.lastIndexOf( "." );
+		String ext = strFileName.substring( pos + 1 );
+		
+		int seq = deviceRepo.getNextValMySequenceInDevice();
+		
+		System.out.println("seq_card : " + seq);
+		
+		String fileName = "card_image_"+ seq + "." + ext;
+		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		return s3Client.getUrl(bucket, fileName).toString();
+	}
+	
+	public String wiredGoodsUpload(MultipartFile file) throws IOException {
+		
+		String strFileName = file.getOriginalFilename();
+		
+		int pos = strFileName.lastIndexOf( "." );
+		String ext = strFileName.substring( pos + 1 );
+		
+		int seq = deviceRepo.getNextValMySequenceInDevice();
+		
+		System.out.println("seq_wiredGoods : " + seq);
+		
+		String fileName = "wiredGoods_image_"+ seq + "." + ext;
 		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 		return s3Client.getUrl(bucket, fileName).toString();

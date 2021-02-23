@@ -17,4 +17,9 @@ public interface WiredGoodsRepository extends JpaRepository<WiredGoods, Long> {
 
 	@Query("select w from WiredGoods w where w.carrier.carrierId=?1")
 	public List<WiredGoods> findByCarrier(Long carrierId);
+	
+	
+	//마지막 device id 가져오기
+	@Query(value = "SELECT next_val from seq_wiredgoods w", nativeQuery = true)
+    public int getNextValMySequence();
 }

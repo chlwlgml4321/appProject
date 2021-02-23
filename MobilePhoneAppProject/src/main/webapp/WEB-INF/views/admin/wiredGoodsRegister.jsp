@@ -458,7 +458,7 @@ $(document).ready(function(){
 					</div>
 
 
-					<form method="post" id="wiredGoodsForm"
+					<form method="post" id="wiredGoodsForm" enctype="multipart/form-data"
 						action="${pageCotext.request.contextPath}/admin/wiredGoodsForm">
 						<div>
 
@@ -506,9 +506,9 @@ $(document).ready(function(){
 							</div>
 
 							<div class="form-group col-md-2">
-								<label for="inputEmail4">이미지</label> <input type="text"
-									class="form-control" id="wiredGoodsImg" placeholder=""
-									name="wiredGoodsImg">
+								<label for="inputEmail4">유선상품 사진</label> <input type="file"
+									class="form-control" id="file" name="file" value="dataFile"
+									required="">
 							</div>
 
 

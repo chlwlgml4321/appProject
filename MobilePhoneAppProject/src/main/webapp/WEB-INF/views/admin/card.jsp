@@ -527,7 +527,7 @@ $(document).ready(function(){
 													<tr>
 														<td>${card.cardId}</td>
 
-														<td><img src=${card.cardImg } width="100px"
+														<td><img src=${card.cardImg} width="100px"
 															height="110px"></td>
 														<td>${card.cardName}</td>
 														<td>${card.discount}</td>

@@ -36,15 +36,13 @@
 
 
 <script type="text/javascript">
+	$(document).ready(function() {
 
-$(document).ready(function(){
-	
-	$("#registerOffice").click(function(){
-		$("#officeForm").submit();
-		
+		$("#registerOffice").click(function() {
+			$("#officeForm").submit();
+
+		});
 	});
-});
-	
 </script>
 </head>
 <body id="page-top">
@@ -457,7 +455,7 @@ $(document).ready(function(){
 					</div>
 
 
-					<form method="post" id="cardForm"
+					<form method="post" id="cardForm" enctype="multipart/form-data"
 						action="${pageCotext.request.contextPath}/admin/cardForm">
 						<div>
 
@@ -494,8 +492,9 @@ $(document).ready(function(){
 							</div>
 
 							<div class="form-group col-md-2">
-								<label for="inputEmail4">카드 이미지</label> <input type="text"
-									class="form-control" id="cardImg" placeholder="" name="cardImg">
+								<label for="inputEmail4">카드 사진</label> <input type="file"
+									class="form-control" id="file" name="file" value="dataFile"
+									required="">
 							</div>
 
 						</div>
