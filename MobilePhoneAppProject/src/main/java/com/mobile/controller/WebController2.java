@@ -17,6 +17,7 @@ import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
+import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.WiredGoods;
@@ -347,6 +348,16 @@ public class WebController2 {
 
 
 
+	
+	@ResponseBody
+	@RequestMapping("/app/phonebookTest")
+	public void phonebookTest(List<PhoneBook> phonebooks) {
+		for(PhoneBook p : phonebooks) {
+			System.out.println("진입 ...");
+			System.out.println(p.getName());
+			System.out.println(p.getTel());
+		}
+	}
 
 
 

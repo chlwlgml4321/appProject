@@ -221,8 +221,8 @@ public class UserServiceImpl implements UserService {
 		Blacklist black= blackListRepo.findById(blacklist.getBlacklistId()).orElse(null);
 
 		if(black !=null) {
-			if(blacklist.getPhone()!=null) {
-				black.setPhone(blacklist.getPhone());
+			if(blacklist.getTel()!=null) {
+				black.setTel(blacklist.getTel());
 			}
 			blackListRepo.save(black);
 		}

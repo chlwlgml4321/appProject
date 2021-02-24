@@ -29,6 +29,7 @@ import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
@@ -174,7 +175,7 @@ public class AppController implements AppControllerInterface {
 	@RequestMapping("/app/userRegister")
 	@ResponseBody
 	public int userRegister(String name, String phone, String regions, String profileImg, String password,
-			Integer isvisitor, Long officeId, String userContacts) {
+			Integer isvisitor, Long officeId, List<PhoneBook> phonebookList) {
 
 
 		Office office = userService.officeSelectById(officeId);

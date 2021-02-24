@@ -1,6 +1,7 @@
 package com.mobile.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mobile.domain.Application;
 import com.mobile.domain.Members;
+import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Review;
 
 @Controller
@@ -49,7 +51,7 @@ public interface AppControllerInterface {
 	 * */
 	//member 회원 가입( 성공 시 1, 실패 시 0)
 	@RequestMapping("/app/userRegister")
-	public int userRegister(String name, String phone, String regions, String profileImg, String password, Integer isvisitor, Long officeId, String userContacts);
+	public int userRegister(String name, String phone, String regions, String profileImg, String password, Integer isvisitor, Long officeId, List<PhoneBook> phonebookList);
 	
 	//member id로 조회
 	@RequestMapping("/app/getUser")

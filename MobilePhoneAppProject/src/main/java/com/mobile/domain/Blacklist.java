@@ -29,20 +29,17 @@ public class Blacklist {
 	@SequenceGenerator(sequenceName = "seq_black", name="seq_black", allocationSize = 1 )
 	Long blacklistId;
 	
-	@ManyToOne
-	@JoinColumn(name = "memberId")
-	Members member;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	Date regDate;
 	
-	String phone;
+	String name;
+	
+	String tel;
 	
 	String title;
 	
 	String memo;
 	
-	String address;
 	
 	
 }
