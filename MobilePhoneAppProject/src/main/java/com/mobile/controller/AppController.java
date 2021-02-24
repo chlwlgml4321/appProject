@@ -1254,6 +1254,12 @@ public class AppController implements AppControllerInterface {
 
 
 
+	public String certification() {
+		
+		System.out.println("certification 진입");
+		
+		return "/login/certification";
+	}
 
 
 

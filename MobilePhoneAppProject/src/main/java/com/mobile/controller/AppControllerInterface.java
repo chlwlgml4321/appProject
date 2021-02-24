@@ -272,6 +272,10 @@ public interface AppControllerInterface {
 	@RequestMapping("/app/getWiredGoodsByCarrierId")
 	public String getWiredGoodsByCarrierId(Long carrierId);
 	
+	//인증 페이지로 이동
+	@RequestMapping("/app/certification")
+	public String certification();
+	
 
 
 	

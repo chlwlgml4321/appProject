@@ -513,6 +513,9 @@ public class UserServiceImpl implements UserService {
 			if(office.getTel() !=null) {
 				o.setTel(office.getTel());
 			} 
+			if(office.getUrl()!=null) {
+				o.setUrl(office.getUrl());
+			}
 			officeRepo.save(o);
 		}
 

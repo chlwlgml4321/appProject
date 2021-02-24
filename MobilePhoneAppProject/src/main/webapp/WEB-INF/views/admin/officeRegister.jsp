@@ -481,6 +481,11 @@ $(document).ready(function(){
 			      <input type="text" class="form-control" id="password"  placeholder="" name="password">
 			    </div>
 			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">링크</label>
+			      <input type="text" class="form-control" id="url"  placeholder="" name="url">
+			    </div>
+			    
 			  </div>
 			  
 			  <div class="form-group col-md-2" >

@@ -500,6 +500,7 @@ $(document).ready(function(){
 	                      <th>주소</th>
 	                      <th>번호</th>
 	                      <th>비밀번호</th>
+	                      <th>링크</th>
 	                      <th>상태</th>
 	                      <th>수정</th>
 	                    </tr>
@@ -515,6 +516,7 @@ $(document).ready(function(){
 	                      <td>${office.address}</td>
 	                      <td>${office.tel}</td>
 	                      <td>${office.password}</td>
+	                      <td>${office.url}</td>
 	                      
 	                     <c:choose>
 	  					 	<c:when test="${office.state==1}">

@@ -49,6 +49,8 @@ public class Office {
 	
 	String password;
 	
+	String url;
+	
 	@ManyToOne
 	@JoinColumn(name = "regionId")
 	Region region;
