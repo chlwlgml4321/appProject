@@ -1,17 +1,24 @@
 package com.mobile.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobile.domain.Application;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
@@ -350,15 +357,44 @@ public class WebController2 {
 
 	
 	@ResponseBody
-	@RequestMapping("/app/phonebookTest")
-	public void phonebookTest(List<PhoneBook> phonebooks) {
-		for(PhoneBook p : phonebooks) {
-			System.out.println("진입 ...");
-			System.out.println(p.getName());
-			System.out.println(p.getTel());
-		}
-	}
+	@RequestMapping("/app/phonebookTest/{memberId}")
+	public String phonebookTest(@PathVariable Long memberId, @RequestBody String phonebooks) {
+		System.out.println(phonebooks);
+		System.out.println("진입 ...");
+		final ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			PhoneBook[] phoneBooks = objectMapper.readValue(phonebooks, PhoneBook[].class);
+			List<PhoneBook> langList = new ArrayList(Arrays.asList(phoneBooks));
+			System.out.println(langList.size());
+			
+			for(PhoneBook pb :langList) {
+				System.out.println(pb.getTel() + " : " + pb.getName());
+			}
 
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("memberID : " +memberId);
+		return "phonebookTest";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/app/phonebookTest2")
+	public void phonebookTest2() {
+		String json = "[{\"name\": \"Java\", \"tel\": \"010525252\"},{\"name\": \"Pythone\", \"tel\": \"010532252\"}]";
+
+		
+
+		
+		
+
+
+		
+		
+	}
+	
+	
 
 
 }

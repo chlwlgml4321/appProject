@@ -2,6 +2,7 @@ package com.mobile.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -172,27 +174,41 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
-	@RequestMapping("/app/userRegister")
+	@RequestMapping("/app/userRegister/{name}/{phone}/{regions}/{profileImg}/{password}/{isvisitor}/{officeId}")
 	@ResponseBody
-	public int userRegister(String name, String phone, String regions, String profileImg, String password,
-			Integer isvisitor, Long officeId, List<PhoneBook> phonebookList) {
+	public int userRegister(@PathVariable String name,@PathVariable String phone,@PathVariable String regions,@PathVariable String profileImg,@PathVariable String password,
+			@PathVariable Integer isvisitor,@PathVariable Long officeId, @RequestBody String phonebookList) {
 
 
 		Office office = userService.officeSelectById(officeId);
-		
+
 		String memberCode = "";
-		
+
 		String[] temp = phone.substring(3).split("");
-		
+
 		for(String s : temp) {
-			
+
 			char tempChar = (char)(Integer.parseInt(s) + 65);
-			
+
 			memberCode += Character.toString(tempChar);
 		}
-		
-		
-		
+
+		final ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			PhoneBook[] phoneBooks = objectMapper.readValue(phonebookList, PhoneBook[].class);
+			List<PhoneBook> langList = new ArrayList(Arrays.asList(phoneBooks));
+			System.out.println(langList.size());
+
+			for(PhoneBook pb :langList) {
+				System.out.println(pb.getTel() + " : " + pb.getName());
+			}
+
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 		Members member = new Members(null, name, phone, regions, null, memberCode, password, isvisitor, null, null, office);
 
 		return userService.memberInsert(member);
@@ -617,14 +633,14 @@ public class AppController implements AppControllerInterface {
 	public Integer AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId) {
 
 		try {
-		Members member = userService.memberSelectById(memberId);
-		Products product = productService.productsSelectById(productId);
-		Installment installment = productService.installmentSelectById(installmentId);
-		WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
-		Card card = productService.cardSelectById(cardId);
+			Members member = userService.memberSelectById(memberId);
+			Products product = productService.productsSelectById(productId);
+			Installment installment = productService.installmentSelectById(installmentId);
+			WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
+			Card card = productService.cardSelectById(cardId);
 
-		Application application = new Application(null, member, product, activationType, purchaseType, addtionalDiscount, supportFundType, isconnectWiredGoods, null, null, installmentFee, installmentPrincipal, cash, monthlyInstallment, monthlyCallingFee, finalFee, installment, wiredGoods, card);
-		productService.applicationInsert(application);
+			Application application = new Application(null, member, product, activationType, purchaseType, addtionalDiscount, supportFundType, isconnectWiredGoods, null, null, installmentFee, installmentPrincipal, cash, monthlyInstallment, monthlyCallingFee, finalFee, installment, wiredGoods, card);
+			productService.applicationInsert(application);
 		} catch(Exception e) {
 			return 0;
 		}
@@ -929,7 +945,7 @@ public class AppController implements AppControllerInterface {
 		return userService.reviewInsert(review);
 
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping("/app/reviewUpdate")
@@ -939,7 +955,7 @@ public class AppController implements AppControllerInterface {
 		Office office = null;
 		Device device = null;
 		Carrier carrier = null;
-		
+
 		String imgPath = null;
 
 		String reviewImg = null;
@@ -955,7 +971,7 @@ public class AppController implements AppControllerInterface {
 		if(carrierId!=null) {
 			carrier = productService.carrierSelectById(carrierId);
 		}
-		
+
 		if(file!=null) {
 			String strFileName = file.getOriginalFilename();
 			int pos = strFileName.lastIndexOf( "." );
@@ -963,7 +979,7 @@ public class AppController implements AppControllerInterface {
 
 			reviewImg = "null";
 		}
-		
+
 		try {
 			if(file!=null) {
 				imgPath = s3Service.update(file, reviewId);
@@ -978,8 +994,8 @@ public class AppController implements AppControllerInterface {
 		Review review = new Review(reviewId, null, office, device, carrier, reviewImg, ext, null, activationType, rate, content, regDate,0);
 
 		return userService.reviewUpdate(review);
-		
-		
+
+
 
 	}
 
@@ -1256,9 +1272,9 @@ public class AppController implements AppControllerInterface {
 
 
 	public String certification() {
-		
+
 		System.out.println("certification 진입");
-		
+
 		return "/login/certification";
 	}
 
