@@ -994,6 +994,9 @@ public class AppController implements AppControllerInterface {
 			return 0;
 		}
 
+		if(file == null) {
+			reviewImg = null;
+		}
 
 		Review review = new Review(reviewId, null, office, device, carrier, reviewImg, ext, null, activationType, rate, content, regDate,0);
 
