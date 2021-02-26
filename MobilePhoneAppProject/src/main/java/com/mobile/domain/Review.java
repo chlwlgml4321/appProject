@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,7 +56,11 @@ public class Review {
 	Carrier carrier;
 	
 	String reviewImg1;
+	
+	@JsonIgnore
 	String reviewImg2;
+	
+	@JsonIgnore
 	String reviewImg3;
 	
 	Integer activationType;

@@ -39,6 +39,7 @@ import com.mobile.domain.Reservations;
 import com.mobile.domain.Review;
 import com.mobile.domain.SearchResults;
 import com.mobile.domain.WiredGoods;
+import com.mobile.service.BlackListService;
 import com.mobile.service.ProductService;
 import com.mobile.service.S3Service;
 import com.mobile.service.UserService;
@@ -56,6 +57,9 @@ public class AppController implements AppControllerInterface {
 
 	@Autowired
 	private ProductService productService;
+	
+	private BlackListService blackListService = BlackListService.getInstance();
+
 
 	@Override
 	@ResponseBody

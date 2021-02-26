@@ -29,6 +29,7 @@ import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.ReviewRepository;
+import com.mobile.service.BlackListService;
 import com.mobile.service.ProductService;
 import com.mobile.service.S3Service;
 import com.mobile.service.UserService;
@@ -46,6 +47,9 @@ public class WebController2 {
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	
+	private BlackListService blackListService = BlackListService.getInstance();
 
 
 
@@ -357,8 +361,10 @@ public class WebController2 {
 
 	
 	@ResponseBody
-	@RequestMapping("/app/phonebookTest/{memberId}")
+	@RequestMapping("/app/phonebookTest")
 	public String phonebookTest(@PathVariable Long memberId, @RequestBody String phonebooks) {
+				
+		Members member = new Members(memberId, "테스트 회원", "010223432422",null, null, "AAAAAAA", "1234", 0, 0, null, null);
 		System.out.println(phonebooks);
 		System.out.println("진입 ...");
 		final ObjectMapper objectMapper = new ObjectMapper();
@@ -375,25 +381,24 @@ public class WebController2 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("memberID : " +memberId);
 		return "phonebookTest";
 	}
 	
 	@ResponseBody
 	@RequestMapping("/app/phonebookTest2")
-	public void phonebookTest2() {
-		String json = "[{\"name\": \"Java\", \"tel\": \"010525252\"},{\"name\": \"Pythone\", \"tel\": \"010532252\"}]";
-
-		
-
-		
-		
-
-
-		
+	public void phonebookTest2(String key) {
+		blackListService.printByKey(key);
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("/app/phonebookTest3")
+	public void phonebookTest3(String key, String value) {
+		blackListService.insertblackListMap(key, value);
+		
+	}
+	
+
 	
 
 
