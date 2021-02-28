@@ -57,6 +57,23 @@
 			
 		});
 		
+		$(".blackListCheckBtn").click(function(){
+			var memberId = $(this).prev().val();
+			
+			$.ajax({
+		        type : 'GET',
+		        url : "/common/getBlacklistByMemberId",
+		        data : {"memberId" : memberId},
+		        dataType: "text",
+		        success : function (data) {
+		        	 alert(data);              
+		        }
+
+		    });
+			
+			
+		});
+		
 		
 		function changeActive(id) {  
 		    alert(id);
@@ -105,10 +122,9 @@
 			<div class="sidebar-heading">유저 관리</div>
 
 			<!-- 유저 관리 -->
-			<li class="nav-item"><a class="nav-link"
-				href="/common/user"> <i class="fas fa-fw fa-table"></i> <span>Users</span></a>
-
-			</li>
+			<li class="nav-item"><a class="nav-link" href="/common/user">
+					<i class="fas fa-fw fa-table"></i> <span>Users</span>
+			</a></li>
 
 
 			<!-- 블랙리스트 관리 -->
@@ -497,7 +513,6 @@
 											width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>profile</th>
 													<th>ID</th>
 													<th>방문여부</th>
 													<th>회원코드</th>
@@ -506,10 +521,10 @@
 													<th>핸드폰</th>
 													<th>가입일자</th>
 													<th>지역</th>
-
 													<th>지점 id</th>
 													<th>회원상태
-													</td>
+													<th>블랙리스트 체크</th>
+
 
 												</tr>
 											</thead>
@@ -517,7 +532,6 @@
 											<tbody>
 												<c:forEach items="${members}" var="members">
 													<tr>
-														<td>${members.profileImg}</td>
 														<td>${members.memberId}</td>
 														<td>${members.isVisitor}</td>
 														<td>${members.memberCode}</td>
@@ -537,17 +551,20 @@
 
 															<c:otherwise>
 																<td style="color: green;"><a href="#"
-																	class="btn btn-success" id="${members.memberId}"> <span
-																		class="text">승인됨</span>
+																	class="btn btn-success" id="${members.memberId}"> 
+																	<span class="text">승인됨</span>
 																</a>
 															</c:otherwise>
 														</c:choose>
 
 
+														<td style="color: green;">
+															<input type = "hidden" value ="${members.memberId}">
+																<a href="#" class="btn btn-success blackListCheckBtn"id="blackListCheckBtn"> 
+															<span class="text">체크</span>
+														</a> <%--  <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td> --%>
 
-														<%--  <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td> --%>
-
-														<%--  <c:choose>
+															<%--  <c:choose>
 	                      	<c:when test="${members.state==1}">
 	                      		<td style="color: green;">
 	                      		

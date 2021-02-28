@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -361,12 +362,12 @@ public class WebController2 {
 
 	
 	@ResponseBody
-	@RequestMapping("/app/phonebookTest")
+	@RequestMapping("/app/phonebookTest/{memberId}")
 	public String phonebookTest(@PathVariable Long memberId, @RequestBody String phonebooks) {
-				
+		System.out.println("진입 ...");
+
 		Members member = new Members(memberId, "테스트 회원", "010223432422",null, null, "AAAAAAA", "1234", 0, 0, null, null);
 		System.out.println(phonebooks);
-		System.out.println("진입 ...");
 		final ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			PhoneBook[] phoneBooks = objectMapper.readValue(phonebooks, PhoneBook[].class);
@@ -374,13 +375,17 @@ public class WebController2 {
 			System.out.println(langList.size());
 			
 			for(PhoneBook pb :langList) {
-				System.out.println(pb.getTel() + " : " + pb.getName());
+				String str = blackListService.getByKey(pb.getTel().replaceAll("-", ""));
+				if(str!=null) {
+					System.out.println(str);
+				}
 			}
 
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return "phonebookTest";
 	}
 	
@@ -398,6 +403,21 @@ public class WebController2 {
 		
 	}
 	
+	//필터링된 블랙리스트 정보 가져오기
+	@ResponseBody
+	@RequestMapping("/common/getBlacklistByMemberId")
+	public String getBlacklistByMemberId(Long memberId) {
+		
+		System.out.println("호출");
+		
+		Members member = userService.memberSelectById(memberId);
+		
+		if(member.getBlakcList()==null || member.getBlakcList().equals("")) {
+			return "통과";
+		}
+		
+		return member.getBlakcList();
+	}
 
 	
 

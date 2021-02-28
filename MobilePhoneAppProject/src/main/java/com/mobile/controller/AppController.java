@@ -187,6 +187,8 @@ public class AppController implements AppControllerInterface {
 		Office office = userService.officeSelectById(officeId);
 
 		String memberCode = "";
+		
+		StringBuilder blakcList = new StringBuilder("");
 
 		String[] temp = phone.substring(3).split("");
 
@@ -197,14 +199,18 @@ public class AppController implements AppControllerInterface {
 			memberCode += Character.toString(tempChar);
 		}
 
+		
 		final ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			PhoneBook[] phoneBooks = objectMapper.readValue(phonebookList, PhoneBook[].class);
 			List<PhoneBook> langList = new ArrayList(Arrays.asList(phoneBooks));
 			System.out.println(langList.size());
-
+			
 			for(PhoneBook pb :langList) {
-				System.out.println(pb.getTel() + " : " + pb.getName());
+				String str = blackListService.getByKey(pb.getTel().replaceAll("-", ""));
+				if(str!=null) {
+					blakcList.append(str);
+				}
 			}
 
 		} catch (JsonProcessingException e) {
@@ -212,8 +218,7 @@ public class AppController implements AppControllerInterface {
 			e.printStackTrace();
 		}
 
-
-		Members member = new Members(null, name, phone, regions, null, memberCode, password, isvisitor, null, null, office);
+		Members member = new Members(null, name, phone, regions, null, memberCode, password, blakcList.toString() ,isvisitor, null, null, office);
 
 		return userService.memberInsert(member);
 

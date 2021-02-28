@@ -33,8 +33,11 @@ public class BlackListService {
 	
 	public String getByKey(String key) {
 		String str = blackListMap.get(key);	
-		String result = "이름 : " + str + "전화번호 : " + key + "\n";
+		if(str!=null) {
+			String result = "이름 : " + str + "  전화번호 : " + key + "\n";
 		return result;
+		}
+		return null;
 	}
 	
 	@PostConstruct
@@ -44,9 +47,6 @@ public class BlackListService {
 		List<Blacklist> list = blacklistRepository.findAll();
 		
 		for(Blacklist bl : list) {
-			System.out.println("tel : " + bl.getTel());
-			
-			System.out.println("name : " + bl.getName());
 			if(StringUtils.isEmpty(bl.getName())) {
 				blackListMap.put(bl.getTel(), "이름 확인 불가");
 
