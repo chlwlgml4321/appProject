@@ -557,7 +557,6 @@
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr>
-	                      <th>profile</th>
 	                      <th>ID</th>
 	                      <th>방문여부</th>
 	                      <th>회원코드</th>
@@ -576,8 +575,7 @@
 	                 
 	                  <tbody>
 	                  	<c:forEach items="${members}" var="members">
-	                    <tr>
-	                      <td>${members.profileImg}</td>
+	                    <tr>	                      
 	                      <td>${members.memberId}</td>
 	                      <td>${members.isVisitor}</td>
 	                      <td>${members.memberCode}</td>

@@ -15,16 +15,20 @@ import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.Point;
 import com.mobile.domain.Region;
+import com.mobile.domain.Replies;
 import com.mobile.domain.Review;
 import com.mobile.repository.AuthorityRepository;
 import com.mobile.repository.BlacklistRepository;
 import com.mobile.repository.MembersRepository;
 import com.mobile.repository.NoticeRepository;
+import com.mobile.repository.OfficeBoardRepository;
 import com.mobile.repository.OfficeRepository;
 import com.mobile.repository.PointRepository;
 import com.mobile.repository.RegionRepository;
+import com.mobile.repository.RepliesRepository;
 import com.mobile.repository.ReviewRepository;
 
 
@@ -46,6 +50,12 @@ public class UserServiceImpl implements UserService {
 	OfficeRepository officeRepo;
 	@Autowired
 	PointRepository pointRepo;
+	
+	@Autowired
+	OfficeBoardRepository officeBoardRepo;
+	
+	@Autowired
+	RepliesRepository repliesRepo;
 	
 	@Autowired
 	AuthorityRepository authorityRepo;
@@ -618,6 +628,66 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Members memberSelectByPhone(String phone) {
 		return membersRepo.findByPhone(phone);
+	}
+
+	@Override
+	public List<OfficeBoard> officeBoardSelectAll() {
+		return officeBoardRepo.findAll();
+	}
+
+	@Override
+	public OfficeBoard officeBoardSelectById(Long officeBoardId) {
+		
+		return officeBoardRepo.findById(officeBoardId).orElse(null);
+	}
+
+	@Override
+	public void officeBoardInsert(OfficeBoard officeBoard) {
+		
+		officeBoardRepo.save(officeBoard);
+	}
+
+	@Override
+	public void officeBoardUpdate(OfficeBoard officeBoard) {
+		
+		OfficeBoard ob = officeBoardRepo.findById(officeBoard.getOfficeBoardId()).orElse(null);
+		
+		if (officeBoard.getContent()!=null) {
+			ob.setContent(officeBoard.getContent());
+		}
+		
+		if(officeBoard.getReadNum()!=null) {
+			ob.setReadNum(officeBoard.getReadNum());
+		}
+		
+		if(officeBoard.getTitle()!=null) {
+			ob.setTitle(officeBoard.getTitle());
+		}
+		
+		officeBoardRepo.save(ob);
+		
+	}
+
+	@Override
+	@Transactional
+	public void officeBoardDelete(Long officeBoardId) {
+		
+		
+		repliesRepo.deleteByOfficeBoardId(officeBoardId);
+		
+		officeBoardRepo.deleteById(officeBoardId);
+	}
+
+	@Override
+	public void replyInsert(Replies replies) {
+		repliesRepo.save(replies);
+		
+	}
+
+	@Override
+	public void replyDelete(Long repliesId) {
+		repliesRepo.deleteById(repliesId);
+		
 	}
 
 	

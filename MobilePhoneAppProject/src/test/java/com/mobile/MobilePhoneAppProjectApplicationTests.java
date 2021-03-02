@@ -21,6 +21,7 @@ import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Recommendation;
@@ -37,6 +38,7 @@ import com.mobile.repository.DeviceRepository;
 import com.mobile.repository.InstallmentRepository;
 import com.mobile.repository.MembersRepository;
 import com.mobile.repository.NoticeRepository;
+import com.mobile.repository.OfficeBoardRepository;
 import com.mobile.repository.OfficeRepository;
 import com.mobile.repository.PointRepository;
 import com.mobile.repository.ProductsRepository;
@@ -112,15 +114,19 @@ class MobilePhoneAppProjectApplicationTests {
 	@Autowired
 	DeviceRepository dr;
 	
-	@Transactional
+	@Autowired
+	OfficeBoardRepository obr;
+	
+	@Autowired
+	OfficeRepository or;
+	
+	
 	@Test
 	void contextLoads() {
 
-
-		System.out.println("get...");
-		int seq = rr.getNextValMySequence();
-
-		System.out.println("seq  : " + seq);
+		//Office office = or.findById(1L).orElse(null);
+		OfficeBoard ob = new OfficeBoard(null, "test content", "test tite", null, 0, null, null);
+		obr.save(ob);
 	}
 
 }

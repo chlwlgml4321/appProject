@@ -44,7 +44,7 @@ public class Replies {
 	private Long replyNo;
 	
 	@ManyToOne
-	@JoinColumn(name = "office_board_no")
+	@JoinColumn(name = "office_board_id")
 	private OfficeBoard officeBoard;
 	
 	private String reply;

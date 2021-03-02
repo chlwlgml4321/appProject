@@ -1,11 +1,14 @@
 package com.mobile.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +24,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobile.domain.Application;
+import com.mobile.domain.Blacklist;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
+import com.mobile.domain.Office;
+import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
@@ -45,11 +51,11 @@ public class WebController2 {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private S3Service s3Service;
-	
-	
+
+
 	private BlackListService blackListService = BlackListService.getInstance();
 
 
@@ -161,7 +167,7 @@ public class WebController2 {
 
 
 		card.setCardImg(cardImg);
-		
+
 		productService.cardInsert(card, ext);
 
 		return "redirect:/admin/card";
@@ -210,7 +216,7 @@ public class WebController2 {
 		List<WiredGoods> wiList= productService.wiredGoodsSelectAll();
 		model.addAttribute("wiredGoods", wiList);
 		wiredGoods.setCarrier(carrier);
-		
+
 		if(file==null) {
 			System.out.println("file is null");
 		} else {
@@ -243,7 +249,7 @@ public class WebController2 {
 		}
 		wiredGoods.setWiredGoodsImg(wiredGoodsImg);
 
-		
+
 		productService.wiredGoodsInsert(wiredGoods, ext);
 
 		return "redirect:/admin/wiredGoods";
@@ -360,7 +366,7 @@ public class WebController2 {
 
 
 
-	
+
 	@ResponseBody
 	@RequestMapping("/app/phonebookTest/{memberId}")
 	public String phonebookTest(@PathVariable Long memberId, @RequestBody String phonebooks) {
@@ -373,7 +379,7 @@ public class WebController2 {
 			PhoneBook[] phoneBooks = objectMapper.readValue(phonebooks, PhoneBook[].class);
 			List<PhoneBook> langList = new ArrayList(Arrays.asList(phoneBooks));
 			System.out.println(langList.size());
-			
+
 			for(PhoneBook pb :langList) {
 				String str = blackListService.getByKey(pb.getTel().replaceAll("-", ""));
 				if(str!=null) {
@@ -385,41 +391,135 @@ public class WebController2 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return "phonebookTest";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/app/phonebookTest2")
 	public void phonebookTest2(String key) {
 		blackListService.printByKey(key);
-		
+
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/app/phonebookTest3")
 	public void phonebookTest3(String key, String value) {
 		blackListService.insertblackListMap(key, value);
-		
+
 	}
-	
+
+
+	/**
+	 * 블랙리스트 
+	 * 권한 : common
+	 * */
+
 	//필터링된 블랙리스트 정보 가져오기
 	@ResponseBody
 	@RequestMapping("/common/getBlacklistByMemberId")
 	public String getBlacklistByMemberId(Long memberId) {
-		
+
 		System.out.println("호출");
-		
+
 		Members member = userService.memberSelectById(memberId);
-		
+
 		if(member.getBlakcList()==null || member.getBlakcList().equals("")) {
 			return "통과";
 		}
-		
+
 		return member.getBlakcList();
 	}
 
+	@ResponseBody
+	@RequestMapping("/common/blackList")
+	public ModelAndView blackList() {
+
+		List<Blacklist> blackList = userService.blacklistSelectAll();;
+
+
+
+		return new ModelAndView("/admin/blackList","blackList",blackList);
+	}
+
+
+
+	//blackList 삭제하기 
+	@RequestMapping("/admin/deleteBlackList")
+	@ResponseBody
+	public String deleteBlackList(Long blacklistId) {
+
+		System.out.println("delete 접근 : " + blacklistId);
+
+		userService.blacklistDelete(blacklistId);
+
+		return "redirect:/common/blackList";
+	}
+
+	//blackList 추가하기 폼 이동
+	@RequestMapping("/admin/blackListRegister")
+	public String register() {
+
+		return "/admin/blackListRegister";
+
+	}
+
+
+	@RequestMapping("/admin/blackListForm")
+	public String blackListForm(Blacklist bl, Model model) {
+
+		userService.blacklistInsert(bl);
+		
+		List<Blacklist> blackList = userService.blacklistSelectAll();
+		model.addAttribute("blackList", blackList);
+		
+		
+		return "redirect:/common/blackList";
+
+	}
 	
+	//게시판
+	@RequestMapping("/common/community")
+	public ModelAndView community() {
+		
+		
+		List<OfficeBoard> officeBoard = userService.officeBoardSelectAll();
+		return new ModelAndView("/admin/community", "officeBoard",officeBoard);
+	}
+	
+	@RequestMapping("/common/communityDetail")
+	public ModelAndView communityDetail(Long officeBoardId) {
+		
+		
+		OfficeBoard officeBoard = userService.officeBoardSelectById(officeBoardId);
+		
+		return new ModelAndView("/admin/communityDetail","officeBoard", officeBoard);
+	}
 
+	
+	@RequestMapping("/common/communityRegister")
+	public String communityRegister() {
+		
+		
+		
+		return "/admin/communityRegister";
+	}
 
+	@RequestMapping("/common/officeBoardForm")
+	public String officeBoardForm(String title, String content, Long officeId) {
+		
+		
+		Office office = userService.officeSelectById(officeId);
+		OfficeBoard officeBoard = new OfficeBoard(null, content, title, null, 0, office, null);
+		
+		userService.officeBoardInsert(officeBoard);
+		
+		return "redirect:/common/community";
+	}
+	
+	
+	
+	
+	
+	
 }

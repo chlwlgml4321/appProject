@@ -9,8 +9,10 @@ import com.mobile.domain.Blacklist;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.Point;
 import com.mobile.domain.Region;
+import com.mobile.domain.Replies;
 import com.mobile.domain.Review;
 
 @Service
@@ -285,6 +287,56 @@ public interface UserService {
 	void authorityInsert(Office office);
 
 
+	/**
+	 * 모든 게시판 글 조회
+	 * */
+	public List<OfficeBoard> officeBoardSelectAll();
+	
+	/**
+	 * 게시판 글 게시판 아이디로 조회
+	 * */
+	public OfficeBoard officeBoardSelectById(Long officeBoardId);
+	
+	/**
+	 * 게시판 글 삽입
+	 * */
+	public void officeBoardInsert(OfficeBoard officeBoard);
+	
+	
+	/**
+	 * 게시판 글 수정 
+	 * */
+	public void officeBoardUpdate(OfficeBoard officeBoard);
+	
+	/**
+	 * 게시판 글 삭제
+	 * */
+	public void officeBoardDelete(Long officeBoardId);
+	
+	/**
+	 *	officeBoardId로 댓글 조회
+	 * */
+	
+	/**
+	 * 댓글 id로 조회
+	 * */
+	
+	/**
+	 * 댓글 삽입
+	 * */
+	
+	public void replyInsert(Replies replies);
+	
+	/**
+	 * 댓글 수정
+	 * */
+	
+	/**
+	 * 댓글 삭제
+	 * */
+	public void replyDelete(Long repliesId);
+	
+	
 	
 
 }

@@ -297,15 +297,8 @@ public class WebController {
 
 		@RequestMapping("/admin/officeForm")
 		public String officeForm(Office office, Model model, Long regionId) {
-			System.out.println("##officeInsert");
-			System.out.println("id: "+office.getOfficeId());
-			System.out.println(office.getAddress());
-			System.out.println(office.getOfficeName());
-			System.out.println("code: "+ office.getCode());
-			System.out.println(office.getTel());
 			
 			List<Office> offices = userService.officeSelectAll();
-			System.out.println(office.getPassword());
 			model.addAttribute("office", offices);
 			Region region= userService.regionSelectById(regionId);
 			office.setRegion(region);
