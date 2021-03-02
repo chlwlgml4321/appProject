@@ -584,9 +584,8 @@ $(document).ready(function(){
                
                 </div>
                 <div class="card-body text-left">
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
-                	<img src="https://phonestorimage.s3.ap-northeast-2.amazonaws.com/device_image/iphone-12-pro-graphite-hero.png"/>
+                	<img src="${review.reviewImg1}"/>
+                	
                
                 </div>
              

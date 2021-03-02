@@ -348,12 +348,36 @@ public class UserServiceImpl implements UserService {
 	public Integer reviewUpdate(Review review) {
 
 		
+		if(review.getReviewImg1()!= null) {
+
+
+			if(!review.getReviewImg1().equals("null")) {
+				review.setReviewImg1(null);
+			} else {
+
+				
+				String fileName = "review_image_"+ review.getReviewId();
+
+				String url = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/" +  fileName + "."+ review.getReviewImg2();
+
+
+				review.setReviewImg1(url);
+				review.setReviewImg2(null);
+			}
+		} else {
+			review.setReviewImg2(null);
+		}
+		
 		try {
 			
 		
 		Review r= reviewRepo.findById(review.getReviewId()).orElse(null);
 
 		if(r !=null) {
+			
+			if(review.getReviewImg1()!=null) {
+				r.setReviewImg1(review.getReviewImg1());
+			}
 			
 			if(review.getCarrier()!=null) {
 				r.setCarrier(review.getCarrier());

@@ -969,6 +969,14 @@ public class AppController implements AppControllerInterface {
 
 		String reviewImg = null;
 		String ext = null;
+		
+
+		
+		if(file == null) {
+			System.out.println("file is null");
+		} else {
+			System.out.println("file is not null");
+		}
 
 		if(officeId!=null) {
 			office = userService.officeSelectById(officeId);
