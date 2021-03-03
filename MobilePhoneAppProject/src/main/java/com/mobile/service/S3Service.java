@@ -90,6 +90,7 @@ public class S3Service {
 		String fileName = "review_image_"+ reviewId + "." + ext;
 		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
 				.withCannedAcl(CannedAccessControlList.PublicRead));
+		
 		return s3Client.getUrl(bucket, fileName).toString();
 	}
 	

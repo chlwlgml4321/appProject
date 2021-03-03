@@ -442,13 +442,7 @@
 								
 								
 								<!-- 208 -->
-								<div class="form-group col-md-2">
-									<label for="inputEmail4">리뷰 사진</label> <input type="file"
-										class="form-control" id="file" name="file" value="dataFile"
-										required="">
-									<!-- 			      <button type="submit" id="deviceImage" class="btn btn-success">업로드</button>
- -->
-								</div>
+	
 
 	
 	
