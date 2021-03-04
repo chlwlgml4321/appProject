@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mobile.domain.Application;
 import com.mobile.domain.Members;
+import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Review;
 
@@ -72,6 +73,10 @@ public interface AppControllerInterface {
 	//폰 번호로 멤버 가져오기
 	@RequestMapping("/app/getUserByPhone")
 	public String getUserByPhone(String phone);
+	
+	//약관 동의
+	@RequestMapping("/app/agreement")
+	public Integer agreement(Long memberId);
 		
 	/**
 	 * 통신사
@@ -278,6 +283,16 @@ public interface AppControllerInterface {
 	@RequestMapping("/app/certification")
 	public String certification();
 	
+	//office notice 전체 받아오기
+	@RequestMapping("/app/getAllOfficeNotice")
+	public String getAllOfficeNotice ();
+	
+	//office notice offie notice 글 번호로 받아오기
+	@RequestMapping("/app/getOfficeNoticeByNoticeId")
+	public String getOfficeNoticeByNoticeId(Long officeNoticeId);
+	
+	
+
 
 
 	

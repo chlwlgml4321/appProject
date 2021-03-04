@@ -18,7 +18,6 @@
   <title>Dashboard</title>
 
   <!-- Custom fonts for this template-->
-  
   <link href="${pageCotext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -30,35 +29,13 @@
 	crossorigin="anonymous"></script>
 	
 	
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/semantic/semantic.min.css">
-
-
-	
-	
 <script type="text/javascript">
 
 $(document).ready(function(){
 	
-	$("#registerOffice").click(function(){
-		$("#officeForm").submit(); 
+	$("#registerRegion").click(function(){
+		$("#regionForm").submit();
 		
-	});
-	
-	
-	$(".regBtn").click(function() {
-		
-		
-		
-	});
-	
-	$(".deleteReply").click(function(){
-		var result = confirm('댓글을 삭제하겠습니까?');
-		if(result){
-		
-			
-			$(this).parent().submit();
-		}
 	});
 });
 	
@@ -66,9 +43,10 @@ $(document).ready(function(){
 </head>
 <body id="page-top">
 
+<sec:authentication var="office" property="principal" />
+
   <!-- Page Wrapper -->
   <div id="wrapper">
-  
   <!-- Sidebar -->
 		<ul
 			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -146,7 +124,7 @@ $(document).ready(function(){
 
 
 			<!-- 지역 등록 -->
-			<li class="nav-item"><a class="nav-link"
+			<li class="nav-item active"><a class="nav-link"
 				href="/admin/regionInsert"> <i class="fas fa-fw fa-table"></i> <span>지역
 						등록</span></a></li>
 
@@ -158,8 +136,8 @@ $(document).ready(function(){
 			<div class="sidebar-heading">office 관리</div>
 
 			<!-- 지점 관리 -->
-			<li class="nav-item active"><a class="nav-link" href="/admin/office">
-					<i class="fas fa-fw fa-table"></i> <span>지점</span>
+			<li class="nav-item"><a class="nav-link" href="/admin/office">
+					<i class="fas fa-fw fa-table"></i> <span>OFFICE</span>
 			</a></li>
 
 
@@ -260,14 +238,8 @@ $(document).ready(function(){
 			<div class="sidebar-heading">커뮤니티 관리</div>
 
 			<li class="nav-item"><a class="nav-link"
-				href="/common/community"> <i class="fas fa-fw fa-table"></i> <span>커뮤니티</span></a>
+				href="/common/community"> <i class="fas fa-fw fa-table"></i> <span>community</span></a>
 			</li>
-			
-			<li class="nav-item"><a class="nav-link"
-				href="/common/community"> <i class="fas fa-fw fa-table"></i> <span>공지사항</span></a>
-			</li>
-			
-			
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
@@ -462,232 +434,35 @@ $(document).ready(function(){
 <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <sec:authentication var="office" property="principal" />
+          <!-- Page Heading -->
+          
+          
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            ${office.officeName} 정산하기</h1>
+          </div>
 
-
-<sec:authorize access="isAuthenticated()">
-<input id="officeId" type ="hidden" value = "${office.officeId}">
-</sec:authorize>
-
-	<div style="text-align: right; padding: 10px; margin-top: 50px;">
-		<sec:authorize access="isAuthenticated()">
-				
-		<c:choose>
-			<c:when test="${office.officeId==officeBoard.office.officeId}">
-			
-			<!-- 등록을 위한 -->
-			<form id = "updateForm" action="/common/officeBoardRegister" method="post">
-				<input type="hidden" name="officeBoardId" value ="${officeBoard.officeBoardId}">
-			
-			</form>
-			
-			
-			<button class="ui primary button" id="deleteBtn"
-				onclick="location.href='${pageContext.request.contextPath}/common/officeBoardDelete/${officeBoard.officeBoardId}'">
-				삭제</button>
-			<button class="ui primary button" id="updateBtn">
-				수정</button>
-			</c:when>
-			
-			<c:when test="${office.officeName eq '관리자'}">
-			
-			<button class="ui primary button" id="deleteBtn"
-				onclick="location.href='${pageContext.request.contextPath}/common/officeBoardDelete/${officeBoard.officeBoardId}'">
-				삭제</button>
-			</c:when>
-			
-			
-		</c:choose>
+            
+			   <form method="post" id="adjustmentForm" action="${pageCotext.request.contextPath}/common/adjustmentForm" >
+			  <div>
+		  		
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">정산금</label>
+			      <input type="text" class="form-control" name="amount">
+			      <input type = "hidden" name ="officeId" value ="${office.officeId}">
+			    </div>
+			    
+			   
+			    
+			    
 		
-		</sec:authorize>
-		
-		<button class="ui primary button" id="list"
-			onclick="location.href='${pageContext.request.contextPath}/common/community'">
-			목록</button>
-	</div>
-
-
-	<!-- 내용 -->
-	<div id="container">
-		<table class="ui definition table">
-			<thead>
-				<tr>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="collapsing" style="text-align: center;">제목</td>
-					<td>${officeBoard.title}</td>
-				</tr>
-				<tr>
-					<td class="collapsing">작성자</td>
-					<td>${officeBoard.office.officeName}
-					</td>
-				</tr>
-				<tr>
-					<div class="ui teal label">
-						<i class="comment icon"></i> ${fn:length(officeBoard.replies)}
-					</div>
-					<div class="ui label">
-						<i class="eye icon"></i> ${officeBoard.readNum}
-					</div>
-					<div class="ui label">
-						<i class="calendar alternate outline icon"></i>
-						${officeBoard.regDate}
-					</div>
-				</tr>
-
-
-
-			</tbody>
-		</table>
-
-		<!-- content -->
-		<div class="ui piled segment">${officeBoard.content}</div>
-
-
-		<!-- btns -->
-		
-		<!-- comment Start -->
-
-		<div class="ui large comments">
-
-			<c:choose>
-				<c:when test="${empty officeBoard.replies}">
-			등록된 댓글이 없습니다.
-		</c:when>
-				<c:otherwise>
-					<div>
-						<span class="ui dividing header" style="font-size: 18pt">댓글
-						</span><i class="gray comment icon"></i>
-					</div>
-					<c:forEach items="${officeBoard.replies}" var="replies">
-						
-								<div class="comment">
-									<a class="avatar"> <i class="big user icon"></i>
-									</a>
-									<div class="content">
-										<a class="author">${replies.office.officeName}</a>
-										<div class="metadata">
-											<a>${replies.regDate} </a> 
-											
-											
-											<form class= "deleteReplyForm" action="/common/replyDelete" method="post">
-												<input type ="hidden" name = "officeBoardId" value= "${officeBoard.officeBoardId}">
-												<input type ="hidden" name = "repliesId" value = "${replies.replyNo}">
-												
-												
-												
-												
-												
-												<sec:authorize access="isAuthenticated()">
-														
-													<c:choose>
-														<c:when test="${office.officeId==officeBoard.office.officeId}">
-															<a class = "deleteReply"> 삭제 </a>
-														</c:when>
-													
-														<c:when test="${office.officeName eq '관리자'}">
-															<a class = "deleteReply"> 삭제 </a>
-														</c:when>
-													
-													
-													</c:choose>
-												
-												</sec:authorize>
-												 
-											</form>
-											
-											
-										</div>
-										<div class="text">${replies.reply}</div>
-							
-									</div>
-
-								</div>
-								
-								
-							
-					</c:forEach>
-
-				</c:otherwise>
-			</c:choose>
-			<sec:authorize access="isAuthenticated()">
-			<form class="ui reply form" action="/common/replyInsert" method="post">
-				<div class="field">
-					<input type="text" name="reply" class="textArea">
-					 <input type="hidden" name="officeId" value="${office.officeId}">
-					 <input type="hidden" name="officeBoardId" value="${officeBoard.officeBoardId}">
-					
-				</div>
-				<div class="ui blue labeled submit icon button regBtn">
-					<i class="icon edit"></i> 댓글 달기
-				</div>
-
-			</form>
-			</sec:authorize>
-		</div>
-	</div>
-
-	
-	<sec:authorize access="isAuthenticated()">
-	<!-- 신고 modal -->
-				<div class="ui modal">
-		  <i class="close icon"></i>
-		  <div class="header">
-		    게시글 신고하기
-		  </div>
-		  
-		  
-		  <!-- 유형 선택 -->
-		 <h4 style="margin-left: 40px">신고 유형</h4>
-		<div class="ui fluid selection dropdown" id="dd" style="width: 80%;margin: auto; margin-top: 30px">
-		  <input type="hidden" name="user">
-		  <i class="dropdown icon"></i>
-		  <div class="default text">신고유형을 선택해주세요.</div>
-		  <div class="menu">
-		    <div class="item" data-value="1">
-		      영리목적의 광고
-		    </div>
-		    <div class="item" data-value="2">
-		    음란성/ 선정성 게시글
-		    </div>
-		    <div class="item" data-value="3">
-		      도배 게시글/댓글
-		    </div>
-		    <div class="item" data-value="4">
-		     개인정보 노출/사생활 침해
-		    </div>
-		    <div class="item" data-value="5">
-		      기타
-		    </div>
-		  </div>
-		</div>
-		  <!-- 유형 선택  -->
-		  
-		  
-		  
-		  <h4 style="margin-left: 40px">신고 내용</h4>
-		  <div class="image content">
-		   
-		   <div class="description" style="text-align: center">
-		      <form action="/community/report" method="post" id="reportForm">
-		      	<input type="text" name= "repContent" style = "width: 90%; height : 100px">
-		      	<input type="hidden" name= "id" value ="${member.id}">
-		      	<input type="hidden" name= "boardNo" value ="${community.boardNo}">
-		      	<input type="hidden" id="rt" name= "repType" value ="1">
-		      	<input type="hidden" name ="${_csrf.parameterName}" value ="${_csrf.token}">
-		      	
-		      </form>
-		    </div>
-		  </div>
-		  <div class="actions">
-		    <div class="ui button" id = "cancleBtn">취소</div>
-		    <div class="ui button" id = "submitReport">신고 하기</div>
-		  </div>
-		</div>
-	</sec:authorize>
-				
+			  </div>
+			  
+			  <div class="form-group col-md-2" >
+			 
+			  <button type="submit" id="registerRegion" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
 

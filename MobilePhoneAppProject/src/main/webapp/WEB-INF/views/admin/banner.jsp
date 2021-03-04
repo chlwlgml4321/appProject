@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 
 <!DOCTYPE html>
 <html>
@@ -38,21 +37,62 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	
-	
-	
-	$(".title").click(function(){
-		 
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
+			
+			
+			var result = confirm('디바이스를 비활성화 시키겠습니까?');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("비활성화");
+				
+				changeState($(this).attr("id"));
+				
+				
+			}
+		} else if(($(this).attr("class") == "btn btn-warning")){
+			var result = confirm('디바이스를 활성화 시키겠습니까?');
+			if(result){
+				
+				
+				
+				$(this).attr("class","btn btn-success");
+				$(this).children().text("활성화");
+				
+				changeState($(this).attr("id"));
+			}
+		}
 		
-
-		location.href = "/common/communityDetail?officeBoardId=" + $(this).children().val(); 
 		
 	});
+	
+	
+	function changeState(id) {  
+	    alert(id);
+	    $.ajax({
+	        type : 'GET',
+	        url : "/admin/changeDeviceState",
+	        data : {"id" : id},
+	        success : function (data) {
+	                         
+	        }
 
-		
+	    });
+	}
+	
 });
 
+
 </script>
+
+<style>
+img {
+	width: 100px;
+	height: 110px;
+}
+</style>
 </head>
 <body id="page-top">
 
@@ -129,8 +169,8 @@ $(document).ready(function(){
 			<div class="sidebar-heading">Region 관리</div>
 
 			<!-- 지역 관리 -->
-			<li class="nav-item active"><a class="nav-link" href="/admin/region">
-					<i class="fas fa-fw fa-table"></i> <span>지역</span>
+			<li class="nav-item"><a class="nav-link" href="/admin/region">
+					<i class="fas fa-fw fa-table"></i> <span>REGION</span>
 			</a></li>
 
 
@@ -457,7 +497,7 @@ $(document).ready(function(){
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">지점 게시판</h1>
+					<h1 class="h3 mb-2 text-gray-800">배너 목록</h1>
 
 
 					<!-- DataTales Example -->
@@ -466,8 +506,8 @@ $(document).ready(function(){
 						<div class="card-body">
 							<div class="table-responsive">
 								<c:choose>
-									<c:when test="${empty officeBoard}">
-										<h3>등록된 글이 없습니다.</h3>
+									<c:when test="${empty banners}">
+										<h3>등록된 배너가 없습니다.</h3>
 									</c:when>
 
 									<c:otherwise>
@@ -477,36 +517,30 @@ $(document).ready(function(){
 												<tr>
 
 
-													<th>id</th>
-													<th>작성자</th>
+													<th>bannerId</th>
+													<th>사진</th>
+													<th>내용</th>
 													<th>제목</th>
-													<th>조회수</th>
-													<th>작성일</th>
+													<th>삭제</th>
 													
-
 
 												</tr>
 											</thead>
 
 											<tbody>
-												<c:forEach items="${officeBoard}" var="officeBoard">
+												<c:forEach items="${banners}" var="banner">
 													<tr>
-														<td>${officeBoard.officeBoardId}</td>
-														<td>${officeBoard.office.officeName}
-														<c:if test="${!empty officeBoard.replies}">
-															&nbsp (${fn:length(officeBoard.replies)})
-														</c:if>
-														</td>
-														<td class = "title">
-														
-														<input type ="hidden" value = "${officeBoard.officeBoardId}">
-															${officeBoard.title}
-														</td>
-														<td>${officeBoard.readNum}</td>
-														<td>${officeBoard.regDate}</td>
-														
+														<td>${banner.bannerId}</td>
 
-														
+														<td><img src="${banner.bannerImg}" /></td>
+														<td>${banner.contents}</td>
+														<td>${banner.title}</td>
+														<td style="color: green;"><a
+															href="${pageContext.request.contextPath}/admin/bannerDelete/${banner.bannerId}"
+															class="btn btn-primary" id="${device.deviceId}"> <span
+																class="text">삭제</span>
+														</a>
+													
 													</tr>
 												</c:forEach>
 
@@ -518,8 +552,8 @@ $(document).ready(function(){
 								</br>
 								<div class="form-group col-md-2">
 									<button type="button"
-										onclick="location.href='${pageContext.request.contextPath}/common/communityRegister'"
-										class="btn btn-primary">글 작성하기</button>
+										onclick="location.href='${pageContext.request.contextPath}/admin/bannerRegister'"
+										class="btn btn-primary">배너 등록</button>
 								</div>
 							</div>
 						</div>

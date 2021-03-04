@@ -162,6 +162,10 @@ public class UserServiceImpl implements UserService {
 				m.setRegions(member.getRegions());
 			}
 
+			if(member.getIsAgreement()!=null){
+				m.setIsAgreement(member.getIsAgreement());
+			}
+			
 			membersRepo.save(m);
 		}
 
@@ -694,6 +698,8 @@ public class UserServiceImpl implements UserService {
 		
 		
 		repliesRepo.deleteByOfficeBoardId(officeBoardId);
+		
+	
 		
 		officeBoardRepo.deleteById(officeBoardId);
 	}

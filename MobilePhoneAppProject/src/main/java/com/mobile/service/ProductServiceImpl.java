@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mobile.domain.Adjustment;
 import com.mobile.domain.Application;
 import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
@@ -14,8 +15,10 @@ import com.mobile.domain.Device;
 import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Office;
+import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
+import com.mobile.repository.AdjustmentRepository;
 import com.mobile.repository.ApplicationRepository;
 import com.mobile.repository.BannersRepository;
 import com.mobile.repository.CallingPlanRepository;
@@ -24,6 +27,7 @@ import com.mobile.repository.CarrierRepository;
 import com.mobile.repository.DeviceRepository;
 import com.mobile.repository.GuestProductRepository;
 import com.mobile.repository.InstallmentRepository;
+import com.mobile.repository.OfficeNoticeRepository;
 import com.mobile.repository.ProductsRepository;
 import com.mobile.repository.WiredGoodsRepository;
 
@@ -58,6 +62,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	BannersRepository bannersRepository;
+	
+	@Autowired
+	OfficeNoticeRepository officeNoticeRepository;
+	
+	@Autowired
+	AdjustmentRepository adjustmentRepository;
 
 
 	@Override
@@ -618,6 +628,134 @@ public class ProductServiceImpl implements ProductService {
 	public List<Products> productSelectOfficeId(Long officeId) {
 
 		return productsRepository.findByOffice(officeId);
+	}
+
+	@Override
+	public Banners bannerSelectById(Long bannerId) {
+		
+		return bannersRepository.findById(bannerId).orElse(null);
+	}
+
+	@Override
+	public void bannerInsert(Banners banners, String ext) {
+		
+		if(banners.getBannerImg() !=null) {
+
+			if(!banners.getBannerImg().equals("null")) {
+				banners.setBannerImg(null);
+			} else {
+
+				int seq = bannersRepository.getNextValMySequenceInBanner();
+				String fileName = "banner_image_" + seq;
+
+				String url = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/" +  fileName + "."+ ext;
+
+				banners.setBannerImg(url);
+			}
+		}
+		
+		bannersRepository.save(banners);
+		
+	}
+
+	@Override
+	public void bannerUpdate(Banners banners) {
+		
+		
+	}
+
+	@Override
+	public void bannerDelete(Long bannerId) {
+
+		
+		bannersRepository.deleteById(bannerId);
+		
+	}
+
+	@Override
+	public List<OfficeNotice> officeNoticeSelectAll() {
+	
+		return officeNoticeRepository.findAll();
+	}
+
+	@Override
+	public OfficeNotice officeNoticeSelectById(Long officeNoticeId) {
+		return officeNoticeRepository.findById(officeNoticeId).orElse(null);
+	}
+
+	@Override
+	public void officeNoticeInsert(OfficeNotice officeNotice) {
+	
+		officeNoticeRepository.save(officeNotice);
+		
+	}
+
+	@Override
+	public void officeNoticeDelete(Long officeNoticeId) {
+	
+		
+		
+		officeNoticeRepository.deleteById(officeNoticeId);
+	}
+
+	@Override
+	public void officeNoticeUpdate(OfficeNotice officeNotice) {
+		
+		
+	}
+
+	@Override
+	public List<Adjustment> adjustmentSelectAll() {
+		
+		return adjustmentRepository.findAll();
+	}
+
+	@Override
+	public Adjustment adjustmentSelectById(Long adjustmentId) {
+
+		return adjustmentRepository.findById(adjustmentId).orElse(null);
+	}
+
+	@Override
+	public void adjustmentInsert(Adjustment adjustment) {
+		adjustmentRepository.save(adjustment);
+		
+	}
+
+	@Override
+	public void adjustmentUpdate(Adjustment adjustment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void adjustmentDelete(Long adjustmentId) {
+		adjustmentRepository.deleteById(adjustmentId);
+		
+	}
+
+	@Override
+	public void pointSelectAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pointSelectByMemberId() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pointSelectByPointId() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pointInsert() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

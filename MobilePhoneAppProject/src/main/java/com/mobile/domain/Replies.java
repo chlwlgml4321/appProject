@@ -56,14 +56,16 @@ public class Replies {
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date regDate;
 	
-	@ManyToOne 
-	@JoinColumn(name = "ref_reply")
-	private Replies parentReply;
+	
+//	
+//	@ManyToOne 
+//	@JoinColumn(name = "ref_reply")
+//	private Replies parentReply;
 	
 //	@Transient
 	//one to many 설정 해야함
-	
-	@OneToMany(mappedBy = "parentReply", fetch = FetchType.LAZY)
-	private List<Replies> childReplies;
+//	
+//	@OneToMany(mappedBy = "parentReply", fetch = FetchType.LAZY)
+//	private List<Replies> childReplies;
 	
 }

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
+import com.mobile.domain.Adjustment;
 import com.mobile.domain.Application;
 import com.mobile.domain.Authority;
 import com.mobile.domain.Banners;
@@ -26,8 +26,10 @@ import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Recommendation;
 import com.mobile.domain.Region;
+import com.mobile.domain.Replies;
 import com.mobile.domain.Review;
 import com.mobile.domain.WiredGoods;
+import com.mobile.repository.AdjustmentRepository;
 import com.mobile.repository.ApplicationRepository;
 import com.mobile.repository.AuthorityRepository;
 import com.mobile.repository.BannersRepository;
@@ -42,6 +44,7 @@ import com.mobile.repository.OfficeBoardRepository;
 import com.mobile.repository.OfficeRepository;
 import com.mobile.repository.PointRepository;
 import com.mobile.repository.ProductsRepository;
+import com.mobile.repository.RepliesRepository;
 import com.mobile.repository.ReviewRepository;
 import com.mobile.repository.WiredGoodsRepository;
 import com.mobile.service.ProductService;
@@ -120,13 +123,22 @@ class MobilePhoneAppProjectApplicationTests {
 	@Autowired
 	OfficeRepository or;
 	
+	@Autowired
+	RepliesRepository rpr;
+	
+	@Autowired
+	AdjustmentRepository adr;
 	
 	@Test
 	void contextLoads() {
 
-		//Office office = or.findById(1L).orElse(null);
-		OfficeBoard ob = new OfficeBoard(null, "test content", "test tite", null, 0, null, null);
-		obr.save(ob);
+		
+		Office office = or.findById(1L).orElse(null);
+		
+		Adjustment adjustment = new Adjustment(null, null, office, 100000);
+		
+		adr.save(adjustment);
+		
 	}
 
 }

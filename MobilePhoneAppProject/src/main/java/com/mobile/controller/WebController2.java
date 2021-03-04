@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,10 +26,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mobile.domain.Adjustment;
 import com.mobile.domain.Application;
+import com.mobile.domain.Banners;
 import com.mobile.domain.Blacklist;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
+import com.mobile.domain.Device;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
@@ -34,6 +40,7 @@ import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
+import com.mobile.domain.Replies;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.ReviewRepository;
 import com.mobile.service.BlackListService;
@@ -469,57 +476,259 @@ public class WebController2 {
 	public String blackListForm(Blacklist bl, Model model) {
 
 		userService.blacklistInsert(bl);
-		
+
 		List<Blacklist> blackList = userService.blacklistSelectAll();
 		model.addAttribute("blackList", blackList);
 		
-		
+		blackListService.insertblackListMap(bl.getTel(), bl.getName());
+
+
 		return "redirect:/common/blackList";
 
 	}
-	
+
 	//게시판
 	@RequestMapping("/common/community")
 	public ModelAndView community() {
-		
-		
+
+
 		List<OfficeBoard> officeBoard = userService.officeBoardSelectAll();
 		return new ModelAndView("/admin/community", "officeBoard",officeBoard);
 	}
-	
+
 	@RequestMapping("/common/communityDetail")
 	public ModelAndView communityDetail(Long officeBoardId) {
-		
-		
+
+
 		OfficeBoard officeBoard = userService.officeBoardSelectById(officeBoardId);
-		
+
+		OfficeBoard of = new OfficeBoard(officeBoardId, null, null, null, officeBoard.getReadNum()+1, null, null);
+
+		userService.officeBoardUpdate(of);
+
 		return new ModelAndView("/admin/communityDetail","officeBoard", officeBoard);
 	}
 
-	
+
 	@RequestMapping("/common/communityRegister")
 	public String communityRegister() {
-		
-		
-		
+
+
+
 		return "/admin/communityRegister";
 	}
 
 	@RequestMapping("/common/officeBoardForm")
 	public String officeBoardForm(String title, String content, Long officeId) {
-		
-		
+
+
 		Office office = userService.officeSelectById(officeId);
 		OfficeBoard officeBoard = new OfficeBoard(null, content, title, null, 0, office, null);
-		
+
 		userService.officeBoardInsert(officeBoard);
-		
+
 		return "redirect:/common/community";
 	}
-	
-	
-	
-	
-	
-	
+
+
+	@RequestMapping("/common/officeBoardDelete/{officeBoardId}")
+	public String officeBoardDelete(@PathVariable Long officeBoardId) {
+
+
+
+		System.out.println("officeBoard Id  : " +officeBoardId);
+
+		userService.officeBoardDelete(officeBoardId);
+
+		return "redirect:/common/community";
+	}
+
+	@RequestMapping("/common/replyInsert")
+	public String replyInsert(String reply, Long officeBoardId, Long officeId) {
+
+		OfficeBoard officeBoard = userService.officeBoardSelectById(officeBoardId);
+		Office office = userService.officeSelectById(officeId);
+
+		Replies rep = new Replies(null, officeBoard, reply, office, null);
+
+		userService.replyInsert(rep);
+
+		return "redirect:/common/communityDetail?officeBoardId="+officeBoardId;
+	}
+
+	@RequestMapping("/common/replyDelete")
+	public String replyDelete(Long repliesId, Long officeBoardId) {
+
+		userService.replyDelete(repliesId); 
+
+		return "redirect:/common/communityDetail?officeBoardId="+officeBoardId;
+	}
+
+
+
+
+	/**
+	 * 배너 관리
+	 * */
+
+	//banner 진입
+	@RequestMapping("/admin/banner")
+	public String banner(Model model) {
+
+		List<Banners> banners = productService.bannersSelectAll();
+
+		model.addAttribute("banners", banners);
+		return "/admin/banner";
+	}
+
+	//bannerRegister 진입
+	@RequestMapping("/admin/bannerRegister")
+	public String deviceRegister(Model model) {
+
+		return "/admin/bannerRegister";
+
+	}
+
+
+	//banner 등록 
+	@Transactional
+	@RequestMapping("/admin/bannerForm")
+	public String deviceForm(Banners banner, MultipartFile file , Model model) {
+
+
+
+		if(file==null) {
+			System.out.println("file is null");
+		} else {
+			System.out.println("file is not null");
+		}
+
+
+
+		String imgPath = null;
+
+		String bannerImg = null;
+		String ext = null;
+
+		if(file!=null) {
+			String strFileName = file.getOriginalFilename();
+			int pos = strFileName.lastIndexOf( "." );
+			ext = strFileName.substring( pos + 1 );
+
+			bannerImg = "null";
+		}
+
+		try {
+			if(file!=null) {
+				imgPath = s3Service.bannerUpload(file);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
+
+		banner.setBannerImg(bannerImg);
+
+		productService.bannerInsert(banner, ext);
+
+
+		List<Banners> banners = productService.bannersSelectAll();
+
+		model.addAttribute("banners", banners);
+
+		return "redirect:/admin/banner";
+
+	}
+
+	//bannerDetail
+	@RequestMapping("/admin/bannerDetail/{bannerId}")
+	public ModelAndView deviceDetail(@PathVariable Long bannerId,MultipartFile file, Model model) {
+
+		Banners banner = productService.bannerSelectById(bannerId);
+
+		return new ModelAndView("/admin/deviceUpdate", "banner", banner);
+	}
+
+
+	//banner 삭제하기 
+	@RequestMapping("/admin/bannerDelete/{bannerId}")
+	public String deleteBanner(@PathVariable Long bannerId) {
+
+
+
+		productService.bannerDelete(bannerId);
+
+		return "redirect:/admin/banner";
+	}
+
+
+	/**
+	 * 지점 공지 사항 관리
+	 * */
+
+	/**
+	 * 정산 관리
+	 * */
+	//adjustment 진입
+	@RequestMapping("/common/adjustment")
+	public String adjustment(Model model) {
+
+		List<Adjustment> adjustments = productService.adjustmentSelectAll();
+
+		model.addAttribute("adjustments", adjustments);
+		return "/admin/adjustment";
+	}
+
+	//adjustmentRegister 진입
+	@RequestMapping("/common/adjustmentInsert")
+	public String adjustmentRegister(Model model) {
+
+		return "/admin/adjustmentInsert";
+
+	}
+
+
+	//adjustment 등록 
+	@Transactional
+	@RequestMapping("/common/adjustmentForm")
+	public String adjustmentForm(Integer amount, Model model, Long officeId) {
+
+		Office office = userService.officeSelectById(officeId);
+		
+		Adjustment am = new Adjustment(null, null, office, amount);
+		
+		productService.adjustmentInsert(am);
+
+		return "redirect:/common/adjustment";
+
+	}
+
+	//adjustmentDetail
+	//@RequestMapping("/admin/bannerDetail/{bannerId}")
+	public ModelAndView adjustmentDetail(@PathVariable Long bannerId,MultipartFile file, Model model) {
+
+		Banners banner = productService.bannerSelectById(bannerId);
+
+		return new ModelAndView("/admin/deviceUpdate", "banner", banner);
+	}
+
+
+	//adjustment 삭제하기 
+	//@RequestMapping("/admin/bannerDelete/{bannerId}")
+	public String adjustmentBanner(@PathVariable Long bannerId) {
+
+
+
+		productService.bannerDelete(bannerId);
+
+		return "redirect:/admin/banner";
+	}
+
+
+	/**
+	 * 포인트 관리
+	 * */
+
+
 }

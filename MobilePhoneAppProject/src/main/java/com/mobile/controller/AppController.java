@@ -31,6 +31,7 @@ import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
@@ -57,7 +58,7 @@ public class AppController implements AppControllerInterface {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	private BlackListService blackListService = BlackListService.getInstance();
 
 
@@ -187,7 +188,7 @@ public class AppController implements AppControllerInterface {
 		Office office = userService.officeSelectById(officeId);
 
 		String memberCode = "";
-		
+
 		StringBuilder blakcList = new StringBuilder("");
 
 		String[] temp = phone.substring(3).split("");
@@ -199,13 +200,13 @@ public class AppController implements AppControllerInterface {
 			memberCode += Character.toString(tempChar);
 		}
 
-		
+
 		final ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			PhoneBook[] phoneBooks = objectMapper.readValue(phonebookList, PhoneBook[].class);
 			List<PhoneBook> langList = new ArrayList(Arrays.asList(phoneBooks));
 			System.out.println(langList.size());
-			
+
 			for(PhoneBook pb :langList) {
 				String str = blackListService.getByKey(pb.getTel().replaceAll("-", ""));
 				if(str!=null) {
@@ -969,9 +970,9 @@ public class AppController implements AppControllerInterface {
 
 		String reviewImg = null;
 		String ext = null;
-		
 
-		
+
+
 		if(file == null) {
 			System.out.println("file is null");
 		} else {
@@ -1263,6 +1264,27 @@ public class AppController implements AppControllerInterface {
 
 
 	}
+	
+	//약관 동의
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/agreement")
+	public Integer agreement(Long memberId) {
+	
+		try {
+			Members member = new Members();
+			
+			member.setMemberId(memberId);
+			member.setIsAgreement(1);
+			
+			userService.memberUpdate(member);
+			
+		} catch(Exception e){
+			return 0;
+		}
+		
+		return 1;
+	}
 
 	@Override
 	@ResponseBody
@@ -1301,7 +1323,55 @@ public class AppController implements AppControllerInterface {
 
 
 
+	//office notice 전체 받아오기
+	@Override
+	@RequestMapping("/app/getAllOfficeNotice")
+	@ResponseBody
+	public String getAllOfficeNotice (){
+		
+		List<OfficeNotice> list = productService.officeNoticeSelectAll();
 
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+
+		
+	}
+
+	//office notice offie notice 글 번호로 받아오기
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/getOfficeNoticeByNoticeId")
+	public String getOfficeNoticeByNoticeId(Long officeNoticeId) {
+		
+		OfficeNotice officeNotice = productService.officeNoticeSelectById(officeNoticeId);
+
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(officeNotice);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+		
+	}
 
 
 

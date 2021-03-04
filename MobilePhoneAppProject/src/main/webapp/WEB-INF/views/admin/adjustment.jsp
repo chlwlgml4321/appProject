@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 
 <!DOCTYPE html>
 <html>
@@ -38,19 +37,41 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	
-	
-	
-	$(".title").click(function(){
-		 
+	$(".btn").click(function(){
+		if($(this).attr("class") == "btn btn-success"){
+			
+			
+			var result = confirm('삭제하시겠습니까? ');
+					
+			if(result){
+				
+				$(this).attr("class","btn btn-warning");
+				$(this).children().text("삭제됨");
+				
+				deleteRegion($(this).attr("id"));
+				
+				
+			}
+		} 
 		
-
-		location.href = "/common/communityDetail?officeBoardId=" + $(this).children().val(); 
 		
 	});
 
+		function deleteRegion(id) {  
+		    alert(id);
+		    $.ajax({
+		        type : 'GET',
+		        url : "/admin/deleteRegion",
+		        data : {"id" : id},
+		        success : function (data) {
+		        	 location.reload();             
+		        }
+
+		    });
+		   
+		}
 		
-});
+	});
 
 </script>
 </head>
@@ -457,7 +478,7 @@ $(document).ready(function(){
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">지점 게시판</h1>
+					<h1 class="h3 mb-2 text-gray-800">정산</h1>
 
 
 					<!-- DataTales Example -->
@@ -466,8 +487,8 @@ $(document).ready(function(){
 						<div class="card-body">
 							<div class="table-responsive">
 								<c:choose>
-									<c:when test="${empty officeBoard}">
-										<h3>등록된 글이 없습니다.</h3>
+									<c:when test="${empty adjustments}">
+										<h3>등록된 정산이 없습니다.</h3>
 									</c:when>
 
 									<c:otherwise>
@@ -477,36 +498,27 @@ $(document).ready(function(){
 												<tr>
 
 
-													<th>id</th>
-													<th>작성자</th>
-													<th>제목</th>
-													<th>조회수</th>
-													<th>작성일</th>
-													
+													<th>정산 Id</th>
+													<th>지점 이름</th>
+													<th>금액</th>
+													<th>등록일</th>
+													<th>삭제</th>
 
 
 												</tr>
 											</thead>
 
 											<tbody>
-												<c:forEach items="${officeBoard}" var="officeBoard">
+												<c:forEach items="${adjustments}" var="adjustment">
 													<tr>
-														<td>${officeBoard.officeBoardId}</td>
-														<td>${officeBoard.office.officeName}
-														<c:if test="${!empty officeBoard.replies}">
-															&nbsp (${fn:length(officeBoard.replies)})
-														</c:if>
-														</td>
-														<td class = "title">
-														
-														<input type ="hidden" value = "${officeBoard.officeBoardId}">
-															${officeBoard.title}
-														</td>
-														<td>${officeBoard.readNum}</td>
-														<td>${officeBoard.regDate}</td>
-														
-
-														
+														<td>${adjustment.adjustmentId}</td>
+														<td>${adjustment.office.officeName}</td>
+														<td>${adjustment.amount}</td>
+														<td>${adjustment.regDate}</td>
+														<td style="color: green;"><a href="#"
+															class="btn btn-success" id="${region.regionId}"> <span
+																class="text">삭제</span>
+														</a>
 													</tr>
 												</c:forEach>
 
@@ -518,8 +530,8 @@ $(document).ready(function(){
 								</br>
 								<div class="form-group col-md-2">
 									<button type="button"
-										onclick="location.href='${pageContext.request.contextPath}/common/communityRegister'"
-										class="btn btn-primary">글 작성하기</button>
+										onclick="location.href='${pageContext.request.contextPath}/common/adjustmentInsert'"
+										class="btn btn-primary">정산 등록하기</button>
 								</div>
 							</div>
 						</div>

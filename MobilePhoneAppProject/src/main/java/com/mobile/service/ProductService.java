@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mobile.domain.Adjustment;
 import com.mobile.domain.Application;
 import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
@@ -13,6 +14,7 @@ import com.mobile.domain.Device;
 import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
+import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
 
@@ -308,13 +310,118 @@ public interface ProductService {
 	public void guestProductDelete(Long id);
 	
 	/**
-	 * 배너 상품 전체 조회
+	 * 배너 전체 조회
 	 * */
 	
 	public List<Banners> bannersSelectAll();
 	
+	/**
+	 * 배너 id로 조회
+	 * */
+	public Banners bannerSelectById(Long bannerId);
 	
 	
+	/**
+	 * 배너 삽입
+	 * */
+	public void bannerInsert(Banners banners, String ext);
+	
+	/**
+	 * 배너 수정
+	 * */
+	public void bannerUpdate(Banners banners);
+	
+	/**
+	 * 배너 삭제
+	 * */
+	public void bannerDelete(Long bannerId);
+	
+	
+	/**
+	 * 지점 공지사항 전체 조회
+	 * */
+	public List<OfficeNotice> officeNoticeSelectAll();
+	
+	/**
+	 * 지점 공지사항 id로 조회
+	 * */
+	public OfficeNotice officeNoticeSelectById(Long officeNoticeId);
+	
+	/**
+	 * 지점 공지사항 삽입
+	 * */
+	public void officeNoticeInsert(OfficeNotice officeNotice);
+	
+	/**
+	 * 지점 공지사항 삭제
+	 * */
+	public void officeNoticeDelete(Long officeNoticeId);
+	
+	/**
+	 * 지점 공지사항 수정
+	 * */
+	public void officeNoticeUpdate(OfficeNotice officeNotice);
+	
+	/**
+	 * 정산 전체 조회
+	 * */
+	public List<Adjustment> adjustmentSelectAll();
+	
+	
+	/**
+	 * 정산 id로 조회
+	 * */
+	public Adjustment adjustmentSelectById(Long adjustmentId);
+	
+	/**
+	 * 정산 삽입
+	 * */
+	public void adjustmentInsert(Adjustment adjustment);
+	
+	
+	/**
+	 * 정산 수정 
+	 * */
+	public void adjustmentUpdate(Adjustment adjustment);
+	
+	/**
+	 * 정산 삭제
+	 * */
+	public void adjustmentDelete(Long adjustmentId);
+	
+	
+	
+	/**
+	 * 포인트 전체 조회
+	 * */
+	public void pointSelectAll();
+	
+	/**
+	 * 멤버 아이디로 포인트 조회
+	 * */
+	public void pointSelectByMemberId();
+	
+	/**
+	 * 포인트 아이디로 포인트 조회
+	 * */
+	public void pointSelectByPointId();
+	
+	/**
+	 * 포인트 삽입
+	 * */
+	public void pointInsert();
+	
+	/**
+	 * 포인트 삭제
+	 * */
+	
+	/**
+	 * 포인트 적립 로그 삽입
+	 * */
+	
+	/**
+	 * 포인트 사용 로그 삽입
+	 * */
 	
 	
 	

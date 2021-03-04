@@ -78,6 +78,29 @@ public class Members {
 	 * */
 	Integer state;
 	
+	/**
+	 * 비동의 - 0
+	 * 동의 - 1
+	 * */
+	Integer isAgreement;
+	
+	public Members(Long memberId, String name, String phone, String regions, String profileImg, String memberCode,
+			String password, String blakcList, Integer isVisitor, Integer state, Date regDate, Office office) {
+		super();
+		this.memberId = memberId;
+		this.name = name;
+		this.phone = phone;
+		this.regions = regions;
+		this.profileImg = profileImg;
+		this.memberCode = memberCode;
+		this.password = password;
+		this.blakcList = blakcList;
+		this.isVisitor = isVisitor;
+		this.state = state;
+		this.regDate = regDate;
+		this.office = office;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	Date regDate;
 	
