@@ -677,6 +677,13 @@ public class ProductServiceImpl implements ProductService {
 	
 		return officeNoticeRepository.findAll();
 	}
+	
+	@Override
+	public List<OfficeNotice> officeNoticeSelectByOfficeId(Long officeId) {
+	
+		return officeNoticeRepository.findByOfficenId(officeId);
+	}
+	
 
 	@Override
 	public OfficeNotice officeNoticeSelectById(Long officeNoticeId) {

@@ -291,7 +291,10 @@ public interface AppControllerInterface {
 	@RequestMapping("/app/getOfficeNoticeByNoticeId")
 	public String getOfficeNoticeByNoticeId(Long officeNoticeId);
 	
-	
+	//officeId로 office Notice 글 받아오기
+	@RequestMapping("/app/getOfficeNoticeByOfficeId")
+	public String getOfficeNoticeByOfficeId(Long officeId);
+
 
 
 

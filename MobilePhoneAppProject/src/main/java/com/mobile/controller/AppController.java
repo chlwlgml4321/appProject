@@ -1370,9 +1370,29 @@ public class AppController implements AppControllerInterface {
 		
 		return result;
 		
-		
 	}
 
+	
+	@RequestMapping("/app/getOfficeNoticeByOfficeId")
+	@ResponseBody
+	public String getOfficeNoticeByOfficeId(Long officeId) {
+		
+		List<OfficeNotice> list = productService.officeNoticeSelectByOfficeId(officeId);
+
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 
 

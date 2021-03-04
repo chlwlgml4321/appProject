@@ -437,6 +437,8 @@ public interface ProductService {
 	 */
 	public List<Products> productSelectOfficeId(Long officeId);
 
+	List<OfficeNotice> officeNoticeSelectByOfficeId(Long officeId);
+
 	
 	
 }
