@@ -22,6 +22,7 @@ import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
 import com.mobile.domain.OfficeBoard;
+import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Recommendation;
@@ -41,6 +42,7 @@ import com.mobile.repository.InstallmentRepository;
 import com.mobile.repository.MembersRepository;
 import com.mobile.repository.NoticeRepository;
 import com.mobile.repository.OfficeBoardRepository;
+import com.mobile.repository.OfficeNoticeRepository;
 import com.mobile.repository.OfficeRepository;
 import com.mobile.repository.PointRepository;
 import com.mobile.repository.ProductsRepository;
@@ -129,15 +131,18 @@ class MobilePhoneAppProjectApplicationTests {
 	@Autowired
 	AdjustmentRepository adr;
 	
+	@Autowired
+	OfficeNoticeRepository ofr;
+	
 	@Test
 	void contextLoads() {
 
 		
 		Office office = or.findById(1L).orElse(null);
 		
-		Adjustment adjustment = new Adjustment(null, null, office, 100000);
+		OfficeNotice of = new OfficeNotice(null, office, "중고폰 팝니다.", "아이폰12", null);
 		
-		adr.save(adjustment);
+		ofr.save(of);
 		
 	}
 

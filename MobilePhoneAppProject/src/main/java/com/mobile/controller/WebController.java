@@ -24,6 +24,7 @@ import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Members;
 import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
+import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
@@ -809,6 +810,83 @@ public class WebController {
 			return "/admin/officeReview";
 		}
 		
+		
+		//공지사항 insert
+		@RequestMapping("/common/officeNoticeRegister")
+		public String registerOfficeNotice(Notice notice, Model model) {
+			System.out.println("진입");
+			System.out.println(notice.getTitle());
+			System.out.println(notice.getContents());
+			
+			List<Notice> notices =userService.noticeSelectAll();
+			model.addAttribute("notice", notices);
+			
+			userService.noticeInsert(notice);
+			
+
+			return "redirect:/admin/notice";
+		}
+		
+		
+		//수정페이지로 이동 
+		@RequestMapping("/common/officeNoticeInsert")
+		public String officeNoticeInsert(Notice notice) {
+			System.out.println("##insert");
+			
+			//userService.noticeInsert(notice);
+			
+			return "/admin/noticeInsert";
+			
+		}
+		
+		//공지사항 전체보기
+		@RequestMapping("/common/officeNotice")
+		public String officeNotice(Model model) {
+			
+			List<OfficeNotice> officeNoticeList= productService.officeNoticeSelectAll();
+			
+			model.addAttribute("officeNoticeList", officeNoticeList);
+			
+			return "/admin/officeNotice";
+			
+		}
+		
+		//공지사항 디테일
+		@RequestMapping("/common/officeNoticeDetail/{noticeId}")
+		public ModelAndView officeNoticeDetail(@PathVariable Long noticeId) {
+		
+			Notice notice = userService.noticeSelectById(noticeId);
+			System.out.println("noticeDetail 진입");
+			System.out.println(noticeId);
+			return new ModelAndView("admin/noticeDetail","notice", notice);
+		}
+		
+
+		//notice 글지우기 
+		@RequestMapping("/common/deleteOfficeNotice")
+		@ResponseBody
+		public String deleteOfficeNotice(Long id) {
+			
+			System.out.println("id 진입 "+id );
+			Notice notice = new Notice();
+			notice.setNoticeId(id);
+			userService.noticeDelete(id);
+			return "redirect:/admin/notice";
+		}
+		
+		
+		//notice 수정하기 
+		@RequestMapping("/common/officeNoticeUpdate")
+		public String officeNoticeUpdate( Notice notice) {
+			
+			System.out.println("title: "+ notice.getTitle());
+
+			System.out.println("id: "+notice.getNoticeId());
+			System.out.println("id: "+notice.getContents());
+			userService.noticeUpdate(notice);
+			
+			return "/admin/noticeInsert";
+		}
 		
 	
 }
