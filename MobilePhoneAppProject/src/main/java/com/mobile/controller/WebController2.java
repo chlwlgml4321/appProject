@@ -480,6 +480,11 @@ public class WebController2 {
 		List<Blacklist> blackList = userService.blacklistSelectAll();
 		model.addAttribute("blackList", blackList);
 		
+		
+		if(bl.getName()==null) {
+			bl.setName("이름 확인 불가");
+		}
+		
 		blackListService.insertblackListMap(bl.getTel(), bl.getName());
 
 
