@@ -538,7 +538,6 @@ $(document).ready(function(){
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의공지사항</h1>
 
 
 					<!-- DataTales Example -->
@@ -551,27 +550,26 @@ $(document).ready(function(){
 
 								<div class="card">
 
-									<form method="post" action="${pageContext.request.contextPath}/noticeUpdate?=${notice.noticeId}">
-										<input type='hidden' name='noticeId' value="${notice.noticeId}">
+									<form method="post" action="${pageContext.request.contextPath}/common/officeNoticeRegister">
+										<input type='hidden' name='officeNotice' value="${officeNotice.noticeId}">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">
-												<input type="text" name="title" style="width:500px; height:40px" value="${notice.title}">
+												<input type="text" name="title" style="width:500px; height:40px" value="${officeNotice.title}">
 											</h6>
-											<h6 class="mb-1 small">${notice.regDate}</h6>
+											<h6 class="mb-1 small">${officeNotice.regDate}</h6>
 										</div>
 										<div class="card-body text-left">
 											<!-- <input type="textarea" name="contents" placeholder=${notice.contents}> -->
 
-										<textarea name="contents" class="contentstext" cols="100" rows="30">${notice.contents}
+										<textarea name="contents" class="contentstext" cols="100" rows="30">${officeNotice.content}
 										</textarea></br>
-										<span style="color:#aaa;" id="counter">(0 / 최대 500자)</span>
 										
 
 
 
 										</div>
 										<div class="form-group col-md-2">
-											<button type="submit" class="btn btn-primary">수정</button>
+											<button type="submit" class="btn btn-primary">등록하기</button>
 										</div>
 									</form>
 								</div>

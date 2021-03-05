@@ -534,7 +534,7 @@ $(document).ready(function(){
 
             </div>
             
-            <form id = "updateForm" action="/officeNoticeInsert?noticeId=${officeNotice.noticeId}" method="post">
+            <form id = "updateForm" action="/officeNoticeInsert?noticeId=${officeNotice.officeNoticeId}" method="post">
 				<input type="hidden" name="title" value ="${officeNotice.title}">
 				<input type="hidden" name="contents" value="${officeNotice.contents}">
 			</form>

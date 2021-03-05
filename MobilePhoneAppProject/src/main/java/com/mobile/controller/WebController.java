@@ -869,7 +869,7 @@ public class WebController {
 		
 		//notice 수정하기 
 		@RequestMapping("/common/officeNoticeUpdate")
-		public String officeNoticeUpdate( OfficeNotice officeNotice) {
+		public String officeNoticeUpdate(OfficeNotice officeNotice) {
 
 			productService.officeNoticeUpdate(officeNotice);
 			
