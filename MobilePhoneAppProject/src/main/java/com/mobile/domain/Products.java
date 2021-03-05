@@ -86,5 +86,11 @@ public class Products {
 	 * */
 	Integer installmentFee;
 	
+	/**
+	 * 재고
+	 * */
+	Integer stock;
+	
+	
 	
 }

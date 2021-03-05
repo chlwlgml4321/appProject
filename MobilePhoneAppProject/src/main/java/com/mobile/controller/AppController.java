@@ -607,7 +607,7 @@ public class AppController implements AppControllerInterface {
 		String result = "";
 
 		try {
-			result = mapper.writeValueAsString(srList);
+			result = mapper.writeValueAsString(list);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}

@@ -39,9 +39,11 @@ $(document).ready(function(){
 			if(result){
 				
 				$(this).attr("class","btn btn-warning");
-				$(this).children().text("삭제됨");
+/* 				$(this).children().text("삭제됨");
+ */				
+				/* deleteNotice($(this).attr("id")); */
 				
-				deleteNotice($(this).attr("id"));
+				
 				
 				
 			}
@@ -54,7 +56,7 @@ $(document).ready(function(){
 		    alert(id);
 		    $.ajax({
 		        type : 'GET',
-		        url : "/deleteNotice",
+		        url : "/deleteOfficeNotice",
 		        data : {"id" : id},
 		        success : function (data) {
 		        	 location.reload();             
@@ -570,14 +572,15 @@ $(document).ready(function(){
 	                  	<c:forEach items="${officeNoticeList}" var="notice">
 	                    <tr>
 	                      <td> 
-	                      <a href="${pageContext.request.contextPath}/officeNoticeDetail/${notice.officeNoticeId}">${notice.officeNoticeId}</a>
+	                      <a href="${pageContext.request.contextPath}/common/officeNoticeDetail/${notice.officeNoticeId}">${notice.officeNoticeId}</a>
 	              		  </td>
 	                      <td>${notice.title}</td>
 	                      <td>${notice.regDate}</td>
-	                     <td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${notice.officeNoticeId}">
-                    					<span class="text">삭제</span>
-                  					</a>
+	                     <td style="color: green;"><a
+							href="${pageContext.request.contextPath}/common/deleteOfficeNotice/${notice.officeNoticeId}"
+							class="btn btn-primary" id="${notice.officeNoticeId}"> <span
+							class="text">삭제</span>
+							</a>
 	                    </tr>
 	                    </c:forEach>
 	                   
@@ -588,7 +591,7 @@ $(document).ready(function(){
                 
                 </br>
                 						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/common/officeNoticeRegister'" class="btn btn-primary">글쓰기</button>
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/common/officeNoticeInsert'" class="btn btn-primary">글쓰기</button>
 										</div>
               </div>
             </div>

@@ -508,7 +508,7 @@ $(document).ready(function(){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">${notice.noticeId}번의 공지사항 </h1>
+          <h1 class="h3 mb-2 text-gray-800">${officeNotice.officeNoticeId}번의 공지사항 </h1>
           
 
           <!-- DataTales Example -->
@@ -523,10 +523,10 @@ $(document).ready(function(){
              
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
-                 </h6>${notice.title} <h6 class="mb-1 small">${notice.regDate} </h6>
+                 </h6>${notice.title} <h6 class="mb-1 small">${officeNotice.regDate} </h6>
                 </div>
                 <div class="card-body text-left">
-                ${notice.contents}
+                ${officeNotice.content}
                
                 </div>
              
@@ -534,9 +534,9 @@ $(document).ready(function(){
 
             </div>
             
-            <form id = "updateForm" action="/noticeInsert?noticeId=${notice.noticeId}" method="post">
-				<input type="hidden" name="title" value ="${notice.title}">
-				<input type="hidden" name="contents" value="${notice.contents}">
+            <form id = "updateForm" action="/officeNoticeInsert?noticeId=${officeNotice.noticeId}" method="post">
+				<input type="hidden" name="title" value ="${officeNotice.title}">
+				<input type="hidden" name="contents" value="${officeNotice.contents}">
 			</form>
 
 				 <div class="form-group col-md-2" >

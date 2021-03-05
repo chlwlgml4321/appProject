@@ -811,20 +811,15 @@ public class WebController {
 		}
 		
 		
-		//공지사항 insert
+		//지점 공지사항 insert
 		@RequestMapping("/common/officeNoticeRegister")
-		public String registerOfficeNotice(Notice notice, Model model) {
-			System.out.println("진입");
-			System.out.println(notice.getTitle());
-			System.out.println(notice.getContents());
+		public String registerOfficeNotice(OfficeNotice officeNotice, Model model) {
 			
-			List<Notice> notices =userService.noticeSelectAll();
-			model.addAttribute("notice", notices);
 			
-			userService.noticeInsert(notice);
+			productService.officeNoticeInsert(officeNotice);
 			
 
-			return "redirect:/admin/notice";
+			return "redirect:/common/officeNotice";
 		}
 		
 		
@@ -835,7 +830,7 @@ public class WebController {
 			
 			//userService.noticeInsert(notice);
 			
-			return "/admin/noticeInsert";
+			return "/admin/officeNoticeInsert";
 			
 		}
 		
@@ -852,40 +847,33 @@ public class WebController {
 		}
 		
 		//공지사항 디테일
-		@RequestMapping("/common/officeNoticeDetail/{noticeId}")
-		public ModelAndView officeNoticeDetail(@PathVariable Long noticeId) {
+		@RequestMapping("/common/officeNoticeDetail/{officeNoticeId}")
+		public ModelAndView officeNoticeDetail(@PathVariable Long officeNoticeId) {
 		
-			Notice notice = userService.noticeSelectById(noticeId);
+			OfficeNotice officeNotice = productService.officeNoticeSelectById(officeNoticeId);
 			System.out.println("noticeDetail 진입");
-			System.out.println(noticeId);
-			return new ModelAndView("admin/noticeDetail","notice", notice);
+			
+			return new ModelAndView("admin/officeNoticeDetail","officeNotice", officeNotice);
 		}
 		
 
 		//notice 글지우기 
-		@RequestMapping("/common/deleteOfficeNotice")
-		@ResponseBody
-		public String deleteOfficeNotice(Long id) {
+		@RequestMapping("/common/deleteOfficeNotice/{id}")
+		public String deleteOfficeNotice(@PathVariable Long id) {
 			
 			System.out.println("id 진입 "+id );
-			Notice notice = new Notice();
-			notice.setNoticeId(id);
-			userService.noticeDelete(id);
-			return "redirect:/admin/notice";
+			productService.officeNoticeDelete(id);
+			return "redirect:/common/officeNotice";
 		}
 		
 		
 		//notice 수정하기 
 		@RequestMapping("/common/officeNoticeUpdate")
-		public String officeNoticeUpdate( Notice notice) {
-			
-			System.out.println("title: "+ notice.getTitle());
+		public String officeNoticeUpdate( OfficeNotice officeNotice) {
 
-			System.out.println("id: "+notice.getNoticeId());
-			System.out.println("id: "+notice.getContents());
-			userService.noticeUpdate(notice);
+			productService.officeNoticeUpdate(officeNotice);
 			
-			return "/admin/noticeInsert";
+			return "redirect:/common/officeNotice";
 		}
 		
 	
