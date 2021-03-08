@@ -173,6 +173,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<Members> mamberSelectInactivatedByOfficeId(Long officeId){
+		
+		return membersRepo.findInActiveMemberByOfficeId(officeId);
+	}
+	
+	@Override
 	public void memberChangeState(Long memberId) {
 		Members member = membersRepo.findById(memberId).orElse(null);
 		int state;

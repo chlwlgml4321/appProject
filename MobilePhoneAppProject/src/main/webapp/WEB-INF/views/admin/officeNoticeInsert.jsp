@@ -121,7 +121,7 @@ $(document).ready(function(){
 										<div class="card-body text-left">
 											<!-- <input type="textarea" name="contents" placeholder=${notice.contents}> -->
 
-										<textarea name="contents" class="contentstext" cols="100" rows="30">${officeNotice.content}
+										<textarea name="content" class="contentstext" cols="100" rows="30">${officeNotice.content}
 										</textarea></br>
 										
 

@@ -128,9 +128,9 @@ $(document).ready(function(){
 											<h6 class="mb-1 small"></h6>
 										</div>
 										<div class="card-body text-left">
-										<textarea name="contents" class="contentstext" placeholder="내용을 입력하세요. " cols="100" rows="30"></textarea>
-										</br>
-										<span style="color:#aaa;" id="counter">(0 / 최대 500자)</span>
+										<input type="text"  name="content" placeholder="내용을 입력하세요." style="width:500px; height:100px";>
+										
+										
 										</div>
 										
 										

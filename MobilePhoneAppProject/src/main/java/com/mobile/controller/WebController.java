@@ -79,9 +79,24 @@ public class WebController {
 	
 	//승인대기중인 멤버 보기 
 	@RequestMapping("/common/inactiveUser")
-	public String inactiveUser(Model model) {
-		System.out.println("wlsdlq");
-		List<Members> members = userService.mamberSelectInactivatedAll();
+	public String inactiveUser(Model model, Principal principal) {
+		
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Office office = (Office) authentication.getPrincipal();
+
+
+		List<Members> members = null;
+		
+		if(office.getState()==2) {
+			members = userService.mamberSelectInactivatedAll();
+		} else {
+			members = userService.mamberSelectInactivatedByOfficeId(office.getOfficeId());
+		}
+		
+		
+		
+		
 		model.addAttribute("members",members);
 		
 		return "/admin/inactiveUser";
@@ -530,9 +545,19 @@ public class WebController {
 		}
 		
 		@RequestMapping("/common/products")
-		public String product(Model model) {
+		public String product(Model model, Principal principal) {
 			
-			List<Products> products = productService.productsSelectAll();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Office office = (Office) authentication.getPrincipal();
+			Long officeId = office.getOfficeId();
+			List<Products> products = null;
+			
+			if(office.getState()==2) {
+				products = productService.productsSelectAll();
+			} else {
+				products = productService.productSelectOfficeId(officeId);
+			}
+			
 			model.addAttribute("products", products);
 			return "/admin/products";
 		}

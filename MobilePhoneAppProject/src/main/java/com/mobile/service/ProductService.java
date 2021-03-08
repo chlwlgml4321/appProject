@@ -47,6 +47,12 @@ public interface ProductService {
 	 * */
 	public Application applicationSelectById(Long applicationId);
 	
+	/**
+	 * 신청서 지점으로 조회
+	 * */
+	
+	public List<Application> applicationSelectByOfficeId(Long officeId);
+	
 
 	/**
 	 * 신청서 삽입 

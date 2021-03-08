@@ -109,7 +109,7 @@ $(document).ready(function(){
             
             <form id = "updateForm" action="/officeNoticeInsert?noticeId=${officeNotice.officeNoticeId}" method="post">
 				<input type="hidden" name="title" value ="${officeNotice.title}">
-				<input type="hidden" name="contents" value="${officeNotice.contents}">
+				<input type="hidden" name="content" value="${officeNotice.content}">
 			</form>
 
 				 <div class="form-group col-md-2" >

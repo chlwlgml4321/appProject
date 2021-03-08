@@ -65,12 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
 		http.authorizeRequests().antMatchers("/common/*").hasAnyRole("ADMIN","OFFICE");
 		
-		http.formLogin().loginPage("/login/loginPage").defaultSuccessUrl("/admin/card");
+		http.formLogin().loginPage("/login/loginPage").defaultSuccessUrl("/common/user");
 		
 		http.exceptionHandling().accessDeniedPage("/accessDenied");
 	//	 http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
 		http.logout().logoutUrl("/logout").invalidateHttpSession(true);
 //		
+		
         http
         .csrf().disable();
 	}

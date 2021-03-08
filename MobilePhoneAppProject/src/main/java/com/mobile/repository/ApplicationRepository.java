@@ -20,6 +20,12 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	@Query("select a from Application a where a.member.memberId=?1")
 	public List<Application> findBymemberId(Long memberId);
 	
+	//지점 아이디로 신청서 찾기
+	@Query("select a from Application a where a.product.office.officeId=?1")
+	public List<Application> findByofficeId(Long officeId);
+	
+	
+	
 	
 
 }

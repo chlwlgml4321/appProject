@@ -41,6 +41,11 @@ public interface UserService {
 	public List<Members> mamberSelectInactivatedAll();
 	
 	/**
+	 * 비활성화된 회원 지점 아이디로 조회
+	 * */
+	public List<Members> mamberSelectInactivatedByOfficeId(Long officeId);
+	
+	/**
 	 * 회원 조회
 	 * */
 	public Members memberSelectById(Long memberId);

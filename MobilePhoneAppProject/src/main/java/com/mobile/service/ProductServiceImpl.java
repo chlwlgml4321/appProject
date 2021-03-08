@@ -96,6 +96,11 @@ public class ProductServiceImpl implements ProductService {
 	public void applicationInsert(Application application) {
 		applicationRepository.save(application);
 	}
+	
+	public List<Application> applicationSelectByOfficeId(Long officeId){
+		
+		return applicationRepository.findByofficeId(officeId);
+	}
 
 	@Override
 	public void applicationUpdate(Application application) {

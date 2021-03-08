@@ -279,9 +279,22 @@ public class WebController2 {
 
 	//application
 	@RequestMapping("/common/application")
-	public ModelAndView application() {
+	public ModelAndView application(Principal principal) {
 
-		List<Application> application = productService.applicationSelectAll();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Office office = (Office) authentication.getPrincipal();
+		Long officeId = office.getOfficeId();
+		
+		
+		List<Application> application = null;
+		if(office.getState()==2) {
+			application = productService.applicationSelectAll();
+		} else {
+			application = productService.applicationSelectByOfficeId(officeId);
+		}
+		
+		
+		
 
 		return new ModelAndView("/admin/application", "application", application);
 	}
