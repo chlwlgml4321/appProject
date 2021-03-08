@@ -606,6 +606,14 @@ public class WebController2 {
 		return "/admin/bannerRegister";
 
 	}
+	
+	//bannerRegister 진입
+		@RequestMapping("/")
+		public String indexPage() {
+
+			return "redirect:/common/user";
+
+		}
 
 
 	//banner 등록 

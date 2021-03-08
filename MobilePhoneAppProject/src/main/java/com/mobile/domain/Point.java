@@ -40,12 +40,6 @@ public class Point {
 	
 	Integer point;
 	
-	/**
-	 * 0 - 미사용
-	 * 1 - 사용
-	 * */
-	Integer pointState;
-	
 	@ManyToOne
 	@JoinColumn(name = "memberId")
 	Members member;

@@ -627,23 +627,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void pointChangeState(Long pointId, Integer state) {
-
-		Point point =pointRepo.findById(pointId).orElse(null);
-
-		if(point !=null) {
-			if(state==0) {
-				point.setPointState(1);
-			} else {
-				point.setPointState(0);
-			}
-
-			pointRepo.save(point);
-		}
-
-	}
-
-	@Override
 	public List<Point> pointSelectUnusedPoint(Long memberId) {
 
 		return pointRepo.findByUnusedPoint(memberId);

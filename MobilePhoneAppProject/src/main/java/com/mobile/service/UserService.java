@@ -273,10 +273,7 @@ public interface UserService {
 	 * */
 	public void pointUpdate(Point point);
 	
-	/**
-	 * 포인트 상태변경
-	 * */
-	public void pointChangeState(Long pointId, Integer state);
+	
 	
 	
 	/**
