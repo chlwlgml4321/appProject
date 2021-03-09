@@ -163,6 +163,7 @@ $(document).ready(function(){
 													<th>개통유형</th>
 													<th>공시지원금</th>
 													<th>마켓지원금</th>
+													<th>할부수수료</th>
 													<th>상태</th>
 													<th>수정</th>
 
@@ -191,6 +192,7 @@ $(document).ready(function(){
 														</c:choose>
 														<td>${products.mainSupportFund}원</td>
 														<td>${products.marketSupportFund}원</td>
+														<td>${products.installmentFee}원</td>
 
 														<c:choose>
 															<c:when test="${products.state==1}">

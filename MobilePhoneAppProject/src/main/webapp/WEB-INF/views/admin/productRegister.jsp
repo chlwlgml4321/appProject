@@ -144,9 +144,9 @@ $(document).ready(function(){
 							</div>
 
 							<div class="form-group col-md-2">
-								<label for="inputEmail4">activationType</label> <select
+								<label for="inputEmail4">개통유형</label> <select
 									id="activationType" class="form-control" name="activationType">
-									<option selected>activationType 선택</option>
+									<option selected>개통유형 선택</option>
 									<option value='1'>기기변경</option>
 									<option value='0'>번호이동</option>
 								</select>
@@ -163,6 +163,12 @@ $(document).ready(function(){
 								<label for="inputEmail4">마켓지원금</label> <input type="text"
 									class="form-control" id="marketSupportFund" placeholder="원"
 									name="marketSupportFund">
+							</div>
+							
+							<div class="form-group col-md-2">
+								<label for="inputEmail4">할부수수료</label> <input type="text"
+									class="form-control" id="installmentFee" placeholder="원"
+									name="installmentFee">
 							</div>
 
 
