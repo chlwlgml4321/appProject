@@ -40,6 +40,15 @@ public class CallingPlan {
 	//선택 약정 할인
 	Integer bondDiscount;
 	
+	//음성
+	String voice;
+	
+	//데이터
+	String data;
+	
+	//문자 정보
+	String messageInfo;
+	
 	/**
 	 * 5G or LTE
 	 * LTE - 0
@@ -56,5 +65,8 @@ public class CallingPlan {
 	 * 1 - 활성화
 	 * */
 	Integer state;
+	
+	
+	
 	
 }

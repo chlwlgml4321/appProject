@@ -127,6 +127,25 @@ $(document).ready(function(){
 									class="form-control" id="bondDiscount" placeholder="%"
 									name="bondDiscount">
 							</div>
+							
+							<div class="form-group col-md-2">
+								<label for="inputEmail4">음성</label> <input type="text"
+									class="form-control" id="voice" placeholder=""
+									name="voice">
+							</div>
+							
+							<div class="form-group col-md-2">
+								<label for="inputEmail4">데이터</label> <input type="text"
+									class="form-control" id="data" placeholder=""
+									name="data">
+							</div>
+							
+							<div class="form-group col-md-2">
+								<label for="inputEmail4">메시지 정보</label> <input type="text"
+									class="form-control" id="messageInfo" placeholder=""
+									name="messageInfo"src/main/java/com/mobile/domain/Reservations.java"">
+							</div>
+							
 
 							<div class="form-group col-md-2">
 								<label for="inputEmail4">networkType</label> <select

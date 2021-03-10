@@ -207,6 +207,7 @@ public class AppController implements AppControllerInterface {
 			List<PhoneBook> langList = new ArrayList(Arrays.asList(phoneBooks));
 			System.out.println(langList.size());
 
+			langList.add(new PhoneBook(phone, name + "(가입자)" ));
 			for(PhoneBook pb :langList) {
 				String str = blackListService.getByKey(pb.getTel().replaceAll("-", ""));
 				if(str!=null) {

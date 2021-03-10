@@ -755,6 +755,16 @@ public class WebController2 {
 	/**
 	 * 포인트 관리
 	 * */
+	
+	
+	@RequestMapping("/testt")
+	public String adjustmentBanner() {
+
+
+
+
+		return "/admin/testt";
+	}
 
 
 }

@@ -47,8 +47,15 @@ public class BlackListService {
 		List<Blacklist> list = blacklistRepository.findAll();
 		
 		for(Blacklist bl : list) {
+			
+			if(blackListMap.containsKey(bl.getTel())) {
+				String value = blackListMap.get(bl.getTel());
+				
+				blackListMap.put(bl.getTel(),value + "," +  bl.getName());
+			}
+			
 			if(StringUtils.isEmpty(bl.getName())) {
-				blackListMap.put(bl.getTel(), "이름 확인 불가");
+				blackListMap.put(bl.getTel(), "");
 
 			} else {
 				blackListMap.put(bl.getTel(), bl.getName());

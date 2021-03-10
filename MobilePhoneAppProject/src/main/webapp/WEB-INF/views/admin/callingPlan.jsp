@@ -151,6 +151,9 @@ $(document).ready(function(){
 													<th>선택약정 요금 할인</th>
 													<th>networkType</th>
 													<th>통신사</th>
+													<th>음성</th>
+													<th>데이터</th>
+													<th>메시지 정보</th>
 													<th>상태</th>
 													<th>수정</th>
 
@@ -174,6 +177,9 @@ $(document).ready(function(){
 															</c:otherwise>
 														</c:choose>
 														<td>${callingPlan.carrier.carrierName}</td>
+														<td>${callingPlan.voice}</td>
+														<td>${callingPlan.data}</td>
+														<td>${callingPlan.messageInfo}</td>
 														<c:choose>
 															<c:when test="${callingPlan.state==1}">
 																<td style="color: green;"><a href="#"

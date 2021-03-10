@@ -155,7 +155,7 @@ $(document).ready(function(){
                 
                 </br>
                 						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/admin/noticeRegister'" class="btn btn-primary">글쓰기</button>
+											<button type="button" onclick="location.href='${pageContext.request.contextPath}/admin/noticeInsert'" class="btn btn-primary">글쓰기</button>
 										</div>
               </div>
             </div>
