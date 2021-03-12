@@ -705,6 +705,13 @@ public class WebController2 {
 		model.addAttribute("adjustments", adjustments);
 		return "/admin/adjustment";
 	}
+	
+	@RequestMapping("/admin/push")
+	public String push(Model model) {
+
+		return "/admin/push";
+	}
+	
 
 	//adjustmentRegister 진입
 	@RequestMapping("/common/adjustmentInsert")

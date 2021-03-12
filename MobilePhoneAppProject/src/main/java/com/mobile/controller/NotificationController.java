@@ -25,11 +25,12 @@ public class NotificationController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    //@ResponseBody ResponseEntity<String>
     @Autowired
     AndroidPushNotificationService androidPushNotificationsService;
 
-    @GetMapping(value = "/send")
-    public @ResponseBody ResponseEntity<String> send(String titleMessage, String bodyMessage) throws JSONException, InterruptedException  {
+    @RequestMapping(value = "/admin/send")
+    public int send(String titleMessage, String bodyMessage) throws JSONException, InterruptedException  {
         String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(bodyMessage, titleMessage);
 
         HttpHeaders headers = new HttpHeaders();
@@ -43,7 +44,8 @@ public class NotificationController {
 
         try{
             String firebaseResponse = pushNotification.get();
-            return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
+            //return new ResponseEntity<>(firebaseResponse, HttpStatus.OK);
+            return 1;
         }
         catch (InterruptedException e){
             logger.debug("got interrupted!");
@@ -53,6 +55,8 @@ public class NotificationController {
             logger.debug("execution error!");
         }
 
-        return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
+        //return new ResponseEntity<>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
+        
+        return 0;
     }
 }
