@@ -6,65 +6,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <title>2-7셀 수련회 상품 이벤트</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="./style.css">
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-
-
-<title>Dashboard</title>
-
-<!-- Custom fonts for this template-->
-<link
-	href="${pageCotext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link
-	href="${pageCotext.request.contextPath}/admin/css/sb-admin-2.min.css"
-	rel="stylesheet">
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"
-	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-	crossorigin="anonymous"></script>
-
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-	
-	$("#registerOffice").click(function(){
-		$("#officeForm").submit();
-		
-	});
-});
-	
-</script>
 </head>
-<body id="page-top">
-	
-	<h1>SPREAD</h1>
-	
-	<form>
-	
-	<input type= "text" class = "text" placeholder="금액">
-	<input type= "text" class = "text" placeholder="계좌번호">
-	<td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" >
-                    					<span class="text">전송</span>
-                  					</a>
-	
-	</form>
-	
-	
-	
-	
-	</body>
+<body style="background-image: url('./images.jpeg'); background-size: cover; background-repeat: no-repeat;">
+<!-- partial:index.partial.html -->
+<p class="title" style="color: white; font-weight: 900; font-size: 30px;" >2-7셀 문화 상품권 뽑기 이벤트 </p>
+
+<div class="box-roulette">
+	<div class="markers"></div>
+	<button type="button" id="btn-start">
+		문상의 주인공은 ?? <br>
+	</button>
+	<div class="roulette" id="roulette"></div>
+
+
+</div>
+<div style= "position: absolute; left: 25%; color: white; font-size: 18px; font-weight: 500">
+	<h1> 본문 : 시편 84편 3-4절<br><br>
+3 나의 왕, 나의 하나님, 만군의 여호와여 주의 제단에서 참새도 제 집을 얻고 제비도 새끼 둘 보금자리를 얻었나이다<br>
+4 주의 집에 사는 자들은 복이 있나니 그들이 항상 주를 찬송하리이다. 아 멘.</h1>
+
+<h1> <br>
+	짧게 참여한 태민이, 유한이는 8.3% 확률! <br>
+	나머지 친구들은 16.6 % 확률이에요~~
+	 <br>
+	  <br>
+	   <br>
+	    <br>
+	     <br>
+</h1>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+<script src='https://cdn.sobekrepository.org/includes/jquery-rotate/2.2/jquery-rotate.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js'></script><script  src="./script.js"></script>
+
+</body>
 
 </html>

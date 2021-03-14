@@ -764,13 +764,53 @@ public class WebController2 {
 	 * */
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("/testt")
 	public String adjustmentBanner() {
 
 
 
-
 		return "/admin/testt";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/result")
+	public String result() {
+
+
+		/**
+		 * 예준, 호성, 근원, 민준, 주찬 당첨 확률 : 16%
+		 * 유한, 태민 당첨 확률 : 10%
+		 * */
+		
+		int result = 0;
+		String winner = "";
+		
+		if(0<result || result <=16) {
+			winner = "예준";
+		} else if(16<result || result <=32) {
+			winner = "호성";
+		} else if(32 <result || result <=48) {
+			winner = "근원";
+		} else if(48 <result || result <=64) {
+			winner = "민준";
+		} else if(64<result || result <=80) {
+			winner = "주찬";
+		} else if(80 <result || result <=90) {
+			winner = "유한";
+		} else if( 90 <result || result <=100) {
+			winner = "태민";
+		}
+
+		return winner;
 	}
 
 
