@@ -304,6 +304,8 @@ public class WebController2 {
 	public String applicationRegister(Long productId, Model model) {
 
 
+		
+		
 		Products products = productService.productsSelectById(productId);
 		Long carrierId = products.getCarrier().getCarrierId();
 
@@ -323,14 +325,17 @@ public class WebController2 {
 
 	//application Insert
 	@RequestMapping("/common/applicationForm")
-	public String applicationForm(Application application, Model model, Long wiredGoodsId, Long cardId,Long productId) {
+	public String applicationForm(Application application,String phone, Model model, Long wiredGoodsId, Long cardId,Long productId) {
 
-
+		Members member = userService.memberSelectByPhone(phone);
 
 		List<Application> apList = productService.applicationSelectAll();
 
 		model.addAttribute("application", apList);
 
+		if(member!=null) {
+			application.setMember(member);
+		}
 
 		if(productId!=null && productId!=0) {
 			Products products = productService.productsSelectById(productId);
@@ -535,6 +540,29 @@ public class WebController2 {
 
 		return "/admin/communityRegister";
 	}
+	
+	
+	@RequestMapping("/common/communityUpdateForm")
+	public ModelAndView communityUpdateForm(Long officeBoardId) {
+		
+		
+		OfficeBoard officeBoard = userService.officeBoardSelectById(officeBoardId);
+		return new ModelAndView("/admin/communityUpdate", "officeBoard", officeBoard);
+	}
+	
+	@RequestMapping("/common/communityUpdate")
+	public ModelAndView communityUpdate(String title, String content,Long officeBoardId) {
+		
+		
+		OfficeBoard officeBoard = userService.officeBoardSelectById(officeBoardId);
+		
+		officeBoard.setContent(content);
+		officeBoard.setTitle(title);
+		
+		userService.officeBoardUpdate(officeBoard);
+		
+		return new ModelAndView("/admin/communityUpdate", "officeBoard", officeBoard);
+	}
 
 	@RequestMapping("/common/officeBoardForm")
 	public String officeBoardForm(String title, String content, Long officeId) {
@@ -551,8 +579,6 @@ public class WebController2 {
 
 	@RequestMapping("/common/officeBoardDelete/{officeBoardId}")
 	public String officeBoardDelete(@PathVariable Long officeBoardId) {
-
-
 
 		System.out.println("officeBoard Id  : " +officeBoardId);
 
@@ -619,7 +645,7 @@ public class WebController2 {
 	//banner 등록 
 	@Transactional
 	@RequestMapping("/admin/bannerForm")
-	public String deviceForm(Banners banner, MultipartFile file , Model model) {
+	public String bannerForm(Banners banner, MultipartFile file , Model model) {
 
 
 
@@ -763,55 +789,5 @@ public class WebController2 {
 	 * 포인트 관리
 	 * */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping("/testt")
-	public String adjustmentBanner() {
-
-
-
-		return "/admin/testt";
-	}
-	
-	@ResponseBody
-	@RequestMapping("/result")
-	public String result() {
-
-
-		/**
-		 * 예준, 호성, 근원, 민준, 주찬 당첨 확률 : 16%
-		 * 유한, 태민 당첨 확률 : 10%
-		 * */
-		
-		int result = 0;
-		String winner = "";
-		
-		if(0<result || result <=16) {
-			winner = "예준";
-		} else if(16<result || result <=32) {
-			winner = "호성";
-		} else if(32 <result || result <=48) {
-			winner = "근원";
-		} else if(48 <result || result <=64) {
-			winner = "민준";
-		} else if(64<result || result <=80) {
-			winner = "주찬";
-		} else if(80 <result || result <=90) {
-			winner = "유한";
-		} else if( 90 <result || result <=100) {
-			winner = "태민";
-		}
-
-		return winner;
-	}
-
 
 }

@@ -143,7 +143,7 @@ public interface ProductService {
 	/**
 	 * 기기 수정하기
 	 * */
-	public void deviceUpdate(Device device);
+	public void deviceUpdate(Device device, String ext);
 	
 	/**
 	 * 기기 상태변경

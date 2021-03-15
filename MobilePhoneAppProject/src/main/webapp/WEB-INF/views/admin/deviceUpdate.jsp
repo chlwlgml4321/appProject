@@ -94,7 +94,7 @@ $(document).ready(function(){
           </div>
 
             
-			   <form method="post" id="deviceForm"  enctype="multipart/form-data" action="${pageCotext.request.contextPath}/deviceForm" >
+			   <form method="post" id="deviceForm"  enctype="multipart/form-data" action="${pageCotext.request.contextPath}/admin/deviceUpdate" >
 			  <div>
 		  		
 		  		 <input type='hidden' name='deviceId' value="${device.deviceId}">

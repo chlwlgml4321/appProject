@@ -135,6 +135,7 @@ public class S3Service {
 		String fileName = "device_image_"+ deviceId + "." + ext;
 		s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
 				.withCannedAcl(CannedAccessControlList.PublicRead));
+		
 		return s3Client.getUrl(bucket, fileName).toString();
 	}
 	

@@ -115,7 +115,7 @@ $(document).ready(function(){
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">지역 목록</h1>
+					<h1 class="h3 mb-2 text-gray-800">블랙리스트</h1>
 
 
 					<!-- DataTales Example -->

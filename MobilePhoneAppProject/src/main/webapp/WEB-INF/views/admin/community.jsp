@@ -41,14 +41,12 @@ $(document).ready(function(){
 	
 	
 	
-	$(".title").click(function(){
-		 
-		
+	$(".oneTable").click(function(){
 
 		location.href = "/common/communityDetail?officeBoardId=" + $(this).children().val(); 
 		
 	});
-
+	
 		
 });
 
@@ -125,7 +123,8 @@ $(document).ready(function(){
 
 											<tbody>
 												<c:forEach items="${officeBoard}" var="officeBoard">
-													<tr>
+													<tr class = "oneTable">
+														<input type ="hidden" value = "${officeBoard.officeBoardId}">
 														<td>${officeBoard.officeBoardId}</td>
 														<td>${officeBoard.office.officeName}
 														<c:if test="${!empty officeBoard.replies}">
@@ -133,8 +132,6 @@ $(document).ready(function(){
 														</c:if>
 														</td>
 														<td class = "title">
-														
-														<input type ="hidden" value = "${officeBoard.officeBoardId}">
 															${officeBoard.title}
 														</td>
 														<td>${officeBoard.readNum}</td>

@@ -27,7 +27,6 @@ import lombok.Setter;
 @Entity
 public class Point {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_point")
 	@SequenceGenerator(sequenceName = "seq_point", name="seq_point", allocationSize = 1 )

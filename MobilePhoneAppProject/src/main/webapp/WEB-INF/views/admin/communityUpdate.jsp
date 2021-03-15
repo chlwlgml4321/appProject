@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -18,6 +20,7 @@
 <title>Dashboard</title>
 
 <!-- Custom fonts for this template-->
+
 <link
 	href="${pageCotext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
@@ -35,24 +38,51 @@
 	crossorigin="anonymous"></script>
 
 
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/semantic/semantic.min.css">
+	
+<script src="/js/summernote/summernote-lite.js"></script>
+<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+
 <script type="text/javascript">
 
-$(document).ready(function(){
+$(document).ready(function() {
+	//여기 아래 부분
 	
-	$("#registerOffice").click(function(){
-		$("#officeForm").submit();
+
+	
+	
+	$("#regBtn").click(function(){
+		
+		$("#regForm").submit();
 		
 	});
+	
+	$("#summernote").summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+        
+	});
+	
+	
+
 });
 	
 </script>
 </head>
 <body id="page-top">
-
 	<!-- Page Wrapper -->
 	<div id="wrapper">
+
 		<!-- Sidebar -->
-		<%@ include file="side.html" %>
+				  <%@ include file="side.html" %>
+		
 		<!-- End of Sidebar -->
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -82,93 +112,56 @@ $(document).ready(function(){
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
+				
 				<div class="container-fluid">
+					<sec:authentication var="office" property="principal" />
+					<!-- 1 -->
+				
 
-					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						상품 [${products.device.deviceName}] 신청서 등록하기
-						</h1>
+					<div id=container>
+						<i class="big blue pen square icon"></i>
+						<h2 style="display: inline-block; font-style: italic;">새글 쓰기</h2>
+						
+
+						<div class="ui middle aligned selection list"
+							style="background-color: #eeeeee">
+							<div class="item">
+								<i class="huge black user circle icon"></i>
+								<div class="content">
+									<div id="id" class="header" style="font-size: 15pt">${officeBoard.office.officeName}</div>
+								</div>
+							</div>
+
+						</div>
+						<form id="regForm" class="ui form" method="post"
+							action="/common/officeBoardForm">
+
+							<div class="field">
+								<input type="text" name="title" placeholder="제목을 입력해주세요" value="${officeBoard.title}">
+								
+								
+							</div>
+
+
+							<textarea id="summernote" name="content" >${officeBoard.content}</textarea>
+							
+
+							<br>
+
+							<button id="cancleBtn" class="ui button" type="button"
+								style="margin: 10px; width: 100px;">취소</button>
+
+							<button id="regBtn" class="positive ui button" type="button"
+								style="float: right; margin: 10px; width: 100px;">등록</button>
+							<input type="hidden" name="officeId" value="${office.officeId}">
+							
+						</form>
+
 					</div>
 
-					<form method="post" id="applicationForm"
-						action="${pageCotext.request.contextPath}/common/applicationForm">
-						<div>
 
-							<input type='hidden' name='applicationId'
-								value="${application.applicationId}"> <input
-								type='hidden' name='productId' value="${products.productsId}">
+					<div id="cover-spin"></div>
 
-							<div class="form-group col-md-2">
-								<label for="inputState">개통유형</label> <select id="activationType"
-									class="form-control" name="activationType">
-									<option selected>개통 유형</option>
-									<option value="0">번호 이동</option>
-									<option value="1">기기변경</option>
-								</select>
-							</div>
-
-							<div class="form-group col-md-2">
-								<label for="inputState">결제 방법</label> <select id="purchaseType"
-									class="form-control" name="purchaseType">
-									<option selected>결제 방법</option>
-
-									<option value="0">현금 일시불 개통</option>
-									<option value="1">할부 개통</option>
-
-								</select>
-							</div>
-
-							<div class="form-group col-md-2">
-								<label for="inputState">자동 이체 카드 결합</label> <select id="cardId"
-									class="form-control" name="cardId">
-									<option selected>결제 방법</option>
-									<option value="0">미결합</option>
-									<c:forEach items="${cards}" var="cards">
-										<option value="${cards.cardId}">${cards.cardName}</option>
-									</c:forEach>
-								</select>
-							</div>
-
-
-
-
-							<div class="form-group col-md-2">
-								<label for="inputState">결합 할인 선택</label> <select
-									id="wiredGoodsId" class="form-control" name="wiredGoodsId">
-									<option selected>결제 방법</option>
-									<option value="0">미결합</option>
-									<c:forEach items="${wiredGoods}" var="wiredGoods">
-										<option value="${wiredGoods.wiredGoodsId}">${wiredGoods.wiredGoodsName}</option>
-									</c:forEach>
-								</select>
-							</div>
-
-
-							<div class="form-group col-md-2">
-								<label for="inputState">지원금 유형 선택</label> <select
-									id="supportFundType" class="form-control"
-									name="supportFundType">
-									<option selected>결제 방법</option>
-									<option value="0">공시지원금 개통</option>
-									<option value="0">선택약정 개통</option>
-
-								</select>
-							</div>
-							
-							
-						<div class="form-group col-md-2">
-			      			<label for="inputEmail4">신청자 핸드폰 번호</label>
-			      			<input type="text" class="form-control" id="phone" name="phone">
-			    		</div>
-
-
-						</div>
-
-						<div class="form-group col-md-2">
-							<button type="submit" id="registerOffice" class="btn btn-primary">등록</button>
-						</div>
-					</form>
 
 				</div>
 				<!-- End of Main Content -->

@@ -45,11 +45,15 @@ $(document).ready(function(){
 		
 	});
 	
+	$("#updateBtn").click(function(){
+		
+		 var officeBoardId = $("#officeBoardId").val();
+		 location.href = "/common/communityUpdateForm?officeBoardId="+officeBoardId;
+	});
 	
 	$(".regBtn").click(function() {
-		
-		
-		
+		$(".form").submit();
+				
 	});
 	
 	$(".deleteReply").click(function(){
@@ -116,7 +120,7 @@ $(document).ready(function(){
 			
 			<!-- 등록을 위한 -->
 			<form id = "updateForm" action="/common/officeBoardRegister" method="post">
-				<input type="hidden" name="officeBoardId" value ="${officeBoard.officeBoardId}">
+				<input type="hidden" id = "officeBoardId" name="officeBoardId" value ="${officeBoard.officeBoardId}">
 			
 			</form>
 			
@@ -257,7 +261,6 @@ $(document).ready(function(){
 					<input type="text" name="reply" class="textArea">
 					 <input type="hidden" name="officeId" value="${office.officeId}">
 					 <input type="hidden" name="officeBoardId" value="${officeBoard.officeBoardId}">
-					
 				</div>
 				<div class="ui blue labeled submit icon button regBtn">
 					<i class="icon edit"></i> 댓글 달기

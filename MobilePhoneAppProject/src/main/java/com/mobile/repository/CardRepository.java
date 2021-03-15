@@ -20,7 +20,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 	
 	
 	//마지막 device id 가져오기
-	@Query(value = "SELECT next_val from seq_card c", nativeQuery = true)
+	@Query(value = "SELECT next_val from seq_card c limit 1", nativeQuery = true)
     public int getNextValMySequence();
 
 }

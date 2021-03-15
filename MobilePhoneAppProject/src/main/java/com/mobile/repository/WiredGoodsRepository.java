@@ -20,6 +20,6 @@ public interface WiredGoodsRepository extends JpaRepository<WiredGoods, Long> {
 	
 	
 	//마지막 device id 가져오기
-	@Query(value = "SELECT next_val from seq_wiredgoods w", nativeQuery = true)
+	@Query(value = "SELECT next_val from seq_wiredgoods w limit 1", nativeQuery = true)
     public int getNextValMySequence();
 }

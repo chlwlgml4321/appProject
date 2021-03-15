@@ -21,7 +21,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	public List<Review> findByOffice(Long officeId);
 	
 	//마지막 리뷰 id 가져오기
-	@Query(value = "SELECT next_val from seq_review sr", nativeQuery = true)
+	@Query(value = "SELECT next_val from seq_review sr limit 1", nativeQuery = true)
     public int getNextValMySequence();
 
 }

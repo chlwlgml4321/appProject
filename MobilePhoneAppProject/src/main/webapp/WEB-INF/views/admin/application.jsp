@@ -135,6 +135,7 @@ $(document).ready(function(){
 	                  <thead>
 	                    <tr>
 	                      <th>신청서 Id</th>
+	                      <th>신청자</th>
 	                      <th>모델명</th>
 	                      <th>출시가격</th>
 	                      <th>통신사</th>
@@ -154,6 +155,10 @@ $(document).ready(function(){
 	                    <tr>
 	                      <td> 
 	                      ${ap.applicationId}
+	              		  </td>
+	              		  
+	              		  <td> 
+	                      ${ap.member.name}
 	              		  </td>
 	              		  
 	                      <td>${ap.product.device.deviceName}</td>

@@ -92,7 +92,7 @@ $(document).ready(function(){
 					</div>
 
 					<form method="post" id="applicationForm"
-						action="${pageCotext.request.contextPath}/admin/applicationChangeState">
+						action="${pageCotext.request.contextPath}/common/applicationChangeState">
 						<div>
 
 							<input type='hidden' name='applicationId'

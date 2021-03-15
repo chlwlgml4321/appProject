@@ -267,7 +267,29 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void deviceUpdate(Device device) {
+	public void deviceUpdate(Device device, String ext) {
+		
+		
+		String url = null;
+		if(device.getImage()!=null) {
+
+
+			if(!device.getImage().equals("null")) {
+				device.setImage(null);
+			} else {
+
+				
+				String fileName = "device_image_"+ device.getDeviceId();
+
+				url = "https://phonestorimage.s3.ap-northeast-2.amazonaws.com/" +  fileName + "."+ ext;
+
+
+				device.setImage(url);
+				
+				
+			}
+		} 
+		
 
 		Device d = deviceRepository.findById(device.getDeviceId()).orElse(null);
 
@@ -278,6 +300,10 @@ public class ProductServiceImpl implements ProductService {
 
 			if(device.getPrice()!=null) {
 				d.setPrice(device.getPrice());
+			}
+			
+			if(url!=null) {
+				d.setImage(url);
 			}
 
 			deviceRepository.save(d);
