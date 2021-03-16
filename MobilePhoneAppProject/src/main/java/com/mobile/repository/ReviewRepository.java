@@ -12,8 +12,12 @@ import com.mobile.domain.Review;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	
+	@Override
+	@Query("select r from Review r order by r.reviewId DESC")
+	public List<Review> findAll();
+	
 	//memberId 로 review 가져오기 
-	@Query("select r from Review r where r.member.memberId=?1")
+	@Query("select r from Review r where r.member.memberId=?1 order by r.reviewId DESC")
 	public List<Review> findByMemberId(Long memberId);
 	
 	//officeId 로 review 가져오기 
