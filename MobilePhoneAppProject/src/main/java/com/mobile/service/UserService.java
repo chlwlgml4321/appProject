@@ -11,6 +11,8 @@ import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
 import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.Point;
+import com.mobile.domain.PointSaveLog;
+import com.mobile.domain.PointUseLog;
 import com.mobile.domain.Region;
 import com.mobile.domain.Replies;
 import com.mobile.domain.Review;
@@ -274,6 +276,56 @@ public interface UserService {
 	public void pointUpdate(Point point);
 	
 	
+
+	/**
+	 * 포인트 삭제
+	 * */
+	public void pointDelete(Long pointId);
+	
+	/**
+	 * 포인트 사용로그 전체 조회
+	 * */
+	public List<PointUseLog> pointUseLogSelectAll();
+	
+	/**
+	 * 포인트 사용로그 포인트 사용로그 아이디로 조회
+	 * */
+	public PointUseLog pointUseLogSelectById(Long id);
+	
+	
+	/**
+	 * 포인트 사용로그 회원 아이디로 조회
+	 * */
+	public List<PointUseLog> pointUseLogSelectByMemberId(Long memberId);
+	
+	/**
+	 * 포인트 사용로그 삽입
+	 * */
+	public void pointUserLogInsert(PointUseLog pointUseLog);
+	
+	
+	/**
+	 * 포인트 적립로그 전체 조회
+	 * */
+	public List<PointSaveLog> pointSaveLogSelectAll();
+	
+	/**
+	 * 포인트 적립로그 포인트 적립로그 아이디로 조회
+	 * */
+	public PointSaveLog pointSaveLogSelectById(Long id);
+	
+	
+	/**
+	 * 포인트 적립로그 회원 아이디로 조회
+	 * */
+	public List<PointSaveLog> pointSaveLogSelectByMemberId(Long memberId);
+	
+	/**
+	 * 포인트 적립로그 삽입
+	 * */
+	public void pointSaveLogInsert(PointSaveLog pointSaveLog);
+	
+	
 	
 	
 	/**
@@ -285,6 +337,10 @@ public interface UserService {
 	 * 사용 포인트 회원 아이디로 조회
 	 * */
 	public List<Point> pointSelectUsedPoint(Long memberId);
+	
+	/**
+	 * 권한 부여
+	 * */
 
 	void authorityInsert(Office office);
 
@@ -337,6 +393,8 @@ public interface UserService {
 	 * 댓글 삭제
 	 * */
 	public void replyDelete(Long repliesId);
+
+	
 	
 	
 	

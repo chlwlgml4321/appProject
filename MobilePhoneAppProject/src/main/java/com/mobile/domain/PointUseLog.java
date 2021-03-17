@@ -27,21 +27,21 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-public class Point {
+public class PointUseLog {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_point")
-	@SequenceGenerator(sequenceName = "seq_point", name="seq_point", allocationSize = 1 )
-	Long pointId;
-	
-	String pointName;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_point_use")
+	@SequenceGenerator(sequenceName = "seq_point_use", name="seq_point_use", allocationSize = 1 )
+	Long pointUseLogId;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	Date regDate;
 	
-	Integer point;
+	Integer usedPoint;
 	
 	@ManyToOne
-	@JoinColumn(name = "memberId")
-	Members member;
+	@JoinColumn(name = "pointId")
+	Point point;
+	
+	
 }

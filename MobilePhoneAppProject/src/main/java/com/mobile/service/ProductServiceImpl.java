@@ -16,6 +16,7 @@ import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Office;
 import com.mobile.domain.OfficeNotice;
+import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
 import com.mobile.repository.AdjustmentRepository;
@@ -28,6 +29,7 @@ import com.mobile.repository.DeviceRepository;
 import com.mobile.repository.GuestProductRepository;
 import com.mobile.repository.InstallmentRepository;
 import com.mobile.repository.OfficeNoticeRepository;
+import com.mobile.repository.PointRepository;
 import com.mobile.repository.ProductsRepository;
 import com.mobile.repository.WiredGoodsRepository;
 
@@ -791,8 +793,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void pointInsert() {
-		// TODO Auto-generated method stub
+	public void pointInsert(Point point) {
+		
 		
 	}
 

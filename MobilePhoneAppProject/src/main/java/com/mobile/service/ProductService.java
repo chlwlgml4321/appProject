@@ -15,6 +15,7 @@ import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
 import com.mobile.domain.Members;
 import com.mobile.domain.OfficeNotice;
+import com.mobile.domain.Point;
 import com.mobile.domain.Products;
 import com.mobile.domain.WiredGoods;
 
@@ -415,7 +416,7 @@ public interface ProductService {
 	/**
 	 * 포인트 삽입
 	 * */
-	public void pointInsert();
+	public void pointInsert(Point point);
 	
 	/**
 	 * 포인트 삭제

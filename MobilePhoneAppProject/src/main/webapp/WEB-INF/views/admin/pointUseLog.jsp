@@ -29,53 +29,11 @@
 	
 	
 <script type="text/javascript">
-	$(document).ready(function(){
-		$(".btn").click(function(){
-			if($(this).attr("class") == "btn btn-success"){
-				
-				
-				var result = confirm('회원의 상태를 비활성화 시키겠습니까?');
-						
-				if(result){
-					
-					$(this).attr("class","btn btn-warning");
-					$(this).children().text("탈퇴");
-					
-					changeState($(this).attr("id"));
-					
-					
-				}
-			} else if(($(this).attr("class") == "btn btn-warning")){
-				var result = confirm('회원을 상태를 활성화 시키겠습니까?');
-				if(result){
-					
-					
-					
-					$(this).attr("class","btn btn-success");
-					$(this).children().text("정상");
-					
-					changeState($(this).attr("id"));
-				}
-			}
-			
-			
-		});
-		
-		
-		function changeState(id) {  
-		    alert(id);
-		    $.ajax({
-		        type : 'GET',
-		        url : "/common/changeUserSate",
-		        data : {"id" : id},
-		        success : function (data) {
-		                         
-		        }
+$(document).ready(function(){
+	
+	
+});
 
-		    });
-		}
-		
-	});
 
 </script>	
 </head>
@@ -85,8 +43,7 @@
   <div id="wrapper">
 
       <!-- Sidebar -->
-      		  <%@ include file="side.html" %>
-      
+      <%@ include file="side.html" %>
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -106,6 +63,9 @@
 
           
           <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+          </ul>
 
         </nav>
         <!-- End of Topbar -->
@@ -114,7 +74,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">회원 목록</h1>
+          <h1 class="h3 mb-2 text-gray-800"> ${member.name}님의 사용 내역</h1>
           
 
           <!-- DataTales Example -->
@@ -123,85 +83,40 @@
             <div class="card-body">
               <div class="table-responsive">
               	<c:choose>
-	              	<c:when test="${empty members}">
-	              		<h3>등록된 회원이 없습니다.</h3>
-	              	</c:when>
-	              	
-	              	<c:otherwise>
+					<c:when test="${empty pointUseLog}">
+						<h3>사용된 포인트가 없습니다.</h3>
+					</c:when>
+					<c:otherwise>
+					
+			    	<br>
+			    	<br>
+			    	
+			    
+			    
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr>
-	                      <th>ID</th>
-	                      <th>방문여부</th>
-	                      <th>회원코드</th>
-	                      <th>이름</th>
-	                      <th>비밀번호</th>
-	                      <th>핸드폰</th>
-	                      <th>가입일자</th>
-	                      <th>지역</th>
-	                      
-	                      <th>지점 id</th>
-	                      <th>회원상태</td>
-	                      <th>포인트 관리</td>
+	                   
+	                  
+	                      <th>Id</th>
+	                      <th>포인트 이름</th>
+	                      <th>적립 포인트</th>
+	                      <th>적립일</th>
 	                      
 	                    </tr>
 	                  </thead>
 	                 
 	                  <tbody>
-	                  	<c:forEach items="${members}" var="members">
-	                    <tr>	                      
-	                      <td>${members.memberId}</td>
-	                      <td>${members.isVisitor}</td>
-	                      <td>${members.memberCode}</td>
-	                      <td>${members.name}</td>
-	                      <td>${members.password}</td>
-	                      <td>${members.phone}</td>
-	                      <td>${members.regDate}</td>
-	                      <td>${members.regions}</td>
-	  					  <td>${members.office.officeId}</td> 
-	  					 <c:choose>
-	  					 	<c:when test="${members.state==1}">
-	  					 		<td style="color: green;">
-	  					 		<a href="#" class="btn btn-success" id="${members.memberId}">
-                    					<span class="text">정상</span>
-                  					</a>
-	  					 	</c:when>
-	  					 	
-	  					 	<c:otherwise>
-	  					 		<td style="color: red;">
-	  					 		<a href="#" class="btn btn-warning" id= "${members.memberId}">
-                    					<span class="text">탈퇴</span>
-                  					</a>
-	  					 	</c:otherwise>
-	  					 </c:choose>
+	                  	<c:forEach items="${pointUseLog}" var="points">
+	                    <tr>
+	                      <td> 
+	                      ${points.pointUseLogId}
+	              		  </td>
+	                      <td>${points.point.pointName}</td>
+	                      <td>${points.usedPoint}</td>
+	                      <td>${points.regDate}</td>
 	  					 
-	                       <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/common/point/${members.memberId}"  class="btn btn-primary"  id="${products.productsId}">
-                    					<span class="text">관리</span>
-                  					</a>
-	                     
-	                     
-	                      <%--  <td><a href="child?id=${member.id}" target="_blank"> ${fn:length(member.childs)}</a> </td> --%> 
-	                   
-	                     <%--  <c:choose>
-	                      	<c:when test="${members.state==1}">
-	                      		<td style="color: green;">
-	                      		
-	                      			<a href="#" class="btn btn-success" id="${members.memberId}">
-                    					<span class="text">추가</span>
-                  					</a>
-	                      		</td>
-	                      	</c:when>
-	                      	
-	                      	<c:otherwise>
-	                      		<td style="color: red;">
-	                	      		<a href="#" class="btn btn-warning" id= "${members.memberId}">
-                    					<span class="text">블랙리스트</span>
-                  					</a>
-	                      		</td>
-	                      	</c:otherwise>
 	                      
-	                      </c:choose> --%>
 	                    </tr>
 	                    </c:forEach>
 	                   
@@ -209,6 +124,9 @@
 	                </table>
 	                </c:otherwise>
                 </c:choose>
+                
+                </br>
+                
               </div>
             </div>
           </div>
@@ -219,7 +137,14 @@
       </div>
       <!-- End of Main Content -->
 
-      
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2020</span>
+          </div>
+        </div>
+      </footer>
       <!-- End of Footer -->
 
     </div>
@@ -230,7 +155,7 @@
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up1"></i>
+    <i class="fas fa-angle-up"></i>
   </a>
 
   <!-- Logout Modal-->

@@ -29,22 +29,25 @@
 	
 	
 <script type="text/javascript">
+
 $(document).ready(function(){
 	
-	
+	$("#registerRegion").click(function(){
+		$("#regionForm").submit();
+		
+	});
 });
-
-
+	
 </script>	
 </head>
 <body id="page-top">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
-      <!-- Sidebar -->
-      <%@ include file="side.html" %>
-    <!-- End of Sidebar -->
+  <!-- Sidebar -->
+  		  <%@ include file="side.html" %>
+  
+		<!-- End of Sidebar -->
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -70,86 +73,36 @@ $(document).ready(function(){
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+<!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800"> ${members.name}님의 포인트 목록</h1>
-          
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            
-            <div class="card-body">
-              <div class="table-responsive">
-              	<c:choose>
-					<c:when test="${empty points}">
-						<h3>등록된 포인트가 없습니다.</h3>
-					</c:when>
-					<c:otherwise>
-						
-					<div class="form-group col-md-2" style="float:right;">
-					<input type='hidden' id ="searchMemberId" name='memberId' value="${members.memberId}">
-							<button type="button" onclick="location.href='${pageContext.request.contextPath}/common/pointUseLog/${members.memberId}'" class="btn btn-primary">사용내역 조회하기</button>
-			    	</div>
-			    	
-			    	<div class="form-group col-md-2" style="float:right;">
-					<input type='hidden' id ="searchMemberId" name='memberId' value="${members.memberId}">
-							<button type="button" onclick="location.href='${pageContext.request.contextPath}/common/pointSaveLog/${members.memberId}'" class="btn btn-primary">적립내역 조회하기</button>
-			    	</div>
-			    	<br>
-			    	<br>
-			    	
-			    
-			    
-	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-	                  <thead>
-	                    <tr>
-	                   
-	                  
-	                      <th>pointId</th>
-	                      <th>포인트 이름</th>
-	                      <th>포인트</th>
-	                      <th>발급일</th>
-	                      <th>삭제</th>
-	                      
-	                    </tr>
-	                  </thead>
-	                 
-	                  <tbody>
-	                  	<c:forEach items="${points}" var="points">
-	                    <tr>
-	                      <td> 
-	                      ${points.pointId}
-	              		  </td>
-	                      <td>${points.pointName}</td>
-	                      <td>${points.point}</td>
-	                      <td>${points.regDate}</td>
-	  					 
-	  					  <td style="color: green;">
-	  					 		<a href="${pageContext.request.contextPath}/common/pointDelete/${points.pointId}/${members.memberId}"  class="btn btn-primary"  id="${points.pointId}">
-                    					<span class="text">삭제</span>
-                  					</a>
-	                      
-	                    </tr>
-	                    </c:forEach>
-	                   
-	                  </tbody>
-	                </table>
-	                </c:otherwise>
-                </c:choose>
-                
-                </br>
-                						<div class="form-group col-md-2">
-											<button type="button" onclick="location.href='${pageContext.request.contextPath}/common/pointRegister/${members.memberId}'" class="btn btn-primary">포인트 추가하기</button>
-										</div>
-              </div>
-            </div>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            ${member.name}회원 포인트 등록하기</h1>
           </div>
 
-        </div>
-        <!-- /.container-fluid -->
-
+            
+			   <form method="post" id="regionForm" action="${pageCotext.request.contextPath}/common/pointForm/${member.memberId}">
+			  <div>
+		  		
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">포인트 이름</label>
+			      <input type="text" class="form-control" name="pointName">
+			    </div>
+			    
+			    <div class="form-group col-md-2">
+			      <label for="inputEmail4">포인트</label>
+			      <input type="text" class="form-control" name="point">
+			    </div>
+			    
+			  </div>
+			  
+			  <div class="form-group col-md-2" >
+			 
+			  <button type="submit" id="registerRegion" class="btn btn-primary">등록</button>
+			  </div>
+			  </form>
+			
       </div>
       <!-- End of Main Content -->
 

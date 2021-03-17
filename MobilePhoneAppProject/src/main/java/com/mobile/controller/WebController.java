@@ -708,7 +708,7 @@ public class WebController {
 
 
 	//memberId에 해당하는 point목록으로 가기 
-	@RequestMapping("/admin/point/{memberId}")
+	@RequestMapping("/common/point/{memberId}")
 	public String point(@PathVariable Long memberId, Point point, Model model) {
 
 		List<Point> points= userService.pointSelectByMemberId(memberId);

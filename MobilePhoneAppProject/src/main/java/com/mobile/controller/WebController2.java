@@ -38,6 +38,9 @@ import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
 import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.PhoneBook;
+import com.mobile.domain.Point;
+import com.mobile.domain.PointSaveLog;
+import com.mobile.domain.PointUseLog;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.Replies;
@@ -785,9 +788,82 @@ public class WebController2 {
 	}
 
 
+	
 	/**
-	 * 포인트 관리
+	 * 포인트 삭제
 	 * */
+	///common/pointDelete/${point.pointId}
+	@RequestMapping("/common/pointDelete/{pointId}/{memberId}")
+	public String pointDelete(@PathVariable Long pointId, @PathVariable Long memberId) {
+
+		userService.pointDelete(pointId);
+
+		return "redirect:/common/point/"+memberId;
+	}
+	
+	
+	/**
+	 * 포인트 추가 폼으로 이동
+	 * */
+	///common/pointRegister/${members.memberId}
+	
+	@RequestMapping("/common/pointRegister/{memberId}")
+	public ModelAndView pointRegister(@PathVariable Long memberId) {
+		
+		Members member = userService.memberSelectById(memberId);
+		
+	
+		return new ModelAndView("/admin/pointInsert", "member", member);		
+	}
+	/**
+	 * 포인트 추가
+	 * */
+	///common/pointForm
+	
+	@RequestMapping("/common/pointForm/{memberId}")
+	public String pointForm (Point point, @PathVariable Long memberId) {
+		
+		Members member = userService.memberSelectById(memberId);
+		
+		point.setMember(member);
+		
+		userService.pointInsert(point);
+		
+		return "redirect:/common/point/"+memberId;
+	}
+	
+	
+	/**
+	 * 포인트 사용 로그 조회
+	 * */
+	///common/pointUseLog/${members.memberId}
+	@RequestMapping("/common/pointUseLog/{memberId}")
+	public ModelAndView pointUseLog (@PathVariable Long memberId) {
+		
+		Members member = userService.memberSelectById(memberId); 
+		
+		List<PointUseLog> pointUseLog = userService.pointUseLogSelectByMemberId(memberId);
+		
+		return new ModelAndView("/admin/pointUseLog", "member", member).addObject("pointUseLog", pointUseLog);
+	}
+	
+	
+	/**
+	 * 포인트 적립 로그 조회
+	 * */
+	///common/pointSaveLog/${members.memberId}
+	@RequestMapping("/common/pointSaveLog/{memberId}")
+	public ModelAndView pointSaveLog (@PathVariable Long memberId) {
+		
+		Members member = userService.memberSelectById(memberId);
+		
+		List<PointSaveLog> pointSaveLog = userService.pointSaveLogSelectByMemberId(memberId);
+		
+		
+		
+		return new ModelAndView("/admin/pointSaveLog", "pointSaveLog", pointSaveLog).addObject("member",member);
+	}
+	
 	
 
 }

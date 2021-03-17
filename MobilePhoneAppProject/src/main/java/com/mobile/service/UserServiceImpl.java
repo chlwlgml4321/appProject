@@ -17,6 +17,8 @@ import com.mobile.domain.Notice;
 import com.mobile.domain.Office;
 import com.mobile.domain.OfficeBoard;
 import com.mobile.domain.Point;
+import com.mobile.domain.PointSaveLog;
+import com.mobile.domain.PointUseLog;
 import com.mobile.domain.Region;
 import com.mobile.domain.Replies;
 import com.mobile.domain.Review;
@@ -27,6 +29,8 @@ import com.mobile.repository.NoticeRepository;
 import com.mobile.repository.OfficeBoardRepository;
 import com.mobile.repository.OfficeRepository;
 import com.mobile.repository.PointRepository;
+import com.mobile.repository.PointSaveLogRepository;
+import com.mobile.repository.PointUseLogRepository;
 import com.mobile.repository.RegionRepository;
 import com.mobile.repository.RepliesRepository;
 import com.mobile.repository.ReviewRepository;
@@ -59,6 +63,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	AuthorityRepository authorityRepo;
+	
+	@Autowired
+	PointSaveLogRepository pointSaveLogRepo;
+	
+	@Autowired
+	PointUseLogRepository pointUseLogRepo;
 
 	@Override
 	public List<Members> memberSelectAll() {
@@ -601,11 +611,13 @@ public class UserServiceImpl implements UserService {
 		return pointRepo.findById(pointId).orElse(null);
 	}
 
+	@Transactional
 	@Override
 	public void pointInsert(Point point) {
 
+		pointSaveLogRepo.save(new PointSaveLog(null, null, point.getPoint(), point));
+		
 		pointRepo.save(point);
-
 	}
 
 	@Override
@@ -637,6 +649,68 @@ public class UserServiceImpl implements UserService {
 
 		return pointRepo.findByUnusedPoint(memberId);
 	}
+	
+	
+	@Override
+	public List<PointUseLog> pointUseLogSelectAll() {
+
+		return pointUseLogRepo.findAll();
+	}
+
+	@Override
+	public PointUseLog pointUseLogSelectById(Long id) {
+
+		return pointUseLogRepo.findById(id).orElse(null);
+	}
+
+	@Override
+	public List<PointUseLog> pointUseLogSelectByMemberId(Long memberId) {
+
+		return pointUseLogRepo.findByMemberId(memberId);
+	}
+
+	@Override
+	public void pointUserLogInsert(PointUseLog pointUseLog) {
+		pointUseLogRepo.save(pointUseLog);
+		
+	}
+
+	@Override
+	public List<PointSaveLog> pointSaveLogSelectAll() {
+		
+		return pointSaveLogRepo.findAll();
+	}
+
+	@Override
+	public PointSaveLog pointSaveLogSelectById(Long id) {
+
+		return pointSaveLogRepo.findById(id).orElse(null);
+	}
+	
+	@Transactional
+	@Override
+	public void pointDelete(Long pointId) {
+		
+		
+		pointUseLogRepo.deleteByPointId(pointId);
+		pointSaveLogRepo.deleteByPointId(pointId);
+		pointRepo.deleteById(pointId);
+		
+		
+	}
+
+	@Override
+	public List<PointSaveLog> pointSaveLogSelectByMemberId(Long memberId) {
+
+		return pointSaveLogRepo.findByMemberId(memberId);
+	}
+
+	@Override
+	public void pointSaveLogInsert(PointSaveLog pointSaveLog) {
+		
+		pointSaveLogRepo.save(pointSaveLog);
+	}
+	
 
 	@Override
 	public Members memberSelectByPhone(String phone) {
@@ -704,6 +778,8 @@ public class UserServiceImpl implements UserService {
 		repliesRepo.deleteById(repliesId);
 		
 	}
+
+
 
 	
 	
