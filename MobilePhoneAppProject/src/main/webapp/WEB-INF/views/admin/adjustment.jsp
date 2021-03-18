@@ -33,6 +33,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
 	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	crossorigin="anonymous"></script>
+	
+	
 
 
 <script type="text/javascript">
@@ -52,10 +54,23 @@ $(document).ready(function(){
 				
 				
 			}
+			
+			
+			
 		} 
 		
 		
 	});
+	
+	
+	
+	$('#printBtn').on("click", function () {
+		
+		alert("dd");
+	      $('.table-responsive').printThis({
+	        
+	      });
+	    });
 
 		function deleteRegion(id) {  
 		    alert(id);
@@ -70,6 +85,8 @@ $(document).ready(function(){
 		    });
 		   
 		}
+		
+		
 		
 	});
 
@@ -115,11 +132,18 @@ $(document).ready(function(){
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">정산</h1>
 
+														
+														
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
+					
 
 						<div class="card-body">
+						
+						<input type ="button" id="printBtn" value = "출력" style = "float:right">
+						 
+						
 							<div class="table-responsive">
 								<c:choose>
 									<c:when test="${empty adjustments}">
@@ -244,6 +268,8 @@ $(document).ready(function(){
 	<!-- Page level custom scripts -->
 	<script
 		src="${pageCotext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
+		
+		<script src="${pageCotext.request.contextPath}/js/printThis.js"></script>
 
 </body>
 
