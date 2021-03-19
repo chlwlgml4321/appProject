@@ -43,6 +43,12 @@ public interface AppControllerInterface {
 	@RequestMapping("/app/getUsedPoint")
 	public String usedPoint(Long id);
 	
+	@RequestMapping("/app/getSavedPointLog")
+	public String getSavedPointLog(Long id);
+	
+	@RequestMapping("/app/getUsedPointLog")
+	public String getUsedPointLog(Long id);
+	
 	
 	
 	

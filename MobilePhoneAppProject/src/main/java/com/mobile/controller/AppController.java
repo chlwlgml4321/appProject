@@ -34,6 +34,8 @@ import com.mobile.domain.Office;
 import com.mobile.domain.OfficeNotice;
 import com.mobile.domain.PhoneBook;
 import com.mobile.domain.Point;
+import com.mobile.domain.PointSaveLog;
+import com.mobile.domain.PointUseLog;
 import com.mobile.domain.Products;
 import com.mobile.domain.Region;
 import com.mobile.domain.Reservations;
@@ -103,7 +105,7 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
-	@RequestMapping("/app/getUserPoint")
+	@RequestMapping("/app/getUserPointSum")
 	@ResponseBody
 	public String getUserPoint(Long memberId) {
 
@@ -134,7 +136,7 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
-	@RequestMapping("/app/unusedPoint")
+	@RequestMapping("/app/getPointList")
 	@ResponseBody
 	public String unusedPoint(Long memberId) {
 
@@ -177,6 +179,48 @@ public class AppController implements AppControllerInterface {
 
 		return result;
 	}
+	
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/getSavedPointLog")
+	public String getSavedPointLog(Long memberId) {
+		
+		List<PointSaveLog> list = userService.pointSaveLogSelectByMemberId(memberId);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	@Override
+	@ResponseBody
+	@RequestMapping("/app/getUsedPointLog")
+	public String getUsedPointLog(Long memberId) {
+	
+		List<PointUseLog> list = userService.pointUseLogSelectByMemberId(memberId);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+		
+	}
+	
 
 	@Override
 	@RequestMapping("/app/userRegister/{name}/{phone}/{regions}/{profileImg}/{password}/{isvisitor}/{officeId}")
@@ -1396,5 +1440,6 @@ public class AppController implements AppControllerInterface {
 	}
 
 
+	
 
 }
