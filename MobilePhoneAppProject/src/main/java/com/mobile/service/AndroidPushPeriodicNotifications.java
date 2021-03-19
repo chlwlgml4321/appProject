@@ -48,8 +48,13 @@ public class AndroidPushPeriodicNotifications {
         JSONObject notification = new JSONObject();
         notification.put("title",titleMessage);
         notification.put("body",bodyMessage);
-
+        notification.put("click_action",".MainPageActivity");
+        
+        data.put("topic", topic);
+        body.put("data", data);
         body.put("notification", notification);
+        
+        
 
         System.out.println(body.toString());
 
