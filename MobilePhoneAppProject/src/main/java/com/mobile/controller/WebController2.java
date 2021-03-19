@@ -735,7 +735,7 @@ public class WebController2 {
 		return "/admin/adjustment";
 	}
 	
-	@RequestMapping("/admin/push")
+	@RequestMapping("/common/push")
 	public String push(Model model) {
 
 		return "/admin/push";

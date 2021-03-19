@@ -319,6 +319,11 @@ public class WebController {
 		Region region= userService.regionSelectById(regionId);
 		office.setRegion(region);
 		userService.officeInsert(office);
+		
+		Members member = new Members(null, office.getOfficeName(), office.getTel(), null, null, "ADMIN", office.getPassword(), 1, 1, null, office);
+		
+		userService.memberInsert(member);
+		
 		return "redirect:/admin/office";
 
 	}

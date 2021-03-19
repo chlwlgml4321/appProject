@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AndroidPushPeriodicNotifications {
 
-    public static String PeriodicNotificationJson(String bodyMessage, String titleMessage) throws JSONException {
+    public static String PeriodicNotificationJson(String bodyMessage, String titleMessage, Long officeId, Integer type) throws JSONException {
         LocalDate localDate = LocalDate.now();
 
 
@@ -31,7 +31,19 @@ public class AndroidPushPeriodicNotifications {
         
         //System.out.println("body : " + bodyMessage + "title : " + titleMessage );
         
-        body.put("to", "/topics/p_topic");
+        String topic = "";
+        
+        if(type == 0 && officeId == 9) {
+        	topic = "p_topic";
+        } else if (type == 0 && officeId != 9) {
+        	topic = officeId + "_topic";
+        } else if (type ==1) {
+           topic =  "office_admin_" + officeId;
+        }
+        
+        body.put("to", "/topics/"+ topic);
+        
+        
         
         JSONObject notification = new JSONObject();
         notification.put("title",titleMessage);

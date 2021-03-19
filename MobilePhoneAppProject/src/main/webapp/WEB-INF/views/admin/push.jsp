@@ -48,8 +48,8 @@ $(document).ready(function(){
 	function sendMessage(bodyMessage, titleMessage) {  
 	    $.ajax({
 	        type : 'GET',
-	        url : "/admin/send",
-	        data : {"bodyMessage" : bodyMessage, "titleMessage" : titleMessage},
+	        url : "/common/send",
+	        data : {"bodyMessage" : bodyMessage, "titleMessage" : titleMessage, "type" : 0},
 	        success : function (data) {
 	        	alert("전송완료");
 	        	

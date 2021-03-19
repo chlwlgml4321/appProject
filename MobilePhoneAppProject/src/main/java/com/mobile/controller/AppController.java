@@ -54,6 +54,8 @@ public class AppController implements AppControllerInterface {
 	@Autowired
 	private S3Service s3Service;
 
+	@Autowired
+	private NotificationController notificationController;
 
 	@Autowired
 	private UserService userService;
@@ -696,6 +698,8 @@ public class AppController implements AppControllerInterface {
 
 			Application application = new Application(null, member, product, activationType, purchaseType, addtionalDiscount, supportFundType, isconnectWiredGoods, null, null, installmentFee, installmentPrincipal, cash, monthlyInstallment, monthlyCallingFee, finalFee, installment, wiredGoods, card);
 			productService.applicationInsert(application);
+			
+			notificationController.send("신청서가 접수 되었습니다.", "확인해주세요.", 1, member.getOffice().getOfficeId());
 		} catch(Exception e) {
 			return 0;
 		}

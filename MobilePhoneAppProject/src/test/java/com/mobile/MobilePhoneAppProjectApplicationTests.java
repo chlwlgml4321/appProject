@@ -138,11 +138,11 @@ class MobilePhoneAppProjectApplicationTests {
 	void contextLoads() {
 
 		
-		Office office = or.findById(1L).orElse(null);
+		Office office = or.findById(8L).orElse(null);
 		
-		OfficeNotice of = new OfficeNotice(null, office, "중고폰 팝니다.", "아이폰12", null);
+		Members member = new Members(null, office.getOfficeName(), office.getTel(), null, null, "ADMIN", office.getPassword(), 1, 1, null, office);
 		
-		ofr.save(of);
+		memberRepo.save(member);
 		
 	}
 

@@ -9,8 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.mobile.domain.Office;
 import com.mobile.service.AndroidPushNotificationService;
 import com.mobile.service.AndroidPushPeriodicNotifications;
 
@@ -29,9 +32,25 @@ public class NotificationController {
     @Autowired
     AndroidPushNotificationService androidPushNotificationsService;
 
-    @RequestMapping(value = "/admin/send")
-    public int send(String titleMessage, String bodyMessage) throws JSONException, InterruptedException  {
-        String notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(bodyMessage, titleMessage);
+    
+    //type - 0 : 회원 푸쉬알림 
+    //type - 1 : 신청서 관리자 알림
+    @RequestMapping(value = "/common/send")
+    public int send(String titleMessage, String bodyMessage, Integer type, Long officeId) throws JSONException, InterruptedException  {
+    	
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String notifications = "";
+        if(type ==0) {
+        	Office office = (Office) authentication.getPrincipal();
+            notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(bodyMessage, titleMessage, office.getOfficeId(), type);
+        } else if(type ==1 ) {
+        	notifications = AndroidPushPeriodicNotifications.PeriodicNotificationJson(bodyMessage, titleMessage, officeId, type);
+        }
+		
+        
+
+        
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application","json",Charset.forName("UTF-8"))); 
