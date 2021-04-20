@@ -11,6 +11,8 @@
 <script type="text/javascript">
 var IMP = window.IMP; // 생략가능
 IMP.init('imp97063232'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
+
  
 /* 중략 */
 IMP.certification({
@@ -20,7 +22,9 @@ IMP.certification({
          // 인증성공
         console.log(rsp.imp_uid);
         console.log(rsp.merchant_uid);
-        
+
+        window.AndroidBridge.resultAuth('success');
+
         $.ajax({
                 type : 'POST',
                 url : '/certifications/confirm',
@@ -33,6 +37,9 @@ IMP.certification({
          });
             
     } else {
+    	
+        window.AndroidBridge.resultAuth('fail');
+
          // 인증취소 또는 인증실패
         var msg = '인증에 실패하였습니다.';
         msg += '에러내용 : ' + rsp.error_msg;
@@ -46,6 +53,7 @@ function takeResponseAndHandle(rsp) {
         // 인증성공
         console.log(rsp.imp_uid);
         console.log(rsp.merchant_uid);
+        
     } else {
          // 인증취소 또는 인증실패
         var msg = '인증에 실패하였습니다.';

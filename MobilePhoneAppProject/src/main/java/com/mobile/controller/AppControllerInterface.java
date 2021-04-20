@@ -289,6 +289,8 @@ public interface AppControllerInterface {
 	@RequestMapping("/app/certification")
 	public String certification();
 	
+	
+	
 	//office notice 전체 받아오기
 	@RequestMapping("/app/getAllOfficeNotice")
 	public String getAllOfficeNotice ();
@@ -300,6 +302,10 @@ public interface AppControllerInterface {
 	//officeId로 office Notice 글 받아오기
 	@RequestMapping("/app/getOfficeNoticeByOfficeId")
 	public String getOfficeNoticeByOfficeId(Long officeId);
+
+	String certificationsSuccess();
+
+	String certificationsFail();
 
 
 

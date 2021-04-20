@@ -25,6 +25,7 @@ import com.mobile.domain.Banners;
 import com.mobile.domain.CallingPlan;
 import com.mobile.domain.Card;
 import com.mobile.domain.Carrier;
+import com.mobile.domain.Certification;
 import com.mobile.domain.Device;
 import com.mobile.domain.GuestProduct;
 import com.mobile.domain.Installment;
@@ -1436,6 +1437,48 @@ public class AppController implements AppControllerInterface {
 
 		try {
 			result = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	@RequestMapping("/app/certificationsSuccess")
+	@ResponseBody
+	public String certificationsSuccess() {
+		System.out.println("Success 진입");
+
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(1);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	@RequestMapping("/app/certificationsFail")
+	@ResponseBody
+	public String certificationsFail() {
+		System.out.println("Fail 진입");
+
+
+		ObjectMapper mapper = new ObjectMapper();
+
+
+		String result = "";
+
+		try {
+			result = mapper.writeValueAsString(0);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
