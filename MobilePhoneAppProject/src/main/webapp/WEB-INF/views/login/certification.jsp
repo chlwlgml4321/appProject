@@ -23,7 +23,8 @@ IMP.certification({
         console.log(rsp.imp_uid);
         console.log(rsp.merchant_uid);
 
-        window.AndroidBridge.resultAuth('success');
+        window.AndroidBridge.resultAuth('success', rsp.imp_uid);
+
 
         $.ajax({
                 type : 'POST',
@@ -38,7 +39,7 @@ IMP.certification({
             
     } else {
     	
-        window.AndroidBridge.resultAuth('fail');
+    	window.AndroidBridge.resultAuth('fail', rsp.imp_uid);
 
          // 인증취소 또는 인증실패
         var msg = '인증에 실패하였습니다.';
