@@ -306,7 +306,13 @@ public interface AppControllerInterface {
 	String certificationsSuccess();
 
 	String certificationsFail();
+	
+	
+	String ready();
 
+	String success();
+	
+	String cpcgi();
 
 
 

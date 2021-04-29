@@ -22,6 +22,8 @@ IMP.certification({
          // 인증성공
         console.log(rsp.imp_uid);
         console.log(rsp.merchant_uid);
+        console.log(rsp.phone);
+
 
         window.AndroidBridge.resultAuth('success', rsp.imp_uid);
 

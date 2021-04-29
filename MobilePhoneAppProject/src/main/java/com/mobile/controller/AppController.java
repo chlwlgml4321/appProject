@@ -1486,6 +1486,27 @@ public class AppController implements AppControllerInterface {
 		return result;
 	}
 
+	
+	@Override
+	@RequestMapping("/app/Ready")
+	public String ready() {
+		return "/login/Ready";
+	}
+
+	@Override
+	@RequestMapping("/app/CPCGI")
+	public String success() {
+		// TODO Auto-generated method stub
+		return "/login/CPCGI";
+	}
+
+	@Override
+	@RequestMapping("/app/Success")
+	public String cpcgi() {
+		// TODO Auto-generated method stub
+		return "/login/Success";
+	}
+
 
 	
 
