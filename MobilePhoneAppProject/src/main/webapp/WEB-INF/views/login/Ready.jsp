@@ -64,7 +64,7 @@
 	 ******************************************************/
 	TransR.put( "CPID", ID );
 	TransR.put( "CPPWD", PWD );
-	TransR.put( "TARGETURL", "http://localhost:8999/app/CPCGI" );
+	TransR.put( "TARGETURL", "http://3.34.58.252:8999/app/CPCGI" );
 	TransR.put( "CPTITLE", "www.danal.co.kr" );
 	
 	/***[ 선택 사항 ]**************************************/
@@ -92,7 +92,7 @@
 	 * IsCharSet	: charset 지정( EUC-KR:deault, UTF-8 )
 	 ******************************************************/
 	ByPassValue.put( "BgColor", "00" );
-	ByPassValue.put( "BackURL", "http://localhost/Danal/UAS/Web/BackURL.jsp" );
+	ByPassValue.put( "BackURL", "http://3.34.58.252/Danal/UAS/Web/BackURL.jsp" );
 	ByPassValue.put( "IsCharSet", CHARSET );
 	
 	/***[ 선택 사항 ]**************************************/
