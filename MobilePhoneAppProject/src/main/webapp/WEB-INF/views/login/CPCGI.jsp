@@ -87,13 +87,13 @@
 		 * 인증성공에 대한 작업
 		 *
 		 **************************************************************************/
-		 String IsCarrier = (String)request.getParameter("IsCarrier");
-		 String IsDstAddr	  	= (String)request.getParameter("IsDstAddr");
-		 String BgColor =(String)request.getParameter("BgColor");
+		 
+		 /* String DstAddr	  	= (String)request.getParameter("DstAddr");
+		 String Name =(String)request.getParameter("Name");
 		 System.out.println("hi");
-		System.out.println(IsCarrier);
-		System.out.println(IsDstAddr);
-		System.out.println(BgColor);
+		
+		System.out.println(DstAddr);
+		System.out.println(Name); */
 %>
 <body>
 <form name="CPCGI" action="/app/Success" method="post">

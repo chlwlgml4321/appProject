@@ -3,6 +3,7 @@
 <%@ page import="kr.co.danal.jsinbi.HttpClient" %> 
 <%@ include file="function.jsp" %>
 <%
+
 	response.setHeader( "Pragma","No-cache" );
 
 	/********************************************************************************
@@ -27,13 +28,19 @@
 	 *  - <, >, &, " 등의 문자를 replace등의 문자 변환함수를 사용하여 치환해야 합니다.
 	 * 
 	 ********************************************************************************/
-       
+	request.setCharacterEncoding("EUC-KR");
 	String BgColor	= (String)request.getParameter("BgColor");
+	String Phone	  	= (String)request.getParameter("PHONE");
+	String Name =(String)request.getParameter("NAME");
+	
+	
 
 	/*
 	 * Get BgColor
 	 */
 	BgColor = GetBgColor( BgColor );
+	
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -44,6 +51,17 @@
 <link href="./css/style.css" type="text/css" rel="stylesheet"  media="screen" />
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 <script language="JavaScript" src="./js/Common.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var phone = $("#phone").val();
+	var name = $("#name").val();
+	
+	window.AndroidBridge.resultAuth('success', phone, name);
+	
+});
+</script>	
 </head>
 <body onload="changeFontSize();">
 	<div class="Wrap">
@@ -94,6 +112,9 @@
     </div>
     <!--//BOARD END-->
 </div>
-
+<form>
+	<input type ="hidden" id = "phone" value= "<%=Phone%>" ></input>
+	<input type ="hidden" id = "name" value= "<%=Name%>" ></input>
+</form>
 </body>
 </html>
