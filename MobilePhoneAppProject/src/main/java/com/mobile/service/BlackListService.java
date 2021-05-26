@@ -14,6 +14,7 @@ import com.mobile.domain.Blacklist;
 import com.mobile.repository.BlacklistRepository;
 
 import lombok.NoArgsConstructor;
+//초기 블랙리스트를 DB에서 가져옵니다.
 
 @Service
 @NoArgsConstructor
@@ -31,6 +32,7 @@ public class BlackListService {
 		System.out.println(str);
 	}
 	
+	//key 값(전화번호)를 통하여 블랙리스트를 가져옵니다.
 	public String getByKey(String key) {
 		String str = blackListMap.get(key);	
 		if(str!=null) {
@@ -40,6 +42,7 @@ public class BlackListService {
 		return null;
 	}
 	
+	//서버 실행 시 초기 블랙리스트 세팅
 	@PostConstruct
 	public void setBlackList() {
 		blackListMap = new HashMap<String, String>();
@@ -76,6 +79,7 @@ public class BlackListService {
 		return blackListMap;
 	}
 	
+	//블랙리스트 맵에 블랙리스트 추가
 	public void insertblackListMap(String key, String value) {
 		
 		blackListMap.put(key, value);

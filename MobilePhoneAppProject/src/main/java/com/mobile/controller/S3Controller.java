@@ -14,6 +14,10 @@ import com.mobile.service.S3Service;
 
 import java.io.IOException; 
 
+/**
+ * 이미지 업로드 테스트 컨트롤러
+ * */
+
 @Controller
 @AllArgsConstructor
 public class S3Controller {

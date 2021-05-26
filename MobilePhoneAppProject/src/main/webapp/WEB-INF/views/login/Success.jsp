@@ -61,6 +61,7 @@ $(document).ready(function(){
 	window.AndroidBridge.resultAuth('success', phone, name);
 	
 });
+
 </script>	
 </head>
 <body onload="changeFontSize();">

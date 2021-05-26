@@ -319,10 +319,7 @@ public class AppController implements AppControllerInterface {
 	@RequestMapping("/app/userDropout")
 	@ResponseBody
 	public void userDropout(java.lang.Long membersId) {
-
-
-
-
+		userService.memberChangeState(membersId);
 	}
 
 	@Override
@@ -397,7 +394,6 @@ public class AppController implements AppControllerInterface {
 
 		System.out.println("c");
 		CallingPlan callinPlan = productService.callingPlanSelectById(callingPlanId);
-
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -691,15 +687,23 @@ public class AppController implements AppControllerInterface {
 	public Integer AddaddApplication(Long memberId, Long productId, Integer activationType, Integer purchaseType, Integer addtionalDiscount, Integer supportFundType, Integer isconnectWiredGoods, Integer monthlyInstallment,  Integer installmentFee, Integer installmentPrincipal, Integer cash, Integer monthlyCallingFee, Integer finalFee, Long installmentId, Long wiredGoodsId, Long cardId) {
 
 		try {
-			Members member = userService.memberSelectById(memberId);
-			Products product = productService.productsSelectById(productId);
-			Installment installment = productService.installmentSelectById(installmentId);
-			WiredGoods wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
-			Card card = productService.cardSelectById(cardId);
+			Members member = null;
+			Products product = null;
+			
+			Installment installment = null;
+			WiredGoods wiredGoods = null;
+			Card card = null;
+			
+			if(memberId!=null) member = userService.memberSelectById(memberId);
+			if(productId!=null) product = productService.productsSelectById(productId);
+			
+			if(installmentId!=null) installment = productService.installmentSelectById(installmentId);
+			if(wiredGoodsId!=null) wiredGoods = productService.wiredGoodsSelectById(wiredGoodsId);
+			if(cardId!=null) card = productService.cardSelectById(cardId);
 
 			Application application = new Application(null, member, product, activationType, purchaseType, addtionalDiscount, supportFundType, isconnectWiredGoods, null, null, installmentFee, installmentPrincipal, cash, monthlyInstallment, monthlyCallingFee, finalFee, installment, wiredGoods, card);
 			productService.applicationInsert(application);
-			
+			System.out.println("정상 실행");
 			notificationController.send("신청서가 접수 되었습니다.", "확인해주세요.", 1, member.getOffice().getOfficeId());
 		} catch(Exception e) {
 			return 0;
