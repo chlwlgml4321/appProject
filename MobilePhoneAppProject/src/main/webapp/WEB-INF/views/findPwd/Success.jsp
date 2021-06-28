@@ -57,7 +57,7 @@
 $(document).ready(function(){
 	var phone = $("#phone").val();
 	var name = $("#name").val();
-	alert("¼º°ø");
+
 	window.AndroidBridge.resultAuth('fpSuccess', phone, name);
 	
 });

@@ -1534,6 +1534,20 @@ public class AppController implements AppControllerInterface {
 	}
 
 
-	
+	@Override
+	@RequestMapping("/app/changePWD")
+	public String changePWD(Long memberId, String password) {
+		try {
+		Members member = userService.memberSelectById(memberId);
+		
+		member.setPassword(password);
+		
+		userService.memberUpdate(member);
+		} catch(Exception e) {
+			return "0";
+		}
+		
+		return "1";
+	}
 
 }
