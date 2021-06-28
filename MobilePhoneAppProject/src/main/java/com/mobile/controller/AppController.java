@@ -1505,6 +1505,28 @@ public class AppController implements AppControllerInterface {
 	}
 
 	@Override
+	@RequestMapping("/app/FPSuccess")
+	public String fpcpcgi() {
+		// TODO Auto-generated method stub
+		
+		System.out.println("비번 찾기 성공 들어옴");
+		return "/findPwd/Success";
+	}
+	
+	@Override
+	@RequestMapping("/app/FPReady")
+	public String fpready() {
+		return "/findPwd/Ready";
+	}
+
+	@Override
+	@RequestMapping("/app/FPCPCGI")
+	public String fpsuccess() {
+		// TODO Auto-generated method stub
+		return "/findPwd/CPCGI";
+	}
+
+	@Override
 	@RequestMapping("/app/Success")
 	public String cpcgi() {
 		// TODO Auto-generated method stub

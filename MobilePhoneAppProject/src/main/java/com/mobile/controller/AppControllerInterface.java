@@ -314,7 +314,14 @@ public interface AppControllerInterface {
 	
 	String cpcgi();
 
+	String fpcpcgi();
 
+	String fpready();
+
+	String fpsuccess();
+
+
+	//String findPwd();
 
 	
 	
