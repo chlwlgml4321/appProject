@@ -320,7 +320,7 @@ public interface AppControllerInterface {
 
 	String fpsuccess();
 
-	String changePWD(Long memberId, String password);
+	String changePWD(String phone, String password);
 
 
 	//String findPwd();

@@ -1536,9 +1536,10 @@ public class AppController implements AppControllerInterface {
 
 	@Override
 	@RequestMapping("/app/changePWD")
-	public String changePWD(Long memberId, String password) {
+	@ResponseBody
+	public String changePWD(String phone, String password) {
 		try {
-		Members member = userService.memberSelectById(memberId);
+		Members member = userService.memberSelectByPhone(phone);
 		
 		member.setPassword(password);
 		
